@@ -10,15 +10,10 @@ This repository is designed to answer two different review questions without blu
 From a fresh clone with CPython 3.12 or later:
 
 ```sh
-python3 scripts/build_public_catalog.py
-git diff --exit-code -- data/catalog
-python3 scripts/verify_public_release.py
-python3 scripts/validate_public_boundary.py .
-python3 scripts/verify_manifest.py PUBLIC_MANIFEST.sha256
-python3 -m unittest discover -s tests -v
+python3 scripts/run_reviewer_audit.py
 ```
 
-A clean result rebuilds the catalog without a diff, verifies public aggregate arithmetic, checks the disclosure boundary, validates every manifested byte, and runs the release tests.
+A clean result rebuilds the catalog without a byte change, verifies public aggregate arithmetic, checks the disclosure boundary, validates every manifested byte, runs the release tests, and passes a generated fictional-source smoke test through the published source-level analysis scripts. The fictional rows exist only in an operating-system temporary directory and are deleted automatically.
 
 ## Headline count reconciliation
 
@@ -44,6 +39,8 @@ The canonical values are in `analysis/results/pooled_summary.csv`; the exact k/n
 5. Use `analysis/ANALYSIS_MANIFEST.sha256` for canonical-run receipts and `PUBLIC_MANIFEST.sha256` for files actually distributed.
 
 The 12 mapped claims cover the source-frame scope, balanced constructions, pooled rates, equal-station sensitivity, action-count diagnostics, timing interpretation, linkage pilot, the known ST02 source limitation, and the construct boundary.
+
+The final manuscript and release-byte bridge is in `docs/MANUSCRIPT_RELEASE_CROSSWALK.md`.
 
 ## Checking more than the headline
 

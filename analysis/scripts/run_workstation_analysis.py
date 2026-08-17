@@ -13,7 +13,7 @@ exact strata. Station is an archive cluster, not a participant proxy.
 
 The source CSV is restricted because it contains raw prompt text. Row-level
 outputs produced here remain restricted and contain no prompt text or excerpts.
-Only aggregate outputs are candidates for public deposit after disclosure review.
+Only disclosure-approved aggregate outputs are included in the public release.
 """
 
 from __future__ import annotations

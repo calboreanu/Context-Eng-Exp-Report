@@ -2,11 +2,11 @@
 
 ## Verdict
 
-**PRIVATE CLEAN-HISTORY RELEASE CANDIDATE: REVIEWER-AUDIT PASS.**
+**PUBLIC VERSION 1.0.0 AGGREGATE EVIDENCE RELEASE: REVIEWER-AUDIT PASS.**
 
 An outside reader can audit the released numerical claims, sensitivity views, claim selectors, field lineage, code paths, and exact file identities from a fresh clone. The repository does not claim that a public reader can regenerate the confidential 31,919-row source frame without separately governed access.
 
-The repository has been pushed privately to `https://github.com/calboreanu/Context-Eng-Exp-Report`. It has not been made public, tagged as a release, or cited from the manuscript through an immutable locator.
+The repository is public at `https://github.com/calboreanu/Context-Eng-Exp-Report` and frozen as immutable release `v1.0.0` at `https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v1.0.0`. The revised manuscript, supplement, response, cover letter, and submission support files use that locator.
 
 ## Evidence contents
 
@@ -20,6 +20,8 @@ The repository has been pushed privately to `https://github.com/calboreanu/Conte
 - executable source-level analysis scripts and an aggregate-only public verifier;
 - a 15-sheet reviewer workbook with eight formula-linked headline checks;
 - a reviewer-first guide that states both the executable audit workflow and the public package's limits.
+- a one-command reviewer audit and generated fictional-source pipeline smoke test that retains no fixture rows;
+- an exact manuscript-to-release crosswalk with final submission-PDF receipts.
 
 ## Independent numerical and provenance review
 
@@ -44,7 +46,8 @@ The primary verification claim reconciles to `693/1,484` versus `478/1,484`, a r
 - `scripts/validate_public_boundary.py`: PASS.
 - `scripts/verify_manifest.py`: PASS after final manifest regeneration.
 - Unit tests: PASS.
-- Fresh-clone GitHub Actions validation: PASS for the pushed commit.
+- Fresh-clone GitHub Actions validation: PASS for the tagged release commit.
+- Fresh downloaded-release audit: PASS through `scripts/run_reviewer_audit.py`.
 - Git history: clean root history; no superseded prototype files in this repository's history.
 
 ## Workbook review
@@ -61,7 +64,6 @@ The workbook and repository contain pseudonymous aggregate station views, includ
 
 The public package proves aggregate arithmetic, cross-file consistency, transformation traceability, and exact released bytes. It does not prove source-row authenticity solely from public content, because the raw prompts, outputs, traces, timestamps, paths, balanced samples, and linkage map are intentionally withheld. Source-level scripts and cryptographic receipts support a separately authorized controlled review.
 
-## Remaining release gates
+## Remaining IST submission item
 
-1. signed internal IRAD/data-use authorization covering the exact aggregate package;
-2. public visibility, immutable tag, downloaded-archive verification, and manuscript locator update.
+The public evidence release is complete. The physical signature check for internal memorandum `SWIFT-DET-CE-001` remains an IST submission-file gate for 18 August 2026. It does not change the public disclosure boundary and does not authorize publication of the confidential source frame.

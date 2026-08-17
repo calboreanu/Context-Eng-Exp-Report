@@ -57,4 +57,4 @@ The public verifier checks condition arithmetic, station and equal-station agree
 
 ## Interpretation boundary
 
-The public files permit independent verification of released aggregate arithmetic and mapping, not regeneration of the raw source frame. The author completed the named disclosure review for the aggregate-only boundary on 17 August 2026. The exact public commit, workbook, manifest, and downloaded release archive must still pass the documented automated checks before publication.
+The public files permit independent verification of released aggregate arithmetic and mapping, not regeneration of the raw source frame. The author completed disclosure review for the aggregate-only boundary on 17 August 2026. The exact Version 1.0.0 release, workbook, manifest, and downloaded archive passed the documented one-command reviewer audit before publication.

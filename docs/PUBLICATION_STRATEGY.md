@@ -2,7 +2,7 @@
 
 ## Selected path: clean public release repository
 
-This repository is the selected clean-history public release candidate. Its canonical name and intended locator are `calboreanu/Context-Eng-Exp-Report` and `https://github.com/calboreanu/Context-Eng-Exp-Report`. It contains only the files covered by the verified public manifest plus the manifest itself.
+This repository is the selected clean-history public release. Its canonical name is `calboreanu/Context-Eng-Exp-Report`; its immutable locator is `https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v1.0.0`. It contains only the files covered by the verified public manifest plus the manifest itself.
 
 This approach has three advantages:
 
@@ -18,13 +18,13 @@ An orphan branch in the former private development repository was not selected b
 
 Deleting the old prototype from the latest branch does not erase it from Git history. Directly changing the former development repository to public would expose the superseded product-case protocol and make it unclear which study the repository supports.
 
-## Final release sequence
+## Completed release sequence
 
-1. complete the final internal authorization signature;
-2. regenerate `PUBLIC_MANIFEST.sha256` after all release-text edits;
-3. rerun the verifier, privacy-boundary scan, tests, and manifest check;
-4. make the existing private `calboreanu/Context-Eng-Exp-Report` repository public only after the release gates close;
-5. tag an immutable version;
-6. download the GitHub-generated archive and record its SHA-256;
-7. rerun the boundary and manifest checks on the downloaded archive;
-8. update the manuscript data-availability statement with the immutable tag or release URL.
+1. the author completed disclosure review of the aggregate-only boundary;
+2. `PUBLIC_MANIFEST.sha256` was regenerated after all release-text edits;
+3. the one-command verifier, privacy-boundary scan, tests, and manifest check passed;
+4. the clean-history repository was made public and tagged `v1.0.0`;
+5. the packaged release archive was downloaded and re-audited;
+6. the manuscript, supplement, response, cover letter, and submission support files were updated to the immutable release URL.
+
+The unsigned internal memorandum remains a separate IST-upload gate. It does not expand the public package to confidential inputs or row-level derivatives.
