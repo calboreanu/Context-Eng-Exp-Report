@@ -1,0 +1,6 @@
+receipt_id,stage,archive_scope,locked_file_count,interaction_source_count,episode_rows,conversation_sources,station_archives,input_sha256,verification_result,public_interpretation
+SRC-01,connected-volume inventory,ST04-ST13,1171,1030,,,,,passed 4684 size hash and copy checks,Receipt only; no source path or content is released
+SRC-02,initial-station replay,ST00-ST02,,,22469,,3,,five frozen outputs byte-identical,One locked ST02 manifest source was absent and was not scanned
+SRC-03,later-station replay,ST04-ST13,1171,1030,9450,,10,,five frozen outputs byte-identical,Zero byte-identical interaction-source overlap with ST00-ST02 or across later stations
+SRC-04,merged source frame,ST00-ST02 and ST04-ST13,,,31919,4760,13,098998194cc6636b92fb47fc04fd78055c28f02ebac664e3ffc87ecffd2bd5d3,merged input and role frame byte-identical to frozen analysis,Restricted input receipt only
+SRC-05,downstream analysis,12 contributing stations,,,,,,098998194cc6636b92fb47fc04fd78055c28f02ebac664e3ffc87ecffd2bd5d3,all deterministic aggregates and three restricted derivatives byte-identical,CPython 3.12.13; provenance-only summary fields normalized

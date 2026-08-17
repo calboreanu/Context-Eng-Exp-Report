@@ -1,0 +1,96 @@
+{
+  "generated_utc": "2026-08-15T13:24:46.502511+00:00",
+  "rule_version": "ce-inheritance-map/2.0.0-action-eligible-pilot",
+  "status": "automated_unadjudicated_candidate_linkage_pilot",
+  "input": {
+    "filename": "extended_multistation_context_episode_review.local.csv",
+    "sha256": "098998194cc6636b92fb47fc04fd78055c28f02ebac664e3ffc87ecffd2bd5d3",
+    "restricted": true
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "implementation": "CPython",
+    "third_party_libraries": []
+  },
+  "scope": {
+    "source_rows_three_stations": 22469,
+    "action_eligible_comparison_rows_mapped": 3502,
+    "prior_ce_predecessor_dispositions": [
+      "candidate_strong",
+      "candidate_probable"
+    ],
+    "eligible_rows_with_prior_action_eligible_ce": 3326,
+    "clean_origin_candidates": 176,
+    "high_confidence_candidates": 1338,
+    "probable_candidates": 1388,
+    "unresolved_primary_rule": 600
+  },
+  "class_counts": {
+    "CLEAN_ORIGIN_CANDIDATE": 176,
+    "CONTEXT_REFERENCE_WITHIN_20": 1183,
+    "EXACT_PROMPT_ANCHOR": 16,
+    "EXACT_SUCCESSFUL_TOOL_TARGET": 1205,
+    "IMMEDIATE_ADJACENCY": 76,
+    "IMMEDIATE_SHORT_REFERENCE": 117,
+    "NEAR_SEQUENCE": 129,
+    "UNRESOLVED_PRIOR_CE_SESSION": 600
+  },
+  "tier_counts": {
+    "CLEAN_ORIGIN_CANDIDATE": 176,
+    "HIGH_CONFIDENCE_CANDIDATE": 1338,
+    "PROBABLE_CANDIDATE": 1388,
+    "UNRESOLVED": 600
+  },
+  "primary_window": 20,
+  "sensitivity": [
+    {
+      "window": 5,
+      "candidate_positive": 2119,
+      "eligible_rows": 3326,
+      "candidate_positive_rate": 0.6371016235718581,
+      "unresolved": 1207
+    },
+    {
+      "window": 10,
+      "candidate_positive": 2453,
+      "eligible_rows": 3326,
+      "candidate_positive_rate": 0.7375225496091401,
+      "unresolved": 873
+    },
+    {
+      "window": 20,
+      "candidate_positive": 2726,
+      "eligible_rows": 3326,
+      "candidate_positive_rate": 0.8196031268791341,
+      "unresolved": 600
+    },
+    {
+      "window": 50,
+      "candidate_positive": 2919,
+      "eligible_rows": 3326,
+      "candidate_positive_rate": 0.8776307877330126,
+      "unresolved": 407
+    },
+    {
+      "window": 106,
+      "candidate_positive": 2976,
+      "eligible_rows": 3326,
+      "candidate_positive_rate": 0.8947684906794949,
+      "unresolved": 350
+    }
+  ],
+  "rule_precedence": [
+    "exact successful tool-target continuity",
+    "exact prompt ticket/path/file anchor continuity",
+    "immediate <=30-word explicit continuation reference",
+    "immediate adjacency",
+    "explicit continuation reference within 20 prompt episodes",
+    "same-session proximity within three prompt episodes",
+    "unresolved prior-CE session"
+  ],
+  "limitations": [
+    "Every linkage label is automated and pending accountable human review.",
+    "Adjacency and lexical continuation cues are candidate evidence, not proof of inheritance.",
+    "The pilot is limited to three station archives and is not additive with the 13-station balanced analysis."
+  ]
+}

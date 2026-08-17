@@ -1,0 +1,6 @@
+artifact_id,artifact_role,bytes,sha256,release_status,reason_withheld
+R-INPUT,restricted merged source input,153312689,098998194cc6636b92fb47fc04fd78055c28f02ebac664e3ffc87ecffd2bd5d3,withheld,"Contains prompts, outputs, traces, timestamps, paths, and potentially confidential material"
+R-STRATA,station-provider-month balancing cells,6129,4f375390e34cd8246101475eba69901933d131961a15d87458f4fc19fc9a7c47,withheld,Joint cells are more granular than needed for public verification
+R-PRIMARY,primary balanced row derivative,553223,bd308fcf2e4d64fee5a03c99b1e055153a1cea178af485af41b5e247de7c7932,withheld,Row-level sample and linkage identifiers
+R-UNRESTRICTED,unrestricted balanced row derivative,758149,97145cafa1713dd0831533c546e6dd7ef419550ba3d321ea7d51b1faa39a06f1,withheld,Row-level sample and linkage identifiers
+R-LINKAGE,inheritance candidate map,779494,78c4da732d49eeea84ba525676a2181534c0c2286cdb15009754e9e674b7a0ac,withheld,Row-level candidate links and session structure

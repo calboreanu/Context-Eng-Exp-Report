@@ -1,0 +1,34 @@
+{
+  "analysis_contract": "ce-action-count-verification-diagnostic/1.0.0",
+  "definition": "Post hoc comparator-weighted within-action-bin verification diagnostic. Action count includes verify calls and is post-exposure; this is not a confounding adjustment or effect decomposition.",
+  "inputs": {
+    "primary_balanced_rows.csv": "bd308fcf2e4d64fee5a03c99b1e055153a1cea178af485af41b5e247de7c7932",
+    "unrestricted_balanced_rows.csv": "97145cafa1713dd0831533c546e6dd7ef419550ba3d321ea7d51b1faa39a06f1"
+  },
+  "summaries": [
+    {
+      "analysis_set": "primary_frontloaded",
+      "archive_batch": "all",
+      "comparator_standardized_gap": 0.06724164852757317,
+      "diagnostic_only": true,
+      "raw_gap": 0.14487870619946092,
+      "rows_per_condition": 1484
+    },
+    {
+      "analysis_set": "unrestricted",
+      "archive_batch": "all",
+      "comparator_standardized_gap": 0.03890036784451208,
+      "diagnostic_only": true,
+      "raw_gap": 0.11130899376669634,
+      "rows_per_condition": 2246
+    },
+    {
+      "analysis_set": "primary_frontloaded",
+      "archive_batch": "subsequent_capture_ST04_ST13",
+      "comparator_standardized_gap": -0.020532530286101573,
+      "diagnostic_only": true,
+      "raw_gap": 0.04901960784313725,
+      "rows_per_condition": 306
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+analysis_set,station_id,balanced_per_condition,metric,metric_label,effect_scale,ce_value,comparison_value,effect
+unrestricted,ST00,588,verification_successful,Completed-successful verification call,risk_difference,0.38945578231292516,0.3129251700680272,0.07653061224489793
+unrestricted,ST00,588,audit_signal,Audit-stage prompt signal,risk_difference,0.3282312925170068,0.1564625850340136,0.17176870748299317
+unrestricted,ST00,588,remediation_signal,Remediation-stage prompt signal,risk_difference,0.1564625850340136,0.07653061224489796,0.07993197278911565
+unrestricted,ST00,588,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.09863945578231292,0.01870748299319728,0.07993197278911565
+unrestricted,ST00,588,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.3401360544217687,0.03571428571428571,0.304421768707483
+unrestricted,ST00,588,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.36394557823129253,0.1054421768707483,0.2585034013605442
+unrestricted,ST00,588,duration_min,Median observed trajectory minutes,median_ratio,4.459200000000001,2.2152083333333334,2.012993510768363
+unrestricted,ST00,588,completed_substantive_actions,Median completed substantive actions,median_ratio,7.0,4.0,1.75
+unrestricted,ST00,588,min_per_action,Median minutes per completed substantive action,median_ratio,0.51101125,0.46072129629629627,1.1091548276756054
+unrestricted,ST01,667,verification_successful,Completed-successful verification call,risk_difference,0.4617691154422789,0.3103448275862069,0.15142428785607198
+unrestricted,ST01,667,audit_signal,Audit-stage prompt signal,risk_difference,0.5067466266866567,0.14992503748125938,0.3568215892053973
+unrestricted,ST01,667,remediation_signal,Remediation-stage prompt signal,risk_difference,0.30884557721139433,0.10344827586206896,0.20539730134932538
+unrestricted,ST01,667,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.1664167916041979,0.014992503748125937,0.15142428785607195
+unrestricted,ST01,667,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.5952023988005997,0.06146926536731634,0.5337331334332833
+unrestricted,ST01,667,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.44377811094452774,0.10644677661169415,0.3373313343328336
+unrestricted,ST01,667,duration_min,Median observed trajectory minutes,median_ratio,4.762383333333333,2.9383,1.620795471304269
+unrestricted,ST01,667,completed_substantive_actions,Median completed substantive actions,median_ratio,9.0,5.0,1.8
+unrestricted,ST01,667,min_per_action,Median minutes per completed substantive action,median_ratio,0.4163823529411765,0.48865000000000003,0.852107547203881
+unrestricted,ST02,470,verification_successful,Completed-successful verification call,risk_difference,0.48723404255319147,0.2978723404255319,0.18936170212765957
+unrestricted,ST02,470,audit_signal,Audit-stage prompt signal,risk_difference,0.4574468085106383,0.14468085106382977,0.3127659574468085
+unrestricted,ST02,470,remediation_signal,Remediation-stage prompt signal,risk_difference,0.41702127659574467,0.07872340425531915,0.3382978723404255
+unrestricted,ST02,470,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.15319148936170213,0.006382978723404255,0.14680851063829786
+unrestricted,ST02,470,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.5659574468085107,0.06595744680851064,0.5
+unrestricted,ST02,470,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.43617021276595747,0.10851063829787234,0.32765957446808514
+unrestricted,ST02,470,duration_min,Median observed trajectory minutes,median_ratio,11.177791666666668,4.686541666666667,2.3850831725597232
+unrestricted,ST02,470,completed_substantive_actions,Median completed substantive actions,median_ratio,11.0,5.0,2.2
+unrestricted,ST02,470,min_per_action,Median minutes per completed substantive action,median_ratio,0.7257249421296296,0.7954316666666668,0.9123661686375274
+unrestricted,ST04,10,verification_successful,Completed-successful verification call,risk_difference,0.3,0.1,0.19999999999999998
+unrestricted,ST04,10,audit_signal,Audit-stage prompt signal,risk_difference,0.3,0.0,0.3
+unrestricted,ST04,10,remediation_signal,Remediation-stage prompt signal,risk_difference,0.0,0.1,-0.1
+unrestricted,ST04,10,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.0,0.0,0.0
+unrestricted,ST04,10,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.1,0.0,0.1
+unrestricted,ST04,10,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.3,0.0,0.3
+unrestricted,ST04,10,duration_min,Median observed trajectory minutes,median_ratio,8.7877,0.7677833333333334,11.445546703714154
+unrestricted,ST04,10,completed_substantive_actions,Median completed substantive actions,median_ratio,8.0,2.0,4.0
+unrestricted,ST04,10,min_per_action,Median minutes per completed substantive action,median_ratio,0.9130324999999999,0.4864009259259259,1.8771191651453514
+unrestricted,ST05,16,verification_successful,Completed-successful verification call,risk_difference,0.5,0.25,0.25
+unrestricted,ST05,16,audit_signal,Audit-stage prompt signal,risk_difference,0.625,0.0625,0.5625
+unrestricted,ST05,16,remediation_signal,Remediation-stage prompt signal,risk_difference,0.3125,0.3125,0.0
+unrestricted,ST05,16,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.3125,0.0,0.3125
+unrestricted,ST05,16,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.5,0.1875,0.3125
+unrestricted,ST05,16,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.75,0.0,0.75
+unrestricted,ST05,16,duration_min,Median observed trajectory minutes,median_ratio,13.552216666666666,4.325175,3.1333337186741965
+unrestricted,ST05,16,completed_substantive_actions,Median completed substantive actions,median_ratio,10.5,8.5,1.2352941176470589
+unrestricted,ST05,16,min_per_action,Median minutes per completed substantive action,median_ratio,0.8990075757575757,0.45522296296296294,1.9748730817665698
+unrestricted,ST06,14,verification_successful,Completed-successful verification call,risk_difference,0.2857142857142857,0.35714285714285715,-0.07142857142857145
+unrestricted,ST06,14,audit_signal,Audit-stage prompt signal,risk_difference,0.07142857142857142,0.21428571428571427,-0.14285714285714285
+unrestricted,ST06,14,remediation_signal,Remediation-stage prompt signal,risk_difference,0.0,0.07142857142857142,-0.07142857142857142
+unrestricted,ST06,14,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.0,0.0,0.0
+unrestricted,ST06,14,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.07142857142857142,0.07142857142857142,0.0
+unrestricted,ST06,14,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.07142857142857142,0.21428571428571427,-0.14285714285714285
+unrestricted,ST06,14,duration_min,Median observed trajectory minutes,median_ratio,5.2658249999999995,5.721783333333333,0.9203118491612463
+unrestricted,ST06,14,completed_substantive_actions,Median completed substantive actions,median_ratio,5.5,4.0,1.375
+unrestricted,ST06,14,min_per_action,Median minutes per completed substantive action,median_ratio,0.9386714814814815,1.3337520833333334,0.70378257939477
+unrestricted,ST07,7,verification_successful,Completed-successful verification call,risk_difference,0.7142857142857143,0.14285714285714285,0.5714285714285714
+unrestricted,ST07,7,audit_signal,Audit-stage prompt signal,risk_difference,0.0,0.0,0.0
+unrestricted,ST07,7,remediation_signal,Remediation-stage prompt signal,risk_difference,0.14285714285714285,0.0,0.14285714285714285
+unrestricted,ST07,7,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.0,0.0,0.0
+unrestricted,ST07,7,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.14285714285714285,0.0,0.14285714285714285
+unrestricted,ST07,7,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.7142857142857143,0.0,0.7142857142857143
+unrestricted,ST07,7,duration_min,Median observed trajectory minutes,median_ratio,11.397549999999999,3.7834,3.0125151979700795
+unrestricted,ST07,7,completed_substantive_actions,Median completed substantive actions,median_ratio,7.0,2.0,3.5
+unrestricted,ST07,7,min_per_action,Median minutes per completed substantive action,median_ratio,2.293721296296296,1.44445,1.5879547899174744
+unrestricted,ST08,80,verification_successful,Completed-successful verification call,risk_difference,0.675,0.4875,0.18750000000000006
+unrestricted,ST08,80,audit_signal,Audit-stage prompt signal,risk_difference,0.2625,0.05,0.21250000000000002
+unrestricted,ST08,80,remediation_signal,Remediation-stage prompt signal,risk_difference,0.2125,0.1,0.11249999999999999
+unrestricted,ST08,80,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.1125,0.0375,0.07500000000000001
+unrestricted,ST08,80,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.4,0.075,0.325
+unrestricted,ST08,80,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.3875,0.0375,0.35000000000000003
+unrestricted,ST08,80,duration_min,Median observed trajectory minutes,median_ratio,6.3788583333333335,4.671141666666666,1.365588712252715
+unrestricted,ST08,80,completed_substantive_actions,Median completed substantive actions,median_ratio,9.0,6.0,1.5
+unrestricted,ST08,80,min_per_action,Median minutes per completed substantive action,median_ratio,0.6339624137931035,0.607325,1.0438602293551287
+unrestricted,ST09,5,verification_successful,Completed-successful verification call,risk_difference,0.0,0.0,0.0
+unrestricted,ST09,5,audit_signal,Audit-stage prompt signal,risk_difference,0.4,0.0,0.4
+unrestricted,ST09,5,remediation_signal,Remediation-stage prompt signal,risk_difference,0.6,0.2,0.39999999999999997
+unrestricted,ST09,5,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.2,0.0,0.2
+unrestricted,ST09,5,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.4,0.0,0.4
+unrestricted,ST09,5,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.4,0.0,0.4
+unrestricted,ST09,5,duration_min,Median observed trajectory minutes,median_ratio,7.00005,3.8533,1.8166376871772247
+unrestricted,ST09,5,completed_substantive_actions,Median completed substantive actions,median_ratio,7.0,4.0,1.75
+unrestricted,ST09,5,min_per_action,Median minutes per completed substantive action,median_ratio,1.777925,0.6562666666666667,2.709150243803332
+unrestricted,ST10,257,verification_successful,Completed-successful verification call,risk_difference,0.4046692607003891,0.49416342412451364,-0.08949416342412453
+unrestricted,ST10,257,audit_signal,Audit-stage prompt signal,risk_difference,0.15953307392996108,0.027237354085603113,0.13229571984435795
+unrestricted,ST10,257,remediation_signal,Remediation-stage prompt signal,risk_difference,0.24124513618677043,0.11284046692607004,0.12840466926070038
+unrestricted,ST10,257,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.05058365758754864,0.05058365758754864,0.0
+unrestricted,ST10,257,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.38910505836575876,0.058365758754863814,0.33073929961089493
+unrestricted,ST10,257,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.4046692607003891,0.038910505836575876,0.36575875486381326
+unrestricted,ST10,257,duration_min,Median observed trajectory minutes,median_ratio,6.0136666666666665,3.9646166666666667,1.5168343303471963
+unrestricted,ST10,257,completed_substantive_actions,Median completed substantive actions,median_ratio,5.0,4.0,1.25
+unrestricted,ST10,257,min_per_action,Median minutes per completed substantive action,median_ratio,1.5189333333333332,1.0159055555555556,1.4951521084090273
+unrestricted,ST11,6,verification_successful,Completed-successful verification call,risk_difference,0.16666666666666666,0.16666666666666666,0.0
+unrestricted,ST11,6,audit_signal,Audit-stage prompt signal,risk_difference,0.5,0.0,0.5
+unrestricted,ST11,6,remediation_signal,Remediation-stage prompt signal,risk_difference,0.16666666666666666,0.0,0.16666666666666666
+unrestricted,ST11,6,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.16666666666666666,0.0,0.16666666666666666
+unrestricted,ST11,6,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.3333333333333333,0.0,0.3333333333333333
+unrestricted,ST11,6,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.3333333333333333,0.0,0.3333333333333333
+unrestricted,ST11,6,duration_min,Median observed trajectory minutes,median_ratio,6.241725000000001,1.1063333333333332,5.641812292859297
+unrestricted,ST11,6,completed_substantive_actions,Median completed substantive actions,median_ratio,5.0,2.0,2.5
+unrestricted,ST11,6,min_per_action,Median minutes per completed substantive action,median_ratio,1.4370283333333334,0.4594833333333333,3.1274873952627953
+unrestricted,ST13,126,verification_successful,Completed-successful verification call,risk_difference,0.29365079365079366,0.18253968253968253,0.11111111111111113
+unrestricted,ST13,126,audit_signal,Audit-stage prompt signal,risk_difference,0.5079365079365079,0.09523809523809523,0.4126984126984127
+unrestricted,ST13,126,remediation_signal,Remediation-stage prompt signal,risk_difference,0.3412698412698413,0.06349206349206349,0.2777777777777778
+unrestricted,ST13,126,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.19047619047619047,0.007936507936507936,0.18253968253968253
+unrestricted,ST13,126,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.6746031746031746,0.07142857142857142,0.6031746031746033
+unrestricted,ST13,126,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.36507936507936506,0.05555555555555555,0.30952380952380953
+unrestricted,ST13,126,duration_min,Median observed trajectory minutes,median_ratio,5.382883333333333,4.115375,1.3079933987384704
+unrestricted,ST13,126,completed_substantive_actions,Median completed substantive actions,median_ratio,6.0,7.0,0.8571428571428571
+unrestricted,ST13,126,min_per_action,Median minutes per completed substantive action,median_ratio,0.3356197112366604,0.5842416666666667,0.574453570132212
+primary_frontloaded,ST00,325,verification_successful,Completed-successful verification call,risk_difference,0.38461538461538464,0.28,0.10461538461538461
+primary_frontloaded,ST00,325,audit_signal,Audit-stage prompt signal,risk_difference,0.4584615384615385,0.16923076923076924,0.28923076923076924
+primary_frontloaded,ST00,325,remediation_signal,Remediation-stage prompt signal,risk_difference,0.2123076923076923,0.06153846153846154,0.15076923076923077
+primary_frontloaded,ST00,325,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.18153846153846154,0.024615384615384615,0.15692307692307692
+primary_frontloaded,ST00,325,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.556923076923077,0.027692307692307693,0.5292307692307693
+primary_frontloaded,ST00,325,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.49538461538461537,0.10461538461538461,0.39076923076923076
+primary_frontloaded,ST00,325,duration_min,Median observed trajectory minutes,median_ratio,4.04035,2.1306,1.8963437529334461
+primary_frontloaded,ST00,325,completed_substantive_actions,Median completed substantive actions,median_ratio,6.0,4.0,1.5
+primary_frontloaded,ST00,325,min_per_action,Median minutes per completed substantive action,median_ratio,0.4907333333333333,0.4682,1.0481275808059234
+primary_frontloaded,ST01,528,verification_successful,Completed-successful verification call,risk_difference,0.5227272727272727,0.3503787878787879,0.1723484848484848
+primary_frontloaded,ST01,528,audit_signal,Audit-stage prompt signal,risk_difference,0.6458333333333334,0.15151515151515152,0.4943181818181819
+primary_frontloaded,ST01,528,remediation_signal,Remediation-stage prompt signal,risk_difference,0.38636363636363635,0.10416666666666667,0.28219696969696967
+primary_frontloaded,ST01,528,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.2196969696969697,0.017045454545454544,0.20265151515151514
+primary_frontloaded,ST01,528,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.7708333333333334,0.0625,0.7083333333333334
+primary_frontloaded,ST01,528,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.5340909090909091,0.09659090909090909,0.4375
+primary_frontloaded,ST01,528,duration_min,Median observed trajectory minutes,median_ratio,3.9101,3.043283333333333,1.2848294331232168
+primary_frontloaded,ST01,528,completed_substantive_actions,Median completed substantive actions,median_ratio,8.0,5.0,1.6
+primary_frontloaded,ST01,528,min_per_action,Median minutes per completed substantive action,median_ratio,0.385823615136876,0.5164166666666666,0.7471168923095873
+primary_frontloaded,ST02,325,verification_successful,Completed-successful verification call,risk_difference,0.5169230769230769,0.28615384615384615,0.23076923076923078
+primary_frontloaded,ST02,325,audit_signal,Audit-stage prompt signal,risk_difference,0.5815384615384616,0.12307692307692308,0.4584615384615385
+primary_frontloaded,ST02,325,remediation_signal,Remediation-stage prompt signal,risk_difference,0.5415384615384615,0.08615384615384615,0.4553846153846154
+primary_frontloaded,ST02,325,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.20307692307692307,0.006153846153846154,0.19692307692307692
+primary_frontloaded,ST02,325,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.7630769230769231,0.06153846153846154,0.7015384615384616
+primary_frontloaded,ST02,325,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.5107692307692308,0.08923076923076922,0.42153846153846153
+primary_frontloaded,ST02,325,duration_min,Median observed trajectory minutes,median_ratio,9.899216666666666,4.052033333333333,2.4430244897623417
+primary_frontloaded,ST02,325,completed_substantive_actions,Median completed substantive actions,median_ratio,12.0,5.0,2.4
+primary_frontloaded,ST02,325,min_per_action,Median minutes per completed substantive action,median_ratio,0.5392673758865248,0.7235416666666666,0.7453162695811458
+primary_frontloaded,ST04,4,verification_successful,Completed-successful verification call,risk_difference,0.25,0.0,0.25
+primary_frontloaded,ST04,4,audit_signal,Audit-stage prompt signal,risk_difference,0.25,0.0,0.25
+primary_frontloaded,ST04,4,remediation_signal,Remediation-stage prompt signal,risk_difference,0.0,0.0,0.0
+primary_frontloaded,ST04,4,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.0,0.0,0.0
+primary_frontloaded,ST04,4,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.25,0.0,0.25
+primary_frontloaded,ST04,4,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.25,0.0,0.25
+primary_frontloaded,ST04,4,duration_min,Median observed trajectory minutes,median_ratio,8.7877,0.37770000000000004,23.26634895419645
+primary_frontloaded,ST04,4,completed_substantive_actions,Median completed substantive actions,median_ratio,5.5,2.0,2.75
+primary_frontloaded,ST04,4,min_per_action,Median minutes per completed substantive action,median_ratio,1.1452633333333333,0.27897916666666667,4.105193040101561
+primary_frontloaded,ST05,11,verification_successful,Completed-successful verification call,risk_difference,0.36363636363636365,0.09090909090909091,0.2727272727272727
+primary_frontloaded,ST05,11,audit_signal,Audit-stage prompt signal,risk_difference,0.7272727272727273,0.0,0.7272727272727273
+primary_frontloaded,ST05,11,remediation_signal,Remediation-stage prompt signal,risk_difference,0.36363636363636365,0.18181818181818182,0.18181818181818182
+primary_frontloaded,ST05,11,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.45454545454545453,0.0,0.45454545454545453
+primary_frontloaded,ST05,11,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.7272727272727273,0.18181818181818182,0.5454545454545454
+primary_frontloaded,ST05,11,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.9090909090909091,0.0,0.9090909090909091
+primary_frontloaded,ST05,11,duration_min,Median observed trajectory minutes,median_ratio,11.721666666666666,3.8267,3.0631266278168305
+primary_frontloaded,ST05,11,completed_substantive_actions,Median completed substantive actions,median_ratio,10.0,7.0,1.4285714285714286
+primary_frontloaded,ST05,11,min_per_action,Median minutes per completed substantive action,median_ratio,0.9134651515151514,0.3904349206349206,2.3396092491667635
+primary_frontloaded,ST06,9,verification_successful,Completed-successful verification call,risk_difference,0.1111111111111111,0.3333333333333333,-0.2222222222222222
+primary_frontloaded,ST06,9,audit_signal,Audit-stage prompt signal,risk_difference,0.1111111111111111,0.3333333333333333,-0.2222222222222222
+primary_frontloaded,ST06,9,remediation_signal,Remediation-stage prompt signal,risk_difference,0.0,0.1111111111111111,-0.1111111111111111
+primary_frontloaded,ST06,9,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.0,0.0,0.0
+primary_frontloaded,ST06,9,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.1111111111111111,0.1111111111111111,0.0
+primary_frontloaded,ST06,9,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.1111111111111111,0.3333333333333333,-0.2222222222222222
+primary_frontloaded,ST06,9,duration_min,Median observed trajectory minutes,median_ratio,4.67975,5.626366666666667,0.8317534702679645
+primary_frontloaded,ST06,9,completed_substantive_actions,Median completed substantive actions,median_ratio,7.0,4.0,1.75
+primary_frontloaded,ST06,9,min_per_action,Median minutes per completed substantive action,median_ratio,0.9006666666666666,0.9013833333333333,0.9992049257622543
+primary_frontloaded,ST07,6,verification_successful,Completed-successful verification call,risk_difference,0.8333333333333334,0.0,0.8333333333333334
+primary_frontloaded,ST07,6,audit_signal,Audit-stage prompt signal,risk_difference,0.0,0.0,0.0
+primary_frontloaded,ST07,6,remediation_signal,Remediation-stage prompt signal,risk_difference,0.0,0.0,0.0
+primary_frontloaded,ST07,6,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.0,0.0,0.0
+primary_frontloaded,ST07,6,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.16666666666666666,0.0,0.16666666666666666
+primary_frontloaded,ST07,6,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.8333333333333334,0.0,0.8333333333333334
+primary_frontloaded,ST07,6,duration_min,Median observed trajectory minutes,median_ratio,15.254608333333334,2.916575,5.230315809925455
+primary_frontloaded,ST07,6,completed_substantive_actions,Median completed substantive actions,median_ratio,7.0,2.0,3.5
+primary_frontloaded,ST07,6,min_per_action,Median minutes per completed substantive action,median_ratio,1.921804398148148,1.4582875,1.3178501483062484
+primary_frontloaded,ST08,41,verification_successful,Completed-successful verification call,risk_difference,0.5853658536585366,0.4146341463414634,0.17073170731707316
+primary_frontloaded,ST08,41,audit_signal,Audit-stage prompt signal,risk_difference,0.4634146341463415,0.0975609756097561,0.36585365853658536
+primary_frontloaded,ST08,41,remediation_signal,Remediation-stage prompt signal,risk_difference,0.4146341463414634,0.0975609756097561,0.31707317073170727
+primary_frontloaded,ST08,41,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.1951219512195122,0.024390243902439025,0.17073170731707318
+primary_frontloaded,ST08,41,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.7317073170731707,0.07317073170731707,0.6585365853658537
+primary_frontloaded,ST08,41,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.6585365853658537,0.04878048780487805,0.6097560975609756
+primary_frontloaded,ST08,41,duration_min,Median observed trajectory minutes,median_ratio,7.706016666666667,4.658183333333333,1.6542965605332554
+primary_frontloaded,ST08,41,completed_substantive_actions,Median completed substantive actions,median_ratio,12.0,6.0,2.0
+primary_frontloaded,ST08,41,min_per_action,Median minutes per completed substantive action,median_ratio,0.7359935897435897,0.6113,1.203981007269082
+primary_frontloaded,ST09,4,verification_successful,Completed-successful verification call,risk_difference,0.0,0.0,0.0
+primary_frontloaded,ST09,4,audit_signal,Audit-stage prompt signal,risk_difference,0.5,0.0,0.5
+primary_frontloaded,ST09,4,remediation_signal,Remediation-stage prompt signal,risk_difference,0.75,0.25,0.5
+primary_frontloaded,ST09,4,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.25,0.0,0.25
+primary_frontloaded,ST09,4,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.5,0.0,0.5
+primary_frontloaded,ST09,4,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.5,0.0,0.5
+primary_frontloaded,ST09,4,duration_min,Median observed trajectory minutes,median_ratio,23.529466666666664,4.660541666666667,5.048654931025542
+primary_frontloaded,ST09,4,completed_substantive_actions,Median completed substantive actions,median_ratio,6.0,4.0,1.5
+primary_frontloaded,ST09,4,min_per_action,Median minutes per completed substantive action,median_ratio,3.392973958333333,0.6484875,5.232134710897794
+primary_frontloaded,ST10,129,verification_successful,Completed-successful verification call,risk_difference,0.43410852713178294,0.5348837209302325,-0.10077519379844957
+primary_frontloaded,ST10,129,audit_signal,Audit-stage prompt signal,risk_difference,0.15503875968992248,0.03875968992248062,0.11627906976744186
+primary_frontloaded,ST10,129,remediation_signal,Remediation-stage prompt signal,risk_difference,0.4186046511627907,0.08527131782945736,0.33333333333333337
+primary_frontloaded,ST10,129,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.09302325581395349,0.03875968992248062,0.05426356589147287
+primary_frontloaded,ST10,129,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.6124031007751938,0.05426356589147287,0.5581395348837209
+primary_frontloaded,ST10,129,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.627906976744186,0.046511627906976744,0.5813953488372093
+primary_frontloaded,ST10,129,duration_min,Median observed trajectory minutes,median_ratio,36.2864,4.651866666666667,7.800395540141592
+primary_frontloaded,ST10,129,completed_substantive_actions,Median completed substantive actions,median_ratio,6.0,5.0,1.2
+primary_frontloaded,ST10,129,min_per_action,Median minutes per completed substantive action,median_ratio,1.898796666666667,0.8666416666666666,2.1909824321855442
+primary_frontloaded,ST11,5,verification_successful,Completed-successful verification call,risk_difference,0.2,0.0,0.2
+primary_frontloaded,ST11,5,audit_signal,Audit-stage prompt signal,risk_difference,0.8,0.0,0.8
+primary_frontloaded,ST11,5,remediation_signal,Remediation-stage prompt signal,risk_difference,0.2,0.0,0.2
+primary_frontloaded,ST11,5,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.2,0.0,0.2
+primary_frontloaded,ST11,5,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.6,0.0,0.6
+primary_frontloaded,ST11,5,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.6,0.0,0.6
+primary_frontloaded,ST11,5,duration_min,Median observed trajectory minutes,median_ratio,8.550483333333334,1.2118333333333333,7.055824508320727
+primary_frontloaded,ST11,5,completed_substantive_actions,Median completed substantive actions,median_ratio,8.0,2.0,4.0
+primary_frontloaded,ST11,5,min_per_action,Median minutes per completed substantive action,median_ratio,0.9075733333333333,0.5004166666666666,1.8136353039134057
+primary_frontloaded,ST13,97,verification_successful,Completed-successful verification call,risk_difference,0.32989690721649484,0.1958762886597938,0.13402061855670103
+primary_frontloaded,ST13,97,audit_signal,Audit-stage prompt signal,risk_difference,0.5979381443298969,0.10309278350515463,0.4948453608247423
+primary_frontloaded,ST13,97,remediation_signal,Remediation-stage prompt signal,risk_difference,0.4536082474226804,0.061855670103092786,0.3917525773195876
+primary_frontloaded,ST13,97,packaging_release_signal,Packaging/release-stage prompt signal,risk_difference,0.23711340206185566,0.010309278350515464,0.2268041237113402
+primary_frontloaded,ST13,97,multistage_signal,At least two distinct stage prompt signals,risk_difference,0.8247422680412371,0.08247422680412371,0.7422680412371133
+primary_frontloaded,ST13,97,grounded_decision_trace,Grounded-decision trace proxy,risk_difference,0.36082474226804123,0.061855670103092786,0.29896907216494845
+primary_frontloaded,ST13,97,duration_min,Median observed trajectory minutes,median_ratio,4.930350000000001,4.114833333333333,1.1981894770950627
+primary_frontloaded,ST13,97,completed_substantive_actions,Median completed substantive actions,median_ratio,6.0,7.0,0.8571428571428571
+primary_frontloaded,ST13,97,min_per_action,Median minutes per completed substantive action,median_ratio,0.22929999999999998,0.5858208333333333,0.3914166020612104

@@ -1,0 +1,23 @@
+name: Validate public evidence boundary
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 scripts/build_public_catalog.py
+      - run: git diff --exit-code -- data/catalog
+      - run: python3 scripts/verify_public_release.py
+      - run: python3 scripts/validate_public_boundary.py .
+      - run: python3 scripts/verify_manifest.py PUBLIC_MANIFEST.sha256
+      - run: python3 -m unittest discover -s tests -v

@@ -1,0 +1,96 @@
+{
+  "rule_version": "context-engineering-eligibility/1.0.0",
+  "cutoff_id": "CUT-20260812-A",
+  "minimum_assistant_output_chars_for_decision": 100,
+  "minimum_distinct_retrieval_targets_for_implicit_context": 2,
+  "publication_exclusions": [
+    "\\bmanuscript\\b",
+    "\\bpreprints?\\b",
+    "\\bpublication\\b",
+    "\\bjournal(?:s)?\\b",
+    "\\bjournal submission\\b",
+    "\\bsubmission (?:package|requirements|guidelines)\\b",
+    "\\breviewer response\\b",
+    "\\bresponse letter\\b",
+    "\\bpeer[- ]?review\\b",
+    "\\bconference paper\\b",
+    "\\bpaper (?:development|revision|submission|review|figure|manuscript)\\b",
+    "\\blatex\\b",
+    "\\bbibliograph(?:y|ic)\\b",
+    "\\bcitation(?:s)?\\b",
+    "\\bdissertation\\b",
+    "\\bdoctoral (?:study|proposal|research|chapter)\\b",
+    "\\bPhD proposal\\b",
+    "\\bthesis\\b",
+    "\\bAPA ?7\\b"
+  ],
+  "non_product_exclusions": [
+    "\\brequest for information\\b",
+    "\\brequest for proposals?\\b",
+    "\\bRFI[- ]?[0-9]",
+    "\\bRFP[- ]?[0-9]",
+    "\\bsales proposal\\b",
+    "\\bbusiness development\\b",
+    "\\bmarketing copy\\b"
+  ],
+  "stages": {
+    "requirements": ["\\brequirements?\\b", "\\bacceptance criteria\\b", "\\bconstraints?\\b", "\\bspec(?:ification)?s?\\b"],
+    "context": ["\\bcontext engineering\\b", "\\bcontext package\\b", "\\bcontext window\\b", "\\bcontext stack\\b"],
+    "design": ["\\bdesign(?:ing|ed)?\\b", "\\barchitect(?:ure|ural|ing)?\\b", "\\bwireframes?\\b", "\\blayout\\b", "\\bux\\b", "\\bui design\\b"],
+    "implementation": ["\\bbuild(?:ing|s|t)?\\b", "\\bimplement(?:ation|ing|ed|s)?\\b", "\\bdevelop(?:ment|ing|ed)?\\b", "\\bcode(?:base|d|s|ing)?\\b", "\\bcreate(?:d|s|ing)?\\b"],
+    "audit": ["\\baudit(?:ing|ed|s)?\\b", "\\breview(?:ing|ed|s)?\\b", "\\binspect(?:ion|ing|ed|s)?\\b", "\\bgap analysis\\b", "\\bdefects?\\b"],
+    "remediation": ["\\bfix(?:es|ed|ing)?\\b", "\\bremediat(?:e|ed|es|ing|ion)\\b", "\\bcorrect(?:ion|ed|ing|s)?\\b", "\\brepair(?:ed|ing|s)?\\b", "\\baddress(?:ed|ing)? (?:the )?(?:issue|finding|defect)"],
+    "verification": ["\\bverif(?:y|ied|ies|ication|ying)\\b", "\\bvalidat(?:e|ed|es|ing|ion)\\b", "\\bre-?tests?\\b", "\\bconfirm(?:ed|ing|s|ation)?\\b", "\\btests? pass(?:ed|es|ing)?\\b"],
+    "packaging_release": ["\\bpackag(?:e|ed|ing)\\b", "\\breleas(?:e|ed|ing)\\b", "\\bdeploy(?:ed|ing|ment)?\\b", "\\bpublish the (?:app|site|package)\\b"]
+  },
+  "context_modes": {
+    "standards_constraints": ["\\bstandards?\\b", "\\bguidelines?\\b", "\\bpolic(?:y|ies)\\b", "\\bprotocol\\b", "\\brubric\\b", "\\bcodebook\\b", "\\bschema\\b", "\\bacceptance criteria\\b", "\\bconstraints?\\b", "\\bAGENTS\\.md\\b", "\\bSKILL\\.md\\b"],
+    "bounded_package": ["\\bcontext package\\b", "\\bdata stack\\b", "\\bsource package\\b", "\\battached (?:file|document|image|archive)s?\\b", "\\buploaded (?:file|document|image|archive)s?\\b", "\\bworkspace\\b", "\\bworking directory\\b", "\\brepository\\b", "\\bcodebase\\b"],
+    "multi_source_synthesis": ["\\bcross[- ]?reference\\b", "\\btriangulat(?:e|ion|ing)\\b", "\\breconcil(?:e|iation|ing)\\b", "\\bsynthesi[sz](?:e|ing|s)\\b", "\\bcompare (?:the |these )?(?:files|documents|sources|versions|stations|workstations)\\b", "\\ball (?:three|3|files|documents|sources|stations|workstations)\\b", "\\bmultiple (?:files|documents|sources|artifacts)\\b"],
+    "just_in_time_retrieval": ["\\b(?:read|inspect|review|open|search|find|look through|audit|check)\\b.{0,80}\\b(?:file|folder|repo|repository|docs?|documents?|codebase|logs?|data|artifacts?|standards?|spec(?:ification)?s?)\\b"],
+    "history_memory": ["\\bprevious conversation\\b", "\\bearlier (?:conversation|work|session|task)\\b", "\\bprior (?:conversation|work|session|task|context)\\b", "\\bconversation history\\b", "\\bmemory\\b", "\\bresume (?:the|this)\\b", "\\bcontinue from\\b"],
+    "tool_environment": ["\\bMCP\\b", "\\bplugin\\b", "\\btool(?:ing|s)?\\b", "\\bbrowser session\\b", "\\bterminal\\b", "\\benvironment state\\b", "\\bworkstations?\\b", "\\bstations? together\\b"],
+    "examples_templates": ["\\bexamples?\\b", "\\bexemplars?\\b", "\\btemplates?\\b", "\\breference implementation\\b", "\\bfollow (?:the|this) pattern\\b"],
+    "context_pruning_compaction": ["\\bcompact(?:ion|ed|ing)?\\b", "\\bcontext window\\b", "\\bprune (?:the )?context\\b", "\\bremove irrelevant\\b", "\\bretain only\\b", "\\bsummari[sz]e (?:the )?(?:context|history|prior work)\\b"],
+    "artifact_state_feedback": ["\\bcurrent state\\b", "\\bworking tree\\b", "\\bgit diff\\b", "\\btest results?\\b", "\\berror logs?\\b", "\\bscreenshots?\\b", "\\bexisting implementation\\b", "\\breturned packages?\\b"]
+  },
+  "product_signals": [
+    "\\bproduct\\b", "\\bsoftware\\b", "\\bapp(?:lication)?\\b", "\\bwebsite\\b", "\\bsite\\b",
+    "\\brepositor(?:y|ies)\\b", "\\bcodebase\\b", "\\bsource code\\b", "\\binterface\\b", "\\bUI\\b", "\\bUX\\b",
+    "\\bcomponent\\b", "\\bfeature\\b", "\\bconfiguration\\b", "\\btest suite\\b", "\\bunit tests?\\b",
+    "\\bbug\\b", "\\bdefect\\b", "\\bissue\\b", "\\bdeploy(?:ment|ed|ing)?\\b", "\\brelease\\b",
+    "\\brequirements?\\b", "\\bacceptance criteria\\b", "\\boperational document\\b", "\\bplatform\\b", "\\bpackage\\b"
+  ],
+  "continuation_only": [
+    "^(?:ok(?:ay)?[,.! ]*)?(?:continue|proceed|go ahead|keep going|carry on|do it|done|yes)[.! ]*$",
+    "^continue from where you left off[.! ]*$"
+  ],
+  "continuation_wrappers": [
+    "^this session is being continued from a previous conversation",
+    "^the summary below covers the earlier portion of the conversation",
+    "^this is a continuation of a previous conversation"
+  ],
+  "delegated_prompt_candidates": [
+    "^you are (?:an? )?(?:audit |review |research |implementation |verification )?subagent\\b",
+    "^you are subagent[ -]?[0-9]+\\b",
+    "^you are reviewer [A-Z0-9]+ in (?:an? )?.*audit\\b",
+    "\\bsubagent [0-9]+ \\((?:audit|review|implementation|verification)[^)]*\\)"
+  ],
+  "tool_generated_prompts": [
+    "^present_files:",
+    "^tool_result:",
+    "^function_call_output:",
+    "^custom_tool_call_output:"
+  ],
+  "nonhuman_block_prefixes": [
+    "<permissions instructions>",
+    "<collaboration_mode>",
+    "<environment_context>",
+    "<app-context>",
+    "<skills_instructions>",
+    "<recommended_plugins>",
+    "<multi_agent_mode>",
+    "# model set context",
+    "a different language model started to solve this problem"
+  ]
+}

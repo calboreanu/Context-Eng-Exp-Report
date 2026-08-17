@@ -1,0 +1,19 @@
+analysis_set,metric,metric_label,effect_scale,stations,effect,ci_low,ci_high,positive_stations,tie_stations,negative_stations,descriptive_sign_p
+unrestricted,verification_successful,Completed-successful verification call,equal_station_mean_risk_difference,12,0.13136946249296802,0.04217295362577246,0.23509533481792116,8,2,2,0.109375
+unrestricted,audit_signal,Audit-stage prompt signal,equal_station_mean_risk_difference,12,0.2682077703184022,0.15366362940768752,0.3741422019475424,10,1,1,0.01171875
+unrestricted,remediation_signal,Remediation-stage prompt signal,equal_station_mean_risk_difference,12,0.14003373596771523,0.057241393273729166,0.22225805834003742,9,1,2,0.0654296875
+unrestricted,packaging_release_signal,Packaging/release-stage prompt signal,equal_station_mean_risk_difference,12,0.10957259337415289,0.05636640170802088,0.1653918798699989,8,4,0,0.0078125
+unrestricted,multistage_signal,At least two distinct stage prompt signals,equal_station_mean_risk_difference,12,0.32381327342639504,0.22597901402008172,0.4173067299808334,11,1,0,0.0009765625
+unrestricted,grounded_decision_trace,Grounded-decision trace proxy,equal_station_mean_risk_difference,12,0.3586282316092492,0.2376510980527101,0.4766840133190963,11,0,1,0.00634765625
+unrestricted,duration_min,Median observed trajectory minutes,equal_station_geometric_mean_median_ratio,12,2.296206870363138,1.6233092125455955,3.4283031218784203,11,0,1,0.00634765625
+unrestricted,completed_substantive_actions,Median completed substantive actions,equal_station_geometric_mean_median_ratio,12,1.8002406893179184,1.4284368864584254,2.3009419116883567,11,0,1,0.00634765625
+unrestricted,min_per_action,Median minutes per completed substantive action,equal_station_geometric_mean_median_ratio,12,1.3166324763838466,0.9886743081671782,1.7641599206681042,8,0,4,0.3876953125
+primary_frontloaded,verification_successful,Completed-successful verification call,equal_station_mean_risk_difference,12,0.17046238467890074,0.04373115063779007,0.32206495515451067,9,1,2,0.0654296875
+primary_frontloaded,audit_signal,Audit-stage prompt signal,equal_station_mean_risk_difference,12,0.35616992364081373,0.19449536153456656,0.5106097738775046,10,1,1,0.01171875
+primary_frontloaded,remediation_signal,Remediation-stage prompt signal,equal_station_mean_risk_difference,12,0.22510141399520955,0.11968727850740046,0.32658447263205087,9,2,1,0.021484375
+primary_frontloaded,packaging_release_signal,Packaging/release-stage prompt signal,equal_station_mean_risk_difference,12,0.15940354337191748,0.09088606900787477,0.23412871383524914,9,3,0,0.00390625
+primary_frontloaded,multistage_signal,At least two distinct stage prompt signals,equal_station_mean_risk_difference,12,0.49668066147587203,0.36037627038625747,0.6134127618658708,11,1,0,0.0009765625
+primary_frontloaded,grounded_decision_trace,Grounded-decision trace proxy,equal_station_mean_risk_difference,12,0.46751085258940384,0.3024110975741018,0.6168635524259019,11,0,1,0.00634765625
+primary_frontloaded,duration_min,Median observed trajectory minutes,equal_station_geometric_mean_median_ratio,12,3.166579674136308,1.9220159597087676,5.439269501455388,11,0,1,0.00634765625
+primary_frontloaded,completed_substantive_actions,Median completed substantive actions,equal_station_geometric_mean_median_ratio,12,1.8596515555675435,1.4671756432098064,2.3764272799945982,11,0,1,0.00634765625
+primary_frontloaded,min_per_action,Median minutes per completed substantive action,equal_station_geometric_mean_median_ratio,12,1.4286931277439394,0.9589706047430893,2.1433586900336254,8,0,4,0.3876953125

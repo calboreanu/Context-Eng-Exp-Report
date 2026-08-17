@@ -1,0 +1,19 @@
+item_id,scope,measure,value,unit,source_file,notes
+FRAME-01,13-station balanced analysis,source_episode_rows,31919,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-02,13-station balanced analysis,source_conversation_count,4760,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-03,13-station balanced analysis,source_station_archives,13,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-04,13-station balanced analysis,action_eligible_ce_candidates,2946,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-05,13-station balanced analysis,action_eligible_frontloaded_ce_candidates,2006,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-06,13-station balanced analysis,action_eligible_routed_comparisons,5899,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-07,13-station balanced analysis,unrestricted_balanced_per_condition,2246,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-08,13-station balanced analysis,primary_frontloaded_balanced_per_condition,1484,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-09,13-station balanced analysis,unrestricted_contributing_stations,12,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-10,13-station balanced analysis,primary_contributing_stations,12,count,analysis/results/analysis_summary.json,Restricted input receipt and verified local rerun
+FRAME-11,three-station linkage pilot,source_rows_three_stations,22469,count,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage
+FRAME-12,three-station linkage pilot,action_eligible_comparison_rows_mapped,3502,count,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage
+FRAME-13,three-station linkage pilot,prior_ce_predecessor_dispositions,candidate_strong|candidate_probable,controlled_values,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage
+FRAME-14,three-station linkage pilot,eligible_rows_with_prior_action_eligible_ce,3326,count,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage
+FRAME-15,three-station linkage pilot,clean_origin_candidates,176,count,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage
+FRAME-16,three-station linkage pilot,high_confidence_candidates,1338,count,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage
+FRAME-17,three-station linkage pilot,probable_candidates,1388,count,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage
+FRAME-18,three-station linkage pilot,unresolved_primary_rule,600,count,analysis/results/inheritance_pilot_summary.json,Automated and unadjudicated candidate linkage

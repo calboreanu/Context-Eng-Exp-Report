@@ -1,0 +1,139 @@
+artifact,field,data_type,definition,unit,nullable,disclosure_class
+analysis/results/action_count_verification_strata.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,archive_batch,string,"Initial, subsequent, or all archive captures.",,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,action_bin,string,Completed substantive-action count interval.,,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,ce_k,integer,Context-operation condition numerator.,,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,ce_n,integer,Context-operation condition denominator.,,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,ce_rate,proportion,Context-operation condition numerator divided by denominator.,proportion,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,comparison_k,integer,Routed-comparison numerator.,,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,comparison_n,integer,Routed-comparison denominator.,,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,comparison_rate,proportion,Routed-comparison numerator divided by denominator.,proportion,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,gap,proportion,Within-action-bin verification-rate difference.,proportion,no,public_aggregate_or_metadata
+analysis/results/action_count_verification_strata.csv,comparison_weight,proportion,Action-bin share in the routed-comparison condition.,proportion,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,archive_group,string,Pseudonymous capture-batch grouping.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,rows_per_condition,integer,Observations in each balanced condition.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,contributing_stations,integer,Pseudonymous stations contributing to the view.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,metric,string,Stable machine-readable metric identifier.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,metric_label,string,Human-readable metric description.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,effect_scale,string,"Risk difference, ratio of medians, or equal-station mean risk difference.",,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,ce_value,number,"Context-operation condition rate or median, according to effect scale.",,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,comparison_value,number,"Routed-comparison rate or median, according to effect scale.",,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,metric,string,Stable machine-readable metric identifier.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,metric_label,string,Human-readable metric description.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,effect_scale,string,"Risk difference, ratio of medians, or equal-station mean risk difference.",,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,stations,integer,Number of stations in an equal-station summary.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,ci_low,number,Ci low.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,ci_high,number,Ci high.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,positive_stations,integer,Stations with a positive metric contrast.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,tie_stations,integer,Stations with a zero metric contrast.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,negative_stations,integer,Stations with a negative metric contrast.,,no,public_aggregate_or_metadata
+analysis/results/equal_station_summary.csv,descriptive_sign_p,proportion,Two-sided exact descriptive sign-test probability.,proportion,no,public_aggregate_or_metadata
+analysis/results/inheritance_window_sensitivity.csv,window,integer,Maximum prior prompt-episode distance in the linkage sensitivity.,,no,public_aggregate_or_metadata
+analysis/results/inheritance_window_sensitivity.csv,candidate_positive,integer,Rows marked candidate-positive by the automated linkage rule.,,no,public_aggregate_or_metadata
+analysis/results/inheritance_window_sensitivity.csv,eligible_rows,integer,Rows eligible for the linkage sensitivity denominator.,,no,public_aggregate_or_metadata
+analysis/results/inheritance_window_sensitivity.csv,candidate_positive_rate,proportion,Candidate-positive rows divided by eligible rows.,proportion,no,public_aggregate_or_metadata
+analysis/results/inheritance_window_sensitivity.csv,unresolved,integer,Eligible linkage rows unresolved at the stated window.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,metric,string,Stable machine-readable metric identifier.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,metric_label,string,Human-readable metric description.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,effect_scale,string,"Risk difference, ratio of medians, or equal-station mean risk difference.",,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,stations,integer,Number of stations in an equal-station summary.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,ci_low,number,Ci low.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,ci_high,number,Ci high.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,positive_stations,integer,Stations with a positive metric contrast.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,tie_stations,integer,Stations with a zero metric contrast.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,negative_stations,integer,Stations with a negative metric contrast.,,no,public_aggregate_or_metadata
+analysis/results/minimum_station_size_summary.csv,descriptive_sign_p,proportion,Two-sided exact descriptive sign-test probability.,proportion,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,metric,string,Stable machine-readable metric identifier.,,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,metric_label,string,Human-readable metric description.,,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,effect_scale,string,"Risk difference, ratio of medians, or equal-station mean risk difference.",,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,ce_value,number,"Context-operation condition rate or median, according to effect scale.",,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,comparison_value,number,"Routed-comparison rate or median, according to effect scale.",,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,rows_per_condition,integer,Observations in each balanced condition.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,station_id,string,Pseudonymous station label with no public identity key.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,balanced_per_condition,integer,Selected observations in each condition for a station or stratum.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,metric,string,Stable machine-readable metric identifier.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,metric_label,string,Human-readable metric description.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,effect_scale,string,"Risk difference, ratio of medians, or equal-station mean risk difference.",,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,ce_value,number,"Context-operation condition rate or median, according to effect scale.",,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,comparison_value,number,"Routed-comparison rate or median, according to effect scale.",,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,record_id,string,Record id.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,view,string,View.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,subgroup_type,string,Subgroup type.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,subgroup_value,string,Subgroup value.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,metric,string,Stable machine-readable metric identifier.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,metric_label,string,Human-readable metric description.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,effect_scale,string,"Risk difference, ratio of medians, or equal-station mean risk difference.",,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,ce_k,integer,Context-operation condition numerator.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,ce_n,integer,Context-operation condition denominator.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,ce_value,number,"Context-operation condition rate or median, according to effect scale.",,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,comparison_k,integer,Routed-comparison numerator.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,comparison_n,integer,Routed-comparison denominator.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,comparison_value,number,"Routed-comparison rate or median, according to effect scale.",,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,ci_low,number,Ci low.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,ci_high,number,Ci high.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,rows_per_condition,integer,Observations in each balanced condition.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,stations,integer,Number of stations in an equal-station summary.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,positive_stations,integer,Stations with a positive metric contrast.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,tie_stations,integer,Stations with a zero metric contrast.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,negative_stations,integer,Stations with a negative metric contrast.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,descriptive_sign_p,proportion,Two-sided exact descriptive sign-test probability.,proportion,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,window,integer,Maximum prior prompt-episode distance in the linkage sensitivity.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,candidate_positive,integer,Rows marked candidate-positive by the automated linkage rule.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,eligible_rows,integer,Rows eligible for the linkage sensitivity denominator.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,unresolved,integer,Eligible linkage rows unresolved at the stated window.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,source_file,string,Source file.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,source_record,string,Source record.,,no,public_aggregate_or_metadata
+data/catalog/source_frame_summary.csv,item_id,string,Item id.,,no,public_aggregate_or_metadata
+data/catalog/source_frame_summary.csv,scope,string,Scope.,,no,public_aggregate_or_metadata
+data/catalog/source_frame_summary.csv,measure,string,Measure.,,no,public_aggregate_or_metadata
+data/catalog/source_frame_summary.csv,value,string,Value.,,no,public_aggregate_or_metadata
+data/catalog/source_frame_summary.csv,unit,string,Unit.,,no,public_aggregate_or_metadata
+data/catalog/source_frame_summary.csv,source_file,string,Source file.,,no,public_aggregate_or_metadata
+data/catalog/source_frame_summary.csv,notes,string,Notes.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,claim_id,string,Claim id.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,manuscript_locator,string,Manuscript locator.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,claim_summary,string,Claim summary.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,evidence_file,string,Evidence file.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,record_selector,string,Record selector.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,generator,string,Generator.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,verification_mode,string,Verification mode.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,claim_status,string,Claim status.,,no,public_aggregate_or_metadata
+data/provenance/claim_to_evidence.csv,boundary_note,string,Boundary note.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,lineage_id,string,Lineage id.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,public_artifact,string,Public artifact.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,public_field,string,Public field.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,restricted_input_field_class,string,Restricted input field class.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,transformation,string,Transformation.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,script,string,Script.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,function,string,Function.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,public_verification,string,Public verification.,,no,public_aggregate_or_metadata
+data/provenance/field_lineage.csv,notes,string,Notes.,,no,public_aggregate_or_metadata
+data/provenance/restricted_artifact_receipts.csv,artifact_id,string,Artifact id.,,no,public_aggregate_or_metadata
+data/provenance/restricted_artifact_receipts.csv,artifact_role,string,Artifact role.,,no,public_aggregate_or_metadata
+data/provenance/restricted_artifact_receipts.csv,bytes,integer,Bytes.,,no,public_aggregate_or_metadata
+data/provenance/restricted_artifact_receipts.csv,sha256,string,Sha256.,,no,public_aggregate_or_metadata
+data/provenance/restricted_artifact_receipts.csv,release_status,string,Release status.,,no,public_aggregate_or_metadata
+data/provenance/restricted_artifact_receipts.csv,reason_withheld,string,Reason withheld.,,no,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,receipt_id,string,Receipt id.,,no,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,stage,string,Stage.,,no,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,archive_scope,string,Archive scope.,,no,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,locked_file_count,integer,Locked file count.,,yes,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,interaction_source_count,integer,Interaction source count.,,yes,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,episode_rows,integer,Episode rows.,,yes,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,conversation_sources,integer,Conversation sources.,,yes,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,station_archives,integer,Station archives.,,yes,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,input_sha256,string,Input sha256.,,yes,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,verification_result,string,Verification result.,,no,public_aggregate_or_metadata
+data/provenance/source_chain_receipts.csv,public_interpretation,string,Public interpretation.,,no,public_aggregate_or_metadata

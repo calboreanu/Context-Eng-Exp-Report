@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite the associated Context Engineering paper and this evidence release."
+title: "Context Engineering workstation evidence"
+type: dataset
+authors:
+  - family-names: Calboreanu
+    given-names: Elias
+repository-code: "https://github.com/calboreanu/Context-Eng-Exp-Report"
+version: 1.0.0-rc1
+date-released: 2026-08-17

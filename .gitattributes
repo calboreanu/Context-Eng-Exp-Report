@@ -1,0 +1,4 @@
+* text=auto eol=lf
+analysis/** -text
+analysis/results/*.csv binary
+*.xlsx binary

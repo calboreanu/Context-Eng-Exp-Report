@@ -1,0 +1,8 @@
+{
+  "cutoff_id": "CUT-20260812-A",
+  "cutoff_date_local": "2026-08-12",
+  "timezone": "America/New_York",
+  "snapshot_observed_at_utc": "2026-08-12T13:31:00Z",
+  "rule": "Include only source bytes frozen and observed by snapshot_observed_at_utc. Later records require a new versioned cutoff and must not be appended to this release.",
+  "missing_timestamp_policy": "Retain in the frozen source receipt, flag timestamp missing, and prohibit chronological analysis until human review."
+}
