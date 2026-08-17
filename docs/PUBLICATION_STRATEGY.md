@@ -20,7 +20,7 @@ Deleting the old prototype from the latest branch does not erase it from Git his
 
 ## Final release sequence
 
-1. complete the final authorization and licensing decisions;
+1. complete the final internal authorization signature;
 2. regenerate `PUBLIC_MANIFEST.sha256` after all release-text edits;
 3. rerun the verifier, privacy-boundary scan, tests, and manifest check;
 4. make the existing private `calboreanu/Context-Eng-Exp-Report` repository public only after the release gates close;

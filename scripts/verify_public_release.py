@@ -176,6 +176,17 @@ def verify_scope_and_catalog() -> None:
     )
 
 
+def verify_licenses() -> None:
+    apache = ROOT / "LICENSE"
+    cc = ROOT / "LICENSES" / "CC-BY-4.0.md"
+    mapping = ROOT / "LICENSING.md"
+    require(apache.is_file() and cc.is_file() and mapping.is_file(), "dual-license files are incomplete")
+    require("Apache License" in apache.read_text(encoding="utf-8") and "Version 2.0" in apache.read_text(encoding="utf-8"), "Apache-2.0 text is invalid")
+    require("https://creativecommons.org/licenses/by/4.0/legalcode" in cc.read_text(encoding="utf-8"), "CC BY 4.0 legal-code link is missing")
+    mapping_text = mapping.read_text(encoding="utf-8")
+    require("Apache-2.0" in mapping_text and "CC-BY-4.0" in mapping_text, "component-license mapping is incomplete")
+
+
 def main() -> None:
     pooled = verify_pooled()
     verify_station_and_equal()
@@ -183,6 +194,7 @@ def main() -> None:
     verify_action_count(pooled)
     verify_inheritance()
     verify_scope_and_catalog()
+    verify_licenses()
     print("PUBLIC AGGREGATE VERIFICATION: PASS")
 
 

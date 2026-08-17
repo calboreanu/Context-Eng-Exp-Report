@@ -19,7 +19,7 @@ FORBIDDEN_FILENAMES = {
 }
 ALLOWED_BINARY_SUFFIXES = {".xlsx"}
 TEXT_SUFFIXES = {".cff", ".csv", ".json", ".md", ".py", ".sha256", ".txt", ".yml", ".yaml"}
-TEXT_FILENAMES = {".gitattributes", ".gitignore"}
+TEXT_FILENAMES = {".gitattributes", ".gitignore", "LICENSE"}
 ROW_LEVEL_FIELDS = {
     "episode_id", "prompt_text", "prompt_excerpt", "session_ref", "source_ref",
     "timestamp_start_utc", "timestamp_end_utc", "tool_trace_json", "target_ref",

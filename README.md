@@ -35,6 +35,8 @@ The raw merged input is restricted because it contains prompts, outputs, tool tr
 
 That distinction is intentional: this is an aggregate evidence and traceability package, not a disguised release of conversation content.
 
-## Release status
+## License and release status
 
-The aggregate-only disclosure boundary has been approved by the author. Public visibility remains pending the final internal IRAD/data-use signature check, exact-release validation, and an explicit component-licensing decision. No public reuse license is granted by this release candidate; see [`LICENSING.md`](LICENSING.md).
+Code and executable specifications are licensed under Apache-2.0. Documentation, public aggregate evidence, mappings, receipts, manifests, and the reviewer workbook are licensed under CC BY 4.0; see [`LICENSING.md`](LICENSING.md) for the exact component split.
+
+The aggregate-only disclosure boundary has been approved by the author. Public visibility remains pending the final internal IRAD/data-use signature check and exact-release validation.

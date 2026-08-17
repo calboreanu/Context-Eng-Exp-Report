@@ -2,7 +2,7 @@
 
 - [ ] Internal IRAD/data-use authorization names the exact aggregate package and repository.
 - [x] Author disclosure review approves the aggregate-only public boundary; no people, prompts, responses, supplied context, row-level trajectories, exact timestamps, persistent locators, or linkage maps are included.
-- [ ] Code, documentation, and aggregate-data licenses are recorded.
+- [x] Code and executable specifications are Apache-2.0; documentation and aggregate evidence are CC BY 4.0.
 - [x] `python3 scripts/build_public_catalog.py` produces no diff after the reviewer-audit repair.
 - [x] `python3 scripts/verify_public_release.py` passes.
 - [x] `python3 scripts/validate_public_boundary.py .` passes.

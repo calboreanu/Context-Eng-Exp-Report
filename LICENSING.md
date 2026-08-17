@@ -1,12 +1,32 @@
 # Component licensing
 
-This release candidate is shared for inspection and verification but does not yet grant a public reuse license. Unless a component-specific license is added before release, all rights remain reserved.
+This repository uses a simple two-license split.
 
-The rights holder may select and record licenses separately for:
+## Apache License 2.0
 
-1. analysis and validation code;
-2. documentation and diagrams;
-3. aggregate data and data dictionaries; and
-4. the paper text, which may have a publisher-specific license.
+The software and executable specifications are licensed under the Apache License, Version 2.0 (`Apache-2.0`). This includes:
 
-A practical open-release option is a permissive software license for code and a Creative Commons license for documentation and aggregate data, but this file intentionally does not make that rights decision. Existing publication licenses do not automatically determine the license for every repository component. In particular, CC BY 4.0 permits commercial reuse with attribution; it does not require separate commercial permission.
+- Python analysis, catalog, validation, and test code;
+- GitHub Actions workflow files;
+- machine-executable JSON schemas and rule/configuration files; and
+- repository support files used to build or validate the release.
+
+The complete license text is in [`LICENSE`](LICENSE).
+
+## Creative Commons Attribution 4.0
+
+The documentation and released evidence materials are licensed under the Creative Commons Attribution 4.0 International license (`CC-BY-4.0`). This includes:
+
+- Markdown documentation, audit reports, codebooks, and traceability descriptions;
+- public aggregate CSV and JSON results;
+- data dictionaries, claim mappings, field lineage, receipts, and manifests;
+- the reviewer workbook; and
+- citation and release metadata.
+
+Attribution should identify **Elias Calboreanu**, the title **Context Engineering workstation evidence**, the year **2026**, and the canonical repository URL, with an indication of changes when applicable. The license notice and official legal-code link are in [`LICENSES/CC-BY-4.0.md`](LICENSES/CC-BY-4.0.md).
+
+## Exclusions and third-party material
+
+The associated journal article is governed by its publisher or author agreement and is not relicensed by this repository. Raw prompts, responses, supplied context, row-level trajectories, linkage maps, and other restricted source records are not included and are not licensed for public distribution here.
+
+No client or third-party confidential content is intentionally included. Any independently owned third-party material retains its original rights and is not relicensed merely by being referenced.

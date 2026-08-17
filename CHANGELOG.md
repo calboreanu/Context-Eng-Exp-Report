@@ -9,4 +9,5 @@
 - Added a reviewer evidence workbook without raw or row-level data.
 - Added exact binary k/n fields to the unified catalog wherever the released full-precision rates and denominators determine them.
 - Added a reviewer-first audit guide and corrected the claim-generator receipt for the known ST02 source limitation.
-- Prepared the verified tree for `calboreanu/Context-Eng-Exp-Report`; public push, immutable tagging, and final licensing remain release actions.
+- Applied Apache-2.0 to code and executable specifications and CC BY 4.0 to documentation and public aggregate evidence.
+- Prepared the verified tree for `calboreanu/Context-Eng-Exp-Report`; public visibility and immutable tagging remain release actions.

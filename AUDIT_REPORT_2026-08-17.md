@@ -64,5 +64,4 @@ The public package proves aggregate arithmetic, cross-file consistency, transfor
 ## Remaining release gates
 
 1. signed internal IRAD/data-use authorization covering the exact aggregate package;
-2. explicit component licensing decision if public reuse rights will be granted;
-3. public visibility, immutable tag, downloaded-archive verification, and manuscript locator update.
+2. public visibility, immutable tag, downloaded-archive verification, and manuscript locator update.

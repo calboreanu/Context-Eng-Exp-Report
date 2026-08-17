@@ -35,5 +35,4 @@ The condition and five prompt-language measures share a deterministic rule famil
 
 - signed internal IRAD/data-use authorization;
 - final automated recheck of the exact release archive;
-- component licensing decision if reuse rights will be granted;
 - final manuscript/repository locator synchronization.
