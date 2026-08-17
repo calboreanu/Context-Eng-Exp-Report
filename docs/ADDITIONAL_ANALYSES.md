@@ -22,4 +22,4 @@ If a reviewer requests a summary not already present, record the request as a de
 
 Run that specification against the restricted data locally. Release only the resulting aggregate table after the same automated and named disclosure checks. Do not provide an unrestricted query endpoint over the row-level data, because combinations of rare cells can reconstruct trajectories even when direct identifiers are absent.
 
-Recommended default: no new public joint table below 20 observations per reported condition, and no grouping that combines station, provider, and month. A reviewer with separately authorized controlled access can evaluate unsuppressed cells locally.
+Recommended default for a newly requested table: no new public joint cell below 20 observations per reported condition, and no grouping that combines station, provider, and month. The already declared pseudonymous station-effect view is an explicit exception because its full-precision rates and denominators are part of the manuscript sensitivity analysis and carry no public station identity key. A reviewer with separately authorized controlled access can evaluate unsuppressed new cells locally.

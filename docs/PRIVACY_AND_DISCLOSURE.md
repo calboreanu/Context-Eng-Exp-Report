@@ -25,6 +25,7 @@ The repository may name source **fields** in order to document lineage. A field 
 4. The station-by-provider-by-month balancing table remains withheld because its joint cells are unnecessarily granular.
 5. Restricted artifacts are represented only by SHA-256 receipts and analytic purpose.
 6. Automated scanning is followed by human disclosure review; a passing script alone is not release authorization. The author confirmed the aggregate-only boundary for this candidate on 17 August 2026.
+7. Exact binary numerators are exposed where they are already deterministically recoverable from a released full-precision rate and denominator; this adds audit convenience, not row-level information.
 
 ## Interpretation boundary
 

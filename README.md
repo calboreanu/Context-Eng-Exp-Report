@@ -19,12 +19,13 @@ The revised paper analyzes 31,919 process-trace episodes from 4,760 conversation
 
 ## Start here
 
-1. Read [`docs/PRIVACY_AND_DISCLOSURE.md`](docs/PRIVACY_AND_DISCLOSURE.md).
-2. Inspect [`data/provenance/claim_to_evidence.csv`](data/provenance/claim_to_evidence.csv).
-3. Filter [`data/catalog/aggregate_catalog.csv`](data/catalog/aggregate_catalog.csv) or open the evidence explorer.
-4. Run `python3 scripts/verify_public_release.py`.
-5. Run `python3 scripts/validate_public_boundary.py .`.
-6. Verify exact bytes with `python3 scripts/verify_manifest.py PUBLIC_MANIFEST.sha256`.
+1. Follow the five-minute workflow in [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md).
+2. Read [`docs/PRIVACY_AND_DISCLOSURE.md`](docs/PRIVACY_AND_DISCLOSURE.md).
+3. Inspect [`data/provenance/claim_to_evidence.csv`](data/provenance/claim_to_evidence.csv).
+4. Filter [`data/catalog/aggregate_catalog.csv`](data/catalog/aggregate_catalog.csv) or open the evidence explorer.
+5. Run `python3 scripts/verify_public_release.py`.
+6. Run `python3 scripts/validate_public_boundary.py .`.
+7. Verify exact bytes with `python3 scripts/verify_manifest.py PUBLIC_MANIFEST.sha256`.
 
 The release is prepared for publication at `https://github.com/calboreanu/Context-Eng-Exp-Report`. See [`docs/PUBLICATION_STRATEGY.md`](docs/PUBLICATION_STRATEGY.md) for the final tag, archive-verification, and manuscript-synchronization sequence.
 

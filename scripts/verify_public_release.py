@@ -48,6 +48,10 @@ def verify_pooled() -> dict[tuple[str, str], dict[str, str]]:
         key = (row["analysis_set"], row["metric"])
         require(key not in index, f"duplicate pooled row {key}")
         close(float(row["effect"]), effect(float(row["ce_value"]), float(row["comparison_value"]), row["effect_scale"]), f"pooled {key}")
+        if "risk_difference" in row["effect_scale"]:
+            n = int(row["rows_per_condition"])
+            close(float(row["ce_value"]) * n, round(float(row["ce_value"]) * n), f"pooled CE numerator {key}", 1e-9)
+            close(float(row["comparison_value"]) * n, round(float(row["comparison_value"]) * n), f"pooled comparison numerator {key}", 1e-9)
         index[key] = row
     for analysis_set, expected_n in [("primary_frontloaded", 1484), ("unrestricted", 2246)]:
         subset = [row for row in rows if row["analysis_set"] == analysis_set]
@@ -146,11 +150,30 @@ def verify_scope_and_catalog() -> None:
     catalog = read_csv(CATALOG / "aggregate_catalog.csv")
     require(len(catalog) == 337, f"aggregate catalog expected 337 rows, got {len(catalog)}")
     require(len({row["record_id"] for row in catalog}) == len(catalog), "aggregate catalog record IDs are not unique")
+    for row in catalog:
+        if row["view"] in {"pooled", "station", "archive_batch"} and "risk_difference" in row["effect_scale"]:
+            require(all(row[field] != "" for field in ["ce_k", "ce_n", "comparison_k", "comparison_n"]), f"missing exact counts in catalog row {row['record_id']}")
+            require(int(row["ce_k"]) / int(row["ce_n"]) == float(row["ce_value"]), f"catalog CE k/n mismatch {row['record_id']}")
+            require(int(row["comparison_k"]) / int(row["comparison_n"]) == float(row["comparison_value"]), f"catalog comparison k/n mismatch {row['record_id']}")
     claims = read_csv(PROVENANCE / "claim_to_evidence.csv")
     require(len(claims) == 12 and len({row["claim_id"] for row in claims}) == 12, "claim map mismatch")
     for claim in claims:
         for filename in claim["evidence_file"].split(" and "):
             require((ROOT / filename).exists(), f"claim {claim['claim_id']} references missing {filename}")
+        if claim["generator"].endswith(".py"):
+            require((ROOT / claim["generator"]).is_file(), f"claim {claim['claim_id']} references missing generator {claim['generator']}")
+
+    primary_verification = next(
+        row for row in catalog
+        if row["view"] == "pooled" and row["analysis_set"] == "primary_frontloaded"
+        and row["metric"] == "verification_successful"
+    )
+    require(
+        (int(primary_verification["ce_k"]), int(primary_verification["ce_n"]),
+         int(primary_verification["comparison_k"]), int(primary_verification["comparison_n"]))
+        == (693, 1484, 478, 1484),
+        "primary headline verification counts mismatch",
+    )
 
 
 def main() -> None:

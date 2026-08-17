@@ -2,7 +2,7 @@
 
 ## While the repository remains private
 
-> Analysis code, rule contracts, aggregate outputs, data definitions, claim-to-evidence mappings, and cryptographic receipts have been assembled as a disclosure-review candidate. They are not yet publicly deposited. Raw and row-level workstation records are not approved for distribution because they can contain prompts, responses, tool traces, exact timestamps, paths, and confidential material.
+> Analysis code, rule contracts, disclosure-approved aggregate outputs, data definitions, claim-to-evidence mappings, and cryptographic receipts have been assembled in a private release candidate. They are not yet publicly deposited. Raw and row-level workstation records are not approved for distribution because they can contain prompts, responses, tool traces, exact timestamps, paths, and confidential material.
 
 ## After an immutable public release exists
 

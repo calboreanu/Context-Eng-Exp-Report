@@ -92,6 +92,21 @@ def normalized(view: str, source_file: str, source_record: str, **values: object
     }
 
 
+def exact_binary_counts(row: dict[str, str], denominator: str) -> dict[str, int]:
+    """Expose exact k/n when full-precision public rates make them deterministic."""
+    if "risk_difference" not in row["effect_scale"]:
+        return {}
+    n = int(denominator)
+    counts: dict[str, int] = {"ce_n": n, "comparison_n": n}
+    for prefix, field in [("ce", "ce_value"), ("comparison", "comparison_value")]:
+        candidate = float(row[field]) * n
+        rounded = round(candidate)
+        if abs(candidate - rounded) > 1e-9:
+            raise RuntimeError(f"{row['analysis_set']}/{row['metric']}: non-integral {prefix} numerator")
+        counts[f"{prefix}_k"] = rounded
+    return counts
+
+
 def build_catalog() -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
 
@@ -102,6 +117,7 @@ def build_catalog() -> list[dict[str, object]]:
             metric=row["metric"], metric_label=row["metric_label"], effect_scale=row["effect_scale"],
             ce_value=row["ce_value"], comparison_value=row["comparison_value"], effect=row["effect"],
             rows_per_condition=row["rows_per_condition"],
+            **exact_binary_counts(row, row["rows_per_condition"]),
         ))
 
     for index, row in enumerate(read_csv(RESULTS / "station_effects.csv"), start=2):
@@ -111,6 +127,7 @@ def build_catalog() -> list[dict[str, object]]:
             metric=row["metric"], metric_label=row["metric_label"], effect_scale=row["effect_scale"],
             ce_value=row["ce_value"], comparison_value=row["comparison_value"], effect=row["effect"],
             rows_per_condition=row["balanced_per_condition"], stations=1,
+            **exact_binary_counts(row, row["balanced_per_condition"]),
         ))
 
     for filename, view in [
@@ -135,6 +152,7 @@ def build_catalog() -> list[dict[str, object]]:
             metric=row["metric"], metric_label=row["metric_label"], effect_scale=row["effect_scale"],
             ce_value=row["ce_value"], comparison_value=row["comparison_value"], effect=row["effect"],
             rows_per_condition=row["rows_per_condition"], stations=row["contributing_stations"],
+            **exact_binary_counts(row, row["rows_per_condition"]),
         ))
 
     for index, row in enumerate(read_csv(RESULTS / "action_count_verification_strata.csv"), start=2):

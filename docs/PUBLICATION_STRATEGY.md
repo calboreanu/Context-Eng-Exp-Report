@@ -23,7 +23,7 @@ Deleting the old prototype from the latest branch does not erase it from Git his
 1. complete the final authorization and licensing decisions;
 2. regenerate `PUBLIC_MANIFEST.sha256` after all release-text edits;
 3. rerun the verifier, privacy-boundary scan, tests, and manifest check;
-4. create `calboreanu/Context-Eng-Exp-Report` as a public GitHub repository and push this one exact history;
+4. make the existing private `calboreanu/Context-Eng-Exp-Report` repository public only after the release gates close;
 5. tag an immutable version;
 6. download the GitHub-generated archive and record its SHA-256;
 7. rerun the boundary and manifest checks on the downloaded archive;
