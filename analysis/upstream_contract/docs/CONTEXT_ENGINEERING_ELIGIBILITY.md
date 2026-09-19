@@ -1,7 +1,7 @@
 # Context-engineering interaction eligibility
 
 Document (adjudication guidance) version: `1.1.0`
-Automated screen rule contract: `context-engineering-eligibility/1.0.0` — unchanged by this revision; `config/context-engineering-eligibility.json`, historical screen outputs, and validator assertions remain at `1.0.0`.
+Automated lexical rule contract: `context-engineering-eligibility/2.1.0-action-reference-20260918`. The provider-status adapter retains its `ce-provider-adapter-v2.0.0-20260917` identifier; v5 rows also identify the new rule contract and `ce-primary-boundary-normalization-v5.0.0-20260918`. Historical screen outputs retain their original versions. See `../PROVIDER_ADAPTER_CORRECTION.md` for the earlier terminal-status, polling and attachment repair and `../EVENT_NORMALIZATION.md` for the current all-provider boundary and lexical-input corrections.
 
 ## Conceptual grounding
 
@@ -9,9 +9,21 @@ The operational definition follows the contemporary distinction between a single
 
 ## Unit of analysis
 
+The following paragraph states the retained conceptual gate. In the event-v5
+publication computation, source-local segments are reconciled through native
+identity, uniquely owned nonprimary boundaries and attributable tool activity.
+An explicit replay, machine notification or bare continuation is not automatically
+a new primary invocation. Unresolved ownership is held. See
+`../EVENT_NORMALIZATION.md` for canonical representation, delegation, quarantine,
+timing and lexical-input rules. The closed acknowledgment grammar is expanded;
+XML tag syntax does not count as a path, and inert Git commit/tag message values
+do not supply stage signals. These are automated corrections, not human adjudication.
+
 An interaction is one primary user-level task invocation and the agent trajectory that follows it until the next primary user-level task invocation in the same source. An invocation may be direct or a human-configured scheduled automation. Tool calls, tool results, assistant messages, injected environment blocks, compacted summaries, sidechains, and delegated-agent prompts are evidence within or around an interaction; they are not separate interactions.
 
 ## Evidence-status precondition
+
+The v5 publication screen classifies the closed TodoWrite tool-name family as administrative and filters unqualified numeric dot tokens from artifact references. Qualified numeric paths, URLs, dotfiles and real Write operations remain supported. The exact grammar and pre-correction replay guard are in `../EVENT_NORMALIZATION.md`. These narrow corrections do not change the human gates below or close the publication-analysis deviation.
 
 The four gates below are evaluated on an archived trajectory. `interaction_evidence_status` (CODEBOOK.md, ruling CD-001) records whether one exists: only `trajectory_observed` records are eligible for gate evaluation and for interaction counts. An event whose occurrence is proven only by independent artifacts (`artifact_corroborated_event_only`) cannot pass the four-gate interaction test: artifacts may independently establish the product event and outcome (gates 1 and 4), but context operation and use trace (gates 2–3) are unavailable without the trajectory. After human review such an event may support a clearly labeled artifact-event analysis; it never enters the interaction denominator or the context-engineering interaction count. `claim_only` assertions are excluded outright by coding rules 1 and 8.
 
@@ -42,6 +54,8 @@ All four gates are conjunctive. A sophisticated prompt without observable use is
 | `exclude_no_context_operation` | Product work was observed without evidence of deliberate context selection, retrieval, maintenance, or structuring. |
 
 The labels are deliberately asymmetric: automation can prioritize likely examples, but it cannot assert that an interaction qualifies. `human_qualified_count` remains zero until named human review is completed.
+
+The automatic publication exclusion detects matches to the frozen publication-purpose rules, not every semantically publication-related task. Such work may remain undetected when its purpose is apparent only outside the retained primary request and no supported native governing-task link carries the matching scope. This is a limitation of the publication analysis, distinct from the intended human coding boundary above.
 
 `origin_candidate` separates scheduled automation from direct or unresolved user-level invocations and identifies likely delegated, continuation, and tool-generated records. `prompt_reuse_count` clusters exact prompt reuse. Repeated scheduled runs may each be real executions, but they are not independent prompt designs or replications.
 

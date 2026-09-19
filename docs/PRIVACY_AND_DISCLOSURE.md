@@ -1,8 +1,8 @@
 # Privacy and disclosure boundary
 
-## Publicly releasable candidate
+## Public package v2.0.0
 
-The public release contains only code, rule contracts, aggregate tables, pseudonymous station summaries, transformation descriptions, and cryptographic receipts. The released statistics are descriptive process-trace summaries.
+Public package v2.0.0 contains only code, rule contracts, aggregate tables, pseudonymous station summaries, transformation descriptions, and cryptographic receipts. Its statistics are descriptive process-trace summaries under the frozen event-v5 analytical contract. Release metadata does not expand this disclosure boundary.
 
 ## Never included
 
@@ -13,7 +13,7 @@ The public release contains only code, rule contracts, aggregate tables, pseudon
 - absolute or relative source paths and source filenames;
 - credentials, emails, personal names, client names, or product names;
 - balanced row derivatives or the automated candidate-linkage map;
-- the 153,312,689-byte merged source file.
+- restricted merged and normalized source inputs.
 
 The repository may name source **fields** in order to document lineage. A field name such as `prompt_text` is not prompt content.
 
@@ -33,6 +33,4 @@ The condition and five prompt-language measures share a deterministic rule famil
 
 ## Release status
 
-- signed internal IRAD/data-use authorization;
-- final automated recheck of the exact release archive;
-- final manuscript/repository locator synchronization.
+The signed internal IRAD/data-use authorization remains a separate confidential record, not a public artifact or an IRB/HRPP approval. The [pre-release audit](LOCAL_CANDIDATE_AUDIT.md) describes the frozen event-v5 checks; the [release checklist](RELEASE_CHECKLIST.md) separately tracks v2.0.0 publication and downloaded-archive verification. Passing checks are not themselves publication authorization. Public distribution does not imply confidential delivery, journal submission or editorial acceptance. Historical preparation-status fields remain unchanged as explained in the [README](../README.md).

@@ -1,5 +1,5 @@
 {
-  "rule_version": "context-engineering-eligibility/1.0.0",
+  "rule_version": "context-engineering-eligibility/2.1.0-action-reference-20260918",
   "cutoff_id": "CUT-20260812-A",
   "minimum_assistant_output_chars_for_decision": 100,
   "minimum_distinct_retrieval_targets_for_implicit_context": 2,
@@ -63,7 +63,9 @@
   ],
   "continuation_only": [
     "^(?:ok(?:ay)?[,.! ]*)?(?:continue|proceed|go ahead|keep going|carry on|do it|done|yes)[.! ]*$",
-    "^continue from where you left off[.! ]*$"
+    "^continue from where you left off[.! ]*$",
+    "^(?:(?:yes|yeah|yep|yup|sure|certainly|absolutely|ok|okay|agreed|approved|sounds (?:good|great)|looks good|go for it)(?:[,! .]+(?:please|thanks|thank you))?)[.! ]*$",
+    "^(?:please[,! .]+)?(?:continue|proceed|go ahead|keep going|carry on|do it)(?:[,! .]+please)?[.! ]*$"
   ],
   "continuation_wrappers": [
     "^this session is being continued from a previous conversation",

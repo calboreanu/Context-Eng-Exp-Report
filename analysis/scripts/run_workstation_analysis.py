@@ -13,7 +13,7 @@ exact strata. Station is an archive cluster, not a participant proxy.
 
 The source CSV is restricted because it contains raw prompt text. Row-level
 outputs produced here remain restricted and contain no prompt text or excerpts.
-Only disclosure-approved aggregate outputs are included in the public release.
+Only aggregate outputs are candidates for public deposit after disclosure review.
 """
 
 from __future__ import annotations
@@ -87,6 +87,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out", required=True, type=Path, help="Output directory")
     parser.add_argument("--bootstrap-reps", type=int, default=50_000)
     parser.add_argument("--bootstrap-seed", type=int, default=20260815)
+    parser.add_argument("--normalization-receipt", type=Path,
+                        help="Private normalization receipt; only its file hash is exported")
     return parser.parse_args()
 
 
@@ -118,11 +120,12 @@ def parse_dt(value: str) -> datetime:
 
 
 def median(values: list[float]) -> float:
-    return statistics.median(values)
+    observed = [value for value in values if math.isfinite(value)]
+    return statistics.median(observed) if observed else math.nan
 
 
 def mean(values: list[float]) -> float:
-    return sum(values) / len(values)
+    return sum(values) / len(values) if values else math.nan
 
 
 def percentile(sorted_values: list[float], q: float) -> float:
@@ -136,6 +139,8 @@ def percentile(sorted_values: list[float], q: float) -> float:
 
 
 def bootstrap_mean_ci(values: list[float], reps: int, seed: int, salt: str) -> tuple[float, float]:
+    if not values:
+        return math.nan, math.nan
     salted_seed = int(hashlib.sha256(f"{seed}:{salt}".encode()).hexdigest()[:16], 16)
     rng = random.Random(salted_seed)
     size = len(values)
@@ -178,17 +183,25 @@ def completed_successful_verification(row: dict[str, str]) -> int:
 
 
 def transform(row: dict[str, str]) -> dict[str, object]:
-    start = parse_dt(row["timestamp_start_utc"])
-    end = parse_dt(row["timestamp_end_utc"])
+    try:
+        start = parse_dt(row["timestamp_start_utc"])
+    except (ValueError, KeyError, TypeError):
+        start = None
+    try:
+        end = parse_dt(row["timestamp_end_utc"])
+    except (ValueError, KeyError, TypeError):
+        end = None
     actions = as_int(row.get("completed_substantive_action_calls"))
-    duration = max(0.0, (end - start).total_seconds() / 60.0)
+    # An unavailable or inconsistent clock is not a zero-duration trajectory.
+    duration = ((end - start).total_seconds() / 60.0
+                if start is not None and end is not None and end >= start else None)
     stages = set(filter(None, row.get("stage_signal_mask", "").split("|")))
     return {
         "episode_id": row["episode_id"],
         "episode_token": token("EP", row["episode_id"]),
         "station_id": row["station_id"],
         "provider": row["provider"],
-        "month": start.strftime("%Y-%m"),
+        "month": start.strftime("%Y-%m") if start is not None else "",
         "origin_candidate": row.get("origin_candidate", ""),
         "automated_disposition": row.get("automated_disposition", ""),
         "publication_exclusion_candidate": row.get("publication_exclusion_candidate", ""),
@@ -196,7 +209,7 @@ def transform(row: dict[str, str]) -> dict[str, object]:
         "stage_signal_mask": "|".join(sorted(stages)),
         "duration_min": duration,
         "completed_substantive_actions": actions,
-        "min_per_action": duration / actions if actions > 0 else None,
+        "min_per_action": duration / actions if actions > 0 and duration is not None else None,
         "verification_successful": completed_successful_verification(row),
         "audit_signal": int("audit" in stages),
         "remediation_signal": int("remediation" in stages),
@@ -209,7 +222,7 @@ def transform(row: dict[str, str]) -> dict[str, object]:
 def cohort(row: dict[str, object]) -> str:
     # Requiring at least one completed-successful substantive action removes the
     # prior selection path in which the grounded-decision proxy qualified itself.
-    if row["completed_substantive_actions"] <= 0:
+    if row["completed_substantive_actions"] <= 0 or not row["month"]:
         return ""
     if row["origin_candidate"] != ORIGIN:
         return ""
@@ -271,6 +284,10 @@ def metric_value(row: dict[str, object], field: str) -> float:
     return float(value)
 
 
+def observed_count(rows: list[dict[str, object]], field: str) -> int:
+    return sum(math.isfinite(metric_value(row, field)) for row in rows)
+
+
 def split_conditions(rows: list[dict[str, object]], ce_label: str):
     ce = [row for row in rows if row["cohort"] == ce_label]
     comparison = [row for row in rows if row["cohort"] == COMPARISON_LABEL]
@@ -292,6 +309,8 @@ def pooled_summary(rows: list[dict[str, object]], analysis_set: str, ce_label: s
             "comparison_value": comp_value,
             "effect": ce_value - comp_value,
             "rows_per_condition": len(ce),
+            "ce_observed": observed_count(ce, field),
+            "comparison_observed": observed_count(comparison, field),
         })
     for field, label in RATIO_METRICS:
         ce_value = median([metric_value(row, field) for row in ce])
@@ -305,6 +324,8 @@ def pooled_summary(rows: list[dict[str, object]], analysis_set: str, ce_label: s
             "comparison_value": comp_value,
             "effect": ce_value / comp_value if comp_value > 0 else math.nan,
             "rows_per_condition": len(ce),
+            "ce_observed": observed_count(ce, field),
+            "comparison_observed": observed_count(comparison, field),
         })
     return result
 
@@ -331,6 +352,8 @@ def station_effects(rows: list[dict[str, object]], analysis_set: str, ce_label: 
                 "ce_value": ce_value,
                 "comparison_value": comp_value,
                 "effect": ce_value - comp_value,
+                "ce_observed": observed_count(ce, field),
+                "comparison_observed": observed_count(comparison, field),
             })
         for field, label in RATIO_METRICS:
             ce_value = median([metric_value(row, field) for row in ce])
@@ -345,6 +368,8 @@ def station_effects(rows: list[dict[str, object]], analysis_set: str, ce_label: 
                 "ce_value": ce_value,
                 "comparison_value": comp_value,
                 "effect": ce_value / comp_value if comp_value > 0 else math.nan,
+                "ce_observed": observed_count(ce, field),
+                "comparison_observed": observed_count(comparison, field),
             })
     return effects
 
@@ -375,7 +400,8 @@ def equal_station_summary(effects: list[dict[str, object]], analysis_set: str, r
             "descriptive_sign_p": exact_two_sided_sign_p(positive, negative),
         })
     for field, label in RATIO_METRICS:
-        ratios = [float(row["effect"]) for row in by_metric[field] if float(row["effect"]) > 0]
+        ratios = [float(row["effect"]) for row in by_metric[field]
+                  if math.isfinite(float(row["effect"])) and float(row["effect"]) > 0]
         log_values = [math.log(value) for value in ratios]
         positive = sum(value > 1 + 1e-12 for value in ratios)
         negative = sum(value < 1 - 1e-12 for value in ratios)
@@ -423,6 +449,8 @@ def archive_group_summary(rows: list[dict[str, object]], analysis_set: str, ce_l
                 "ce_value": ce_value,
                 "comparison_value": comp_value,
                 "effect": effect,
+                "ce_observed": observed_count(ce, field),
+                "comparison_observed": observed_count(comparison, field),
             })
         for field, label in RATIO_METRICS:
             ce_value = median([metric_value(row, field) for row in ce])
@@ -438,6 +466,8 @@ def archive_group_summary(rows: list[dict[str, object]], analysis_set: str, ce_l
                 "ce_value": ce_value,
                 "comparison_value": comp_value,
                 "effect": ce_value / comp_value if comp_value > 0 else math.nan,
+                "ce_observed": observed_count(ce, field),
+                "comparison_observed": observed_count(comparison, field),
             })
     return result
 
@@ -529,6 +559,8 @@ def main() -> None:
         "source_episode_rows": len(transformed),
         "source_conversation_count": len(all_source_refs),
         "source_station_archives": len(all_stations),
+        "source_rows_without_valid_month": sum(not row["month"] for row in transformed),
+        "source_rows_without_observed_duration": sum(row["duration_min"] is None for row in transformed),
         "action_eligible_ce_candidates": len(ce),
         "action_eligible_frontloaded_ce_candidates": len(frontloaded_ce),
         "action_eligible_routed_comparisons": len(comparison),
@@ -539,7 +571,7 @@ def main() -> None:
     }
     summary = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "analysis_contract": "context-engineering-new-submission-analysis/1.0.0",
+        "analysis_contract": "context-engineering-event-normalized-analysis/5.0.0",
         "input": {
             "filename": args.input.name,
             "sha256": sha256_file(args.input),
@@ -563,10 +595,13 @@ def main() -> None:
             "action_eligibility": "at least one completed and successful modify, execute, or verify call",
             "frontloaded_context_candidate": "attachment_count>0 OR prompt_artifact_reference_count>=2 OR context_mode_mask intersects bounded_package|multi_source_synthesis|standards_constraints|examples_templates",
             "verification_successful": "at least one verify-class call that completed and succeeded",
-            "audit_remediation_packaging": "case-insensitive prompt-regex stage signals inherited from the frozen screen; lexical candidate measures, not adjudicated execution",
+            "audit_remediation_packaging": "case-insensitive prompt-regex stage signals after narrow v4 inert Git commit/tag-message sanitation; lexical candidate measures, not adjudicated execution",
             "multistage_signal": "at least two distinct entries in stage_signal_mask",
-            "grounded_decision_trace": "screen proxy; stage signal plus completed retrieval/search plus assistant output length threshold",
-            "min_per_action": "observed trajectory minutes divided by completed substantive actions; all retained cohort rows have a positive denominator",
+            "grounded_decision_trace": "screen proxy; decision-stage signal plus completed and successful retrieval/search plus assistant output length threshold",
+            "min_per_action": "observed trajectory minutes divided by completed substantive actions; unavailable or inconsistent timing remains missing, never zero-imputed",
+            "timing_denominators": "condition medians use finite observations only; every pooled, archive and station estimate reports ce_observed and comparison_observed; station ratios require finite positive ratios",
+            "source_conversation_count": "distinct canonical source references represented by normalized rows; not all contributing alias files or distinct human conversations",
+            "missing_month": "rows with unavailable start month cannot enter exact calendar-month balancing",
             "balancing": "deterministic one-to-one sampling within station_id x provider x calendar month; not task matching",
         },
         "scope": scope,
@@ -582,6 +617,12 @@ def main() -> None:
         "equal_station_summary": equal_station,
         "minimum_station_size_summary": minimum_station_size,
     }
+    if args.normalization_receipt:
+        summary["normalization_receipt"] = {
+            "filename": args.normalization_receipt.name,
+            "sha256": sha256_file(args.normalization_receipt),
+            "restricted": True,
+        }
     (args.out / "analysis_summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(scope, indent=2))
 

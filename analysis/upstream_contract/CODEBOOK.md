@@ -2,6 +2,15 @@
 
 Version: `2.2.0-pilot`
 
+Event-v5 publication correction note: the human codebook itself is unchanged. The separately versioned automated screen recognizes the closed TodoWrite administrative family and excludes unqualified numeric-dot reference tokens. Full native reconstruction and analytical rematching do not create or transfer human decisions. See `EVENT_NORMALIZATION.md` for the exact computational rules.
+
+Publication-use note: this is the retained pilot adjudication codebook, not the
+schema of a newly human-adjudicated dataset. The publication deviation remains
+explicit in `PUBLICATION_ANALYSIS_DEVIATION.md`. Event-v5 extraction reconciles
+native identities and nonprimary boundaries before the publication's automatic
+routing; its actual unit, source aliases, ownership, lexical-input corrections
+and timing rules are in `EVENT_NORMALIZATION.md`.
+
 ## Context-engineering interaction gate
 
 The multi-station post-run screen uses one primary user-level task invocation plus its downstream agent trajectory as the interaction unit. A human may code `include_context_engineering` only when product purpose, a deliberate context operation, a context-use trace, and an observable product action or evidence-grounded decision are all present. The full operational rule, automated routing labels, and examples are versioned in `docs/CONTEXT_ENGINEERING_ELIGIBILITY.md` and `config/context-engineering-eligibility.json`.
@@ -88,6 +97,11 @@ Relationship `candidate_confidence` describes the strength of the deterministic 
 | `adjudication_status` | `single_coded`, `double_coded_agreement`, `adjudicated` |
 
 ## Coding rules
+
+These are human-adjudication requirements. The automated publication analysis
+excludes records matching its frozen publication-purpose rules; it does not
+establish that all semantically publication-related work has been identified.
+See `PUBLICATION_ANALYSIS_DEVIATION.md` for that unresolved scope limitation.
 
 1. Code observable actions, not assistant narration, plans, or claims.
 2. Read the frozen source at the recorded locator and, when needed, inspect the private target mapping.

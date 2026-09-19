@@ -1,0 +1,176 @@
+{
+  "analysis_contract": "context-engineering-event-normalized-analysis/5.0.0",
+  "analysis_scope": {
+    "v4": {
+      "action_eligible_ce_candidates": 1324,
+      "action_eligible_frontloaded_ce_candidates": 529,
+      "action_eligible_routed_comparisons": 4206,
+      "primary_contributing_stations": 12,
+      "primary_frontloaded_balanced_per_condition": 405,
+      "source_conversation_count": 4677,
+      "source_episode_rows": 20682,
+      "source_rows_without_observed_duration": 18,
+      "source_rows_without_valid_month": 0,
+      "source_station_archives": 13,
+      "unrestricted_balanced_per_condition": 1105,
+      "unrestricted_contributing_stations": 12
+    },
+    "v5": {
+      "action_eligible_ce_candidates": 1473,
+      "action_eligible_frontloaded_ce_candidates": 552,
+      "action_eligible_routed_comparisons": 4029,
+      "primary_contributing_stations": 12,
+      "primary_frontloaded_balanced_per_condition": 429,
+      "source_conversation_count": 4677,
+      "source_episode_rows": 20682,
+      "source_rows_without_observed_duration": 18,
+      "source_rows_without_valid_month": 0,
+      "source_station_archives": 13,
+      "unrestricted_balanced_per_condition": 1227,
+      "unrestricted_contributing_stations": 12
+    }
+  },
+  "fixed_v4_selection_exposure": {
+    "frontloading_changed": {
+      "v4_primary_ce": 2,
+      "v4_resolved": 13,
+      "v4_unrestricted_ce": 2
+    },
+    "now_zero_completed_substantive_action": {
+      "v4_primary_ce": 3,
+      "v4_primary_comparison": 5,
+      "v4_resolved": 107,
+      "v4_unrestricted_ce": 15,
+      "v4_unrestricted_comparison": 21
+    },
+    "reference_count_changed": {
+      "v4_primary_ce": 6,
+      "v4_resolved": 128,
+      "v4_unrestricted_ce": 6
+    },
+    "route_or_status_changed": {
+      "v4_primary_ce": 4,
+      "v4_primary_comparison": 15,
+      "v4_resolved": 252,
+      "v4_unrestricted_ce": 16,
+      "v4_unrestricted_comparison": 59
+    },
+    "successful_todowrite_calls": {
+      "v4_primary_ce": 132,
+      "v4_primary_comparison": 161,
+      "v4_resolved": 6726,
+      "v4_unrestricted_ce": 525,
+      "v4_unrestricted_comparison": 534
+    },
+    "successful_todowrite_events": {
+      "v4_primary_ce": 34,
+      "v4_primary_comparison": 49,
+      "v4_resolved": 1503,
+      "v4_unrestricted_ce": 145,
+      "v4_unrestricted_comparison": 153
+    }
+  },
+  "historical_confirmation_transferred": false,
+  "human_labels_added": 0,
+  "input_sha256": {
+    "v4": "5bf87c6f2eb7aeb6d500871369267fa9841719370d228c0a518f4e7c00bccd51",
+    "v5": "1014631e96d0a7c7df0545ca1516894872bc0874127e803cf6d159dc8babf146"
+  },
+  "limitations": [
+    "Counts describe computational changes, not human semantic error rates.",
+    "All statistical results are rematched/recomputed; fixed-v4 exposure counts are separate diagnostics.",
+    "Other lexical stage/context/verification limitations remain; no broad semantic model was introduced."
+  ],
+  "measurement_changes": {
+    "automated_disposition_changed_events": 339,
+    "completed_substantive_action_calls_changed_events": 1522,
+    "context_mode_mask_changed_events": 21,
+    "context_trace_status_changed_events": 377,
+    "frontloading_changed_events": 13,
+    "prompt_artifact_reference_count_changed_events": 130,
+    "reclassified_calls": 6788,
+    "successful_reclassified_calls": 6780,
+    "successful_todowrite_events": 1522
+  },
+  "native_invariant_checks": 3948491,
+  "phrase_overlap_exposure": {
+    "counts": {
+      "v4": {
+        "eligible_ce_events": 0,
+        "eligible_comparison_events": 0,
+        "primary_events": 0,
+        "resolved_events": 109,
+        "sole_packaging_trigger_events": 25,
+        "unrestricted_events": 0
+      },
+      "v5": {
+        "eligible_ce_events": 0,
+        "eligible_comparison_events": 0,
+        "primary_events": 0,
+        "resolved_events": 109,
+        "sole_packaging_trigger_events": 25,
+        "unrestricted_events": 0
+      }
+    },
+    "pattern": "\\bcontext package\\b",
+    "text_scope": "stage-sanitized retained primary request; literal match, not semantic adjudication"
+  },
+  "sample_membership": {
+    "primary": {
+      "newly_selected_events": 69,
+      "removed_events": 21,
+      "retained_changed_condition": 0,
+      "retained_distinct_events": 789,
+      "retained_same_condition": 789,
+      "v4_total": 810,
+      "v5_total": 858
+    },
+    "unrestricted": {
+      "newly_selected_events": 294,
+      "removed_events": 50,
+      "retained_changed_condition": 39,
+      "retained_distinct_events": 2160,
+      "retained_same_condition": 2121,
+      "v4_total": 2210,
+      "v5_total": 2454
+    }
+  },
+  "scope": "Actual native-source v4-to-v5 computational correction, not hypothetical fixed-row reclassification or human error adjudication.",
+  "source_accounting": {
+    "v4": {
+      "canonical_resolved_sources": 4677,
+      "contributing_alias_sources": 4760,
+      "contributing_not_canonical_resolved": 83,
+      "delta_canonical_held": 1,
+      "delta_only_held_alias": 0,
+      "delta_with_held_alias": 13,
+      "delta_with_resolved_alias": 83,
+      "delta_without_any_canonical_role": 82
+    },
+    "v5": {
+      "canonical_resolved_sources": 4677,
+      "contributing_alias_sources": 4760,
+      "contributing_not_canonical_resolved": 83,
+      "delta_canonical_held": 1,
+      "delta_only_held_alias": 0,
+      "delta_with_held_alias": 13,
+      "delta_with_resolved_alias": 83,
+      "delta_without_any_canonical_role": 82
+    }
+  },
+  "status_transitions": {
+    "quarantined->quarantined": 283,
+    "resolved->resolved": 20682
+  },
+  "unchanged_native_event_identities": 20965,
+  "unchanged_tool_names_resolved_occurrence_counts": {
+    "v4": {
+      "bashoutput": 0,
+      "killshell": 0
+    },
+    "v5": {
+      "bashoutput": 0,
+      "killshell": 0
+    }
+  }
+}

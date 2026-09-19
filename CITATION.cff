@@ -1,11 +1,12 @@
 cff-version: 1.2.0
-message: "Please cite the associated Context Engineering paper and this evidence release."
+message: "Cite public package v2.0.0 for the corrected event-v5 evidence. Its analytical contract is 5.0.0; historical public v1.0.0 identifies the prior analysis."
 title: "Context Engineering workstation evidence"
 type: dataset
 authors:
   - family-names: Calboreanu
     given-names: Elias
 repository-code: "https://github.com/calboreanu/Context-Eng-Exp-Report"
-version: 1.0.0
-date-released: 2026-08-17
+url: "https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v2.0.0"
+version: 2.0.0
+date-released: 2026-09-19
 license: CC-BY-4.0

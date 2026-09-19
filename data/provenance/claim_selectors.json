@@ -1,0 +1,43 @@
+{
+  "schema_version": "public-claim-selectors/1.0",
+  "claims": {
+    "CE-C01": [
+      {"file": "analysis/results/analysis_summary.json", "kind": "json", "path": ["scope"], "fields": ["source_episode_rows", "source_station_archives"], "expected_records": 1},
+      {"file": "analysis/EVENT_CORRECTION_IMPACT.json", "kind": "json", "path": ["intake"], "fields": ["retained_source_segments"], "expected_records": 1}
+    ],
+    "CE-C02": [
+      {"file": "analysis/results/analysis_summary.json", "kind": "json", "path": ["scope"], "fields": ["primary_frontloaded_balanced_per_condition", "unrestricted_balanced_per_condition"], "expected_records": 1}
+    ],
+    "CE-C03": [
+      {"file": "analysis/results/pooled_summary.csv", "kind": "csv", "where": {"analysis_set": "primary_frontloaded", "effect_scale": "risk_difference"}, "fields": ["metric", "ce_value", "comparison_value", "effect", "rows_per_condition", "ce_observed", "comparison_observed"], "expected_records": 6}
+    ],
+    "CE-C04": [
+      {"file": "analysis/results/pooled_summary.csv", "kind": "csv", "where": {"analysis_set": "primary_frontloaded", "metric": "verification_successful"}, "fields": ["ce_value", "comparison_value", "effect", "rows_per_condition", "ce_observed", "comparison_observed"], "expected_records": 1}
+    ],
+    "CE-C05": [
+      {"file": "analysis/results/equal_station_summary.csv", "kind": "csv", "where": {"analysis_set": "primary_frontloaded"}, "fields": ["metric", "effect", "stations", "ci_low", "ci_high"], "expected_records": 9}
+    ],
+    "CE-C06": [
+      {"file": "analysis/results/action_count_verification_summary.json", "kind": "json", "path": ["summaries"], "where": {"analysis_set": "primary_frontloaded", "archive_batch": "all"}, "fields": ["rows_per_condition", "raw_gap", "comparator_standardized_gap", "diagnostic_only"], "expected_records": 1}
+    ],
+    "CE-C07": [
+      {"file": "analysis/results/action_count_verification_summary.json", "kind": "json", "path": ["summaries"], "where": {"analysis_set": "unrestricted", "archive_batch": "all"}, "fields": ["rows_per_condition", "raw_gap", "comparator_standardized_gap", "diagnostic_only"], "expected_records": 1}
+    ],
+    "CE-C08": [
+      {"file": "analysis/results/action_count_verification_summary.json", "kind": "json", "path": ["summaries"], "where": {"analysis_set": "primary_frontloaded", "archive_batch": "subsequent_capture_ST04_ST13"}, "fields": ["rows_per_condition", "raw_gap", "comparator_standardized_gap", "diagnostic_only"], "expected_records": 1}
+    ],
+    "CE-C09": [
+      {"file": "analysis/results/pooled_summary.csv", "kind": "csv", "where": {"analysis_set": ["primary_frontloaded", "unrestricted"], "metric": ["duration_min", "min_per_action"]}, "fields": ["analysis_set", "metric", "ce_value", "comparison_value", "effect", "rows_per_condition", "ce_observed", "comparison_observed"], "expected_records": 4},
+      {"file": "analysis/results/equal_station_summary.csv", "kind": "csv", "where": {"analysis_set": ["primary_frontloaded", "unrestricted"], "metric": ["duration_min", "min_per_action"]}, "fields": ["analysis_set", "metric", "effect", "stations", "ci_low", "ci_high"], "expected_records": 4}
+    ],
+    "CE-C10": [
+      {"file": "analysis/results/inheritance_pilot_summary.json", "kind": "json", "path": ["sensitivity"], "where": {"window": 20}, "fields": ["window", "candidate_positive", "eligible_rows", "candidate_positive_rate", "unresolved"], "expected_records": 1}
+    ],
+    "CE-C11": [
+      {"file": "data/provenance/source_chain_receipts.csv", "kind": "csv", "where": {"receipt_id": "SRC-02"}, "fields": ["receipt_id", "stage", "episode_rows", "station_archives", "verification_result", "public_interpretation"], "expected_records": 1}
+    ],
+    "CE-C12": [
+      {"file": "analysis/upstream_contract/PUBLICATION_ANALYSIS_DEVIATION.md", "kind": "markdown_section", "section": "Authorized analytical meaning", "required_text": ["They do not establish", "five-role Context Engineering method", "four-stage workflow", "product quality, or causality"], "expected_records": 1}
+    ]
+  }
+}

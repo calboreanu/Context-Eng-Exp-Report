@@ -1,5 +1,9 @@
 # Privacy-preserving evidence repository audit — 2026-08-17
 
+Historical v1.0.0 report retained for provenance. Its counts and verdict do not
+verify the later event-v3 candidate. Current scope is in README.md and the
+current manifests; a version tag does not imply platform-enforced immutability.
+
 ## Verdict
 
 **PUBLIC VERSION 1.0.0 AGGREGATE EVIDENCE RELEASE: REVIEWER-AUDIT PASS.**

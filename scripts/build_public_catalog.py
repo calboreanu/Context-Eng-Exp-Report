@@ -22,6 +22,7 @@ CATALOG_FIELDS = [
     "tie_stations", "negative_stations", "descriptive_sign_p", "window",
     "candidate_positive", "eligible_rows", "unresolved", "source_file",
     "source_record",
+    "ce_observed", "comparison_observed",
 ]
 
 
@@ -38,6 +39,8 @@ FIELD_DEFINITIONS = {
     "ce_n": ("integer", "Context-operation condition denominator."),
     "ce_rate": ("proportion", "Context-operation condition numerator divided by denominator."),
     "ce_value": ("number", "Context-operation condition rate or median, according to effect scale."),
+    "ce_observed": ("integer", "Finite observations used in the context-operation condition estimate; timing may be unavailable."),
+    "comparison_observed": ("integer", "Finite observations used in the comparison estimate; timing may be unavailable."),
     "comparison_available": ("integer", "Eligible routed comparisons before balancing."),
     "comparison_k": ("integer", "Routed-comparison numerator."),
     "comparison_n": ("integer", "Routed-comparison denominator."),
@@ -117,6 +120,7 @@ def build_catalog() -> list[dict[str, object]]:
             metric=row["metric"], metric_label=row["metric_label"], effect_scale=row["effect_scale"],
             ce_value=row["ce_value"], comparison_value=row["comparison_value"], effect=row["effect"],
             rows_per_condition=row["rows_per_condition"],
+            ce_observed=row["ce_observed"], comparison_observed=row["comparison_observed"],
             **exact_binary_counts(row, row["rows_per_condition"]),
         ))
 
@@ -127,6 +131,7 @@ def build_catalog() -> list[dict[str, object]]:
             metric=row["metric"], metric_label=row["metric_label"], effect_scale=row["effect_scale"],
             ce_value=row["ce_value"], comparison_value=row["comparison_value"], effect=row["effect"],
             rows_per_condition=row["balanced_per_condition"], stations=1,
+            ce_observed=row["ce_observed"], comparison_observed=row["comparison_observed"],
             **exact_binary_counts(row, row["balanced_per_condition"]),
         ))
 
@@ -152,6 +157,7 @@ def build_catalog() -> list[dict[str, object]]:
             metric=row["metric"], metric_label=row["metric_label"], effect_scale=row["effect_scale"],
             ce_value=row["ce_value"], comparison_value=row["comparison_value"], effect=row["effect"],
             rows_per_condition=row["rows_per_condition"], stations=row["contributing_stations"],
+            ce_observed=row["ce_observed"], comparison_observed=row["comparison_observed"],
             **exact_binary_counts(row, row["rows_per_condition"]),
         ))
 
@@ -206,7 +212,7 @@ def build_source_frame() -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     for key, value in analysis["scope"].items():
         rows.append({
-            "item_id": f"FRAME-{len(rows)+1:02d}", "scope": "13-station balanced analysis",
+            "item_id": f"FRAME-{len(rows)+1:02d}", "scope": "13-archive source frame and matched analyses",
             "measure": key, "value": value, "unit": "count",
             "source_file": "analysis/results/analysis_summary.json", "notes": "Restricted input receipt and verified local rerun",
         })
@@ -214,13 +220,86 @@ def build_source_frame() -> list[dict[str, object]]:
         if isinstance(value, list):
             value = "|".join(value)
             unit = "controlled_values"
-        else:
+        elif isinstance(value, (int, float)):
             unit = "count"
+        else:
+            unit = "definition"
         rows.append({
             "item_id": f"FRAME-{len(rows)+1:02d}", "scope": "three-station linkage pilot",
             "measure": key, "value": value, "unit": unit,
             "source_file": "analysis/results/inheritance_pilot_summary.json", "notes": "Automated and unadjudicated candidate linkage",
         })
+    if analysis.get('analysis_contract') == 'context-engineering-event-normalized-analysis/5.0.0':
+        correction = json.loads((RESULTS / 'boundary_correction_summary.json').read_text(encoding='utf-8'))
+        boundary_fields = ['old_source_rows', 'old_claude_rows', 'normalized_events',
+                           'resolved_events', 'quarantined_events', 'representation_reduction',
+                           'absorbed_nonprimary_components', 'total_alias_to_primary_component_reduction']
+        groups = [
+            ('normalization', {key: correction['normalization'][key] for key in boundary_fields},
+             'same frozen source universe; primary-boundary correction', 'Computational event accounting, not human accuracy'),
+            ('absorbed_nonprimary_kinds', correction['normalization']['absorbed_nonprimary_kinds'],
+             'supported nonprimary boundaries', 'Work and original aliases remain attached to the supported primary owner'),
+            ('review46', correction['review46'], 'historical event-v3 author-check rejoin',
+             'Historical case-level counts; no inferred transfer of confirmation to changed event-v5 classifications'),
+            ('full_primary_overlap', correction['full_primary_overlap'], 'historical to current primary overlap',
+             'Distinguish historical event memberships from distinct current events; balancing can change membership'),
+            ('historical_evidence_all138', correction['historical_evidence_overlap']['all138'],
+             'historical operational evidence rejoin', 'Operational evidence, not a representative classifier reference study'),
+        ]
+        for prefix, values, scope_label, notes in groups:
+            for key, value in values.items():
+                # Publish only the scalar aggregate counts in these allowlisted
+                # sections. Detailed joins and nested private records are never
+                # inputs to this public catalog builder.
+                if type(value) is not int:
+                    continue
+                rows.append({'item_id': f'FRAME-{len(rows)+1:02d}', 'scope': scope_label,
+                             'measure': f'{prefix}.{key}', 'value': value, 'unit': 'count',
+                             'source_file': 'analysis/results/boundary_correction_summary.json', 'notes': notes})
+        action_reference = json.loads((RESULTS / 'action_reference_correction_summary.json').read_text(encoding='utf-8'))
+        action_groups = [
+            ('invariants', {key: action_reference[key] for key in
+                            ('unchanged_native_event_identities', 'native_invariant_checks')},
+             'event-v4 to event-v5 native identity accounting'),
+            ('status_transitions', action_reference['status_transitions'],
+             'event-v4 to event-v5 automated disposition'),
+            ('measurement_changes', action_reference['measurement_changes'],
+             'event-v4 to event-v5 rule-derived changes'),
+            ('fixed_v4_selection_exposure', action_reference['fixed_v4_selection_exposure'],
+             'changed measurements within fixed historical event-v4 selections'),
+            ('sample_membership', action_reference['sample_membership'],
+             'event-v4 to event-v5 balanced membership'),
+            ('source_accounting', action_reference['source_accounting'],
+             'contributing alias sources versus canonical resolved sources'),
+            ('unchanged_tool_names_resolved_occurrence_counts',
+             action_reference['unchanged_tool_names_resolved_occurrence_counts'],
+             'resolved occurrences of unchanged administrative-tool candidates'),
+            ('phrase_overlap_exposure.counts', action_reference['phrase_overlap_exposure']['counts'],
+             'literal context-package phrase exposure, not semantic stage adjudication'),
+        ]
+        for prefix, values, scope_label in action_groups:
+            for key, value in sorted(values.items()):
+                nested = prefix in {'fixed_v4_selection_exposure', 'sample_membership',
+                                    'source_accounting', 'unchanged_tool_names_resolved_occurrence_counts',
+                                    'phrase_overlap_exposure.counts'}
+                if nested != isinstance(value, dict):
+                    raise ValueError(f'Non-count correction catalog field: {prefix}.{key}')
+                counts = sorted(value.items()) if nested else [('', value)]
+                for subkey, count in counts:
+                    if type(count) is not int or count < 0:
+                        raise ValueError(f'Non-count correction catalog field: {prefix}.{key}.{subkey}')
+                    measure = '.'.join(part for part in (prefix, key, subkey) if part)
+                    notes = 'Computational correction accounting; no new human judgments or independent accuracy estimate'
+                    if prefix == 'measurement_changes':
+                        notes = 'All normalized native components, including resolved and held events; not only the resolved analysis input'
+                    elif prefix == 'fixed_v4_selection_exposure':
+                        notes = 'Fixed historical v4 subset named in the measure; resolved subset excludes held components'
+                        if key == 'route_or_status_changed':
+                            notes += '; changes in analysis.cohort() eligibility/condition or resolved/held status, not bare automated_disposition'
+                    rows.append({'item_id': f'FRAME-{len(rows)+1:02d}', 'scope': scope_label,
+                                 'measure': measure, 'value': count, 'unit': 'count',
+                                 'source_file': 'analysis/results/action_reference_correction_summary.json',
+                                 'notes': notes})
     return rows
 
 

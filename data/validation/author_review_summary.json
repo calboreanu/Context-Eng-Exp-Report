@@ -1,0 +1,36 @@
+{
+  "author_reported_reviewed_events": 46,
+  "collectively_confirmed_classifications": 46,
+  "condition_counts": [
+    23,
+    23
+  ],
+  "criterion_fields_in_review_instrument": 414,
+  "inaccuracies_reported": 0,
+  "inclusion_probabilities": "Unequal: 1/N within each cell.",
+  "independent_accuracy_estimate": null,
+  "independent_rater": false,
+  "inter_rater_reliability_estimate": null,
+  "interpretation": "The author reported reviewing all 46 frozen event-v3 cases and confirming their classifications. A subsequent source-based technical audit identified scope, frontloading and incidental-stage discrepancies. The original report is preserved; it is not transferred to changed classifications or the entire corrected analysis. This is an author-involved unblinded historical check, not independent validation or a population-accuracy estimate.",
+  "limitations": [
+    "Individual criterion-form responses were not supplied.",
+    "The collective report does not establish 414 separately elicited judgments.",
+    "Unequal coverage sampling and author/rule-design involvement limit generalization."
+  ],
+  "population_accuracy_estimate": null,
+  "provider_format_count": 3,
+  "recorded_date": "2026-09-18",
+  "recording_granularity": "Collective author statement covering the frozen 46-event set.",
+  "release_status": "unreleased_local_candidate",
+  "review_design": "author_involved_unblinded_collective_confirmation",
+  "sample_design": "One event per nonempty condition × station × canonical-provider cell.",
+  "schema_version": "classifier-review-aggregate/2.0",
+  "reviewed_analysis_version": "event-v3",
+  "applies_to_entire_corrected_analysis": false,
+  "new_human_criterion_judgments_from_technical_audit": 0,
+  "selected_events": 46,
+  "separately_recorded_criterion_judgments": 0,
+  "station_count": 12,
+  "private_confirmation_sha256": "e8772cb65b3b08a6af75f3631a25146aeecd3124d6520f3ea3bdf02583e78d4c",
+  "private_packet_sha256": "d101adcc9bfd0a431c1e10e35c32ac3bf97560b59224accfebef568473b983c3"
+}

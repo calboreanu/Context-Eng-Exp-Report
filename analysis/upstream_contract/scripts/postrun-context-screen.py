@@ -14,12 +14,15 @@ import io
 import json
 import os
 import re
+import shlex
 import sys
 import zipfile
 from collections import Counter, defaultdict
 from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
+
+ADAPTER_VERSION = "ce-provider-adapter-v2.0.0-20260917"
 
 
 def digest(value: str) -> str:
@@ -180,6 +183,10 @@ def extract_human_prompt(record: dict, provider: str, nonhuman_prefixes: list[st
         payload = record.get("payload") if isinstance(record.get("payload"), dict) else {}
         if record.get("type") != "response_item" or payload.get("type") != "message" or payload.get("role") != "user":
             return None
+        content = payload.get("content")
+        if isinstance(content, list):
+            attachments = sum(isinstance(item, dict) and item.get("type") == "input_image"
+                              for item in content)
         blocks = []
         for value in content_text(payload.get("content"), accepted=("input_text", "text")):
             stripped = value.strip()
@@ -209,17 +216,304 @@ def claude_tool_result(record: dict):
     ]
 
 
-def codex_tool_result(record: dict):
+@dataclass(frozen=True)
+class ResultStatus:
+    """Provider-reported status, not a judgment about task/output quality."""
+    completed: bool
+    succeeded: bool
+    session_id: str | None = None
+    kind: str = "transport_response"
+    process: bool = False
+
+
+# The match MUST start at the transport envelope, never inside its Output body.
+PROCESS_HEADER = re.compile(
+    r"\AChunk ID: [^\n]+\nWall time: [^\n]+\nProcess "
+    r"(?:exited with code (-?\d+)|running with session ID ([^\s]+))"
+    r"[ \t]*(?:\n|\Z)")
+SCRIPT_HEADER = re.compile(
+    r"\AScript (?:running with cell ID ([^\s]+)|completed)"
+    r"[ \t]*(?:\n|\Z)")
+
+
+def _session(value):
+    return str(value) if isinstance(value, (str, int)) and not isinstance(value, bool) and str(value) else None
+
+
+def _exit_code(value):
+    if isinstance(value, int) and not isinstance(value, bool):
+        return value
+    if isinstance(value, str) and re.fullmatch(r"-?\d+", value):
+        return int(value)
+    return None
+
+
+def _script_body_parts(text):
+    """Decode a code-mode Output body only when entirely structured results.
+
+    Arbitrary prose, logs and quoted examples are not searched. JSON content is
+    still provider-reported output, not independently authenticated telemetry.
+    """
+    marker = "\nOutput:\n"
+    if marker not in text:
+        return []
+    remainder = text.split(marker, 1)[1].strip()
+    if PROCESS_HEADER.match(remainder):
+        return result_status_parts(remainder)
+    decoded = []
+    decoder = json.JSONDecoder()
+    while remainder:
+        try:
+            obj, end = decoder.raw_decode(remainder)
+        except ValueError:
+            return []
+        if not isinstance(obj, (dict, list)):
+            return []
+        decoded.extend(result_status_parts(obj))
+        remainder = remainder[end:].strip()
+    return decoded
+
+
+def result_status_parts(value) -> list[ResultStatus]:
+    """Parse supported envelopes only; do not search arbitrary response prose.
+
+    Generic result receipt remains a transport-success heuristic. An explicit
+    process envelope supersedes that heuristic. Nested content/text wrappers
+    are supported; arbitrary output/JSON data fields are not recursively mined.
+    """
+    if isinstance(value, str):
+        stripped = value.strip()
+        match = PROCESS_HEADER.match(stripped)
+        if match:
+            if match.group(1) is not None:
+                code = int(match.group(1))
+                return [ResultStatus(True, code == 0, kind="process_exit", process=True)]
+            return [ResultStatus(False, False, _session(match.group(2)), "process_running", True)]
+        # Code-mode cell completion does not establish nested process success.
+        script = SCRIPT_HEADER.match(stripped)
+        if script:
+            if script.group(1):
+                return [ResultStatus(False, False, "cell:" + script.group(1), "script_running", True)]
+            return _script_body_parts(stripped) or [ResultStatus(True, True, kind="script_completed", process=True)]
+        try:
+            decoded = json.loads(stripped)
+        except (ValueError, TypeError):
+            return [ResultStatus(True, True)]
+        if isinstance(decoded, (dict, list)):
+            return result_status_parts(decoded)
+        return [ResultStatus(True, True)]
+    if isinstance(value, list):
+        parts = []
+        for block in value:
+            if isinstance(block, dict) and block.get("type") in {"text", "output_text"} and isinstance(block.get("text"), str):
+                parts.extend(result_status_parts(block))
+            else:
+                parts.append(ResultStatus(True, True))
+        return parts or [ResultStatus(True, True)]
+    if isinstance(value, dict):
+        failed = value.get("isError") is True or value.get("is_error") is True
+        code = _exit_code(value.get("exit_code"))
+        session = _session(value.get("session_id"))
+        if code is not None:
+            parts = [ResultStatus(True, code == 0 and not failed, session, "process_exit", True)]
+            if isinstance(value.get("content"), list):
+                parts.extend(result_status_parts(value["content"]))
+        elif session is not None:
+            parts = [ResultStatus(False, False, session, "process_running", True)]
+        elif "exit_code" in value or "session_id" in value:
+            # Null/unparseable exit status without a live session is unknown,
+            # not terminal success (e.g. timeout/cancellation).
+            parts = [ResultStatus(False, False, kind="process_status_unknown", process=True)]
+        elif value.get("type") in {"text", "output_text"} and isinstance(value.get("text"), str):
+            parts = result_status_parts(value["text"])
+        elif isinstance(value.get("content"), list):
+            parts = result_status_parts(value["content"])
+        else:
+            parts = [ResultStatus(True, not failed)]
+        if failed:
+            # Preserve incompletion while preventing an inner exit-0 or generic
+            # wrapper success from overriding an explicit provider error.
+            parts = [ResultStatus(p.completed, False, p.session_id, "provider_error", p.process) for p in parts]
+        return parts
+    if value is None:
+        return [ResultStatus(False, False, kind="missing_output")]
+    return [ResultStatus(True, True)]
+
+
+def codex_result_statuses(record: dict):
     payload = record.get("payload") if isinstance(record.get("payload"), dict) else {}
     if record.get("type") != "response_item" or payload.get("type") not in {"function_call_output", "custom_tool_call_output"}:
         return []
     call_id = str(payload.get("call_id") or payload.get("id") or "")
     if not call_id:
         return []
-    output = payload.get("output")
-    output_text = output if isinstance(output, str) else compact_json(output)
-    failed = bool(re.search(r'"(?:exit_code|isError)"\s*:\s*(?:[1-9][0-9]*|true)', output_text or "", re.I))
-    return [(call_id, not failed)]
+    return [(call_id, result_status_parts(payload.get("output")))]
+
+
+def codex_tool_result(record: dict):
+    """Compatibility API only; use EpisodeToolState for completion and polling."""
+    return [(call_id, all(p.completed and p.succeeded for p in parts))
+            for call_id, parts in codex_result_statuses(record)]
+
+
+def _poll_session(name, raw_input):
+    leaf = name.lower().split(".")[-1].split("__")[-1]
+    if leaf not in {"write_stdin", "wait"}:
+        return None
+    value = raw_input
+    if isinstance(value, str):
+        try:
+            value = json.loads(value)
+        except ValueError:
+            return None
+    if not isinstance(value, dict):
+        return None
+    if leaf == "write_stdin":
+        return _session(value.get("session_id"))
+    cell = _session(value.get("cell_id"))
+    return "cell:" + cell if cell is not None else None
+
+
+def _is_poll_name(name):
+    return name.lower().split(".")[-1].split("__")[-1] in {"write_stdin", "wait"}
+
+
+class EpisodeToolState:
+    """Call/result association bounded to one source episode and its cutoff.
+
+    Call list/order remain intact. Polls are administrative, while a matched
+    terminal result updates the original process invocation exactly once.
+    No process session is linked across episodes or ambiguous session owners.
+    """
+    def __init__(self, calls: list[dict]):
+        self.calls = calls
+        self.by_id = {}
+        self.sessions = {}
+        self.metadata = {}
+        self.diagnostics = Counter()
+
+    def add_call(self, call_id, name, raw_input, provider="codex_rollout"):
+        target = target_identity(raw_input)
+        polling = _poll_session(name, raw_input) if provider == "codex_rollout" else None
+        is_poll = provider == "codex_rollout" and _is_poll_name(name)
+        call = {"order": len(self.calls) + 1, "name": name,
+                "class": "administrative" if is_poll else classify_tool(name, raw_input),
+                "completed": False, "succeeded": False,
+                "target_ref": token("TGT", target) if target else ""}
+        self.calls.append(call)
+        self.metadata[id(call)] = {"parts": [], "poll_session": polling, "is_poll": is_poll, "sticky_failure": False}
+        if call_id:
+            if provider.startswith("claude"):
+                self.by_id[call_id] = call
+                return call
+            if call_id in self.by_id:
+                # Provider IDs are expected unique within an episode. Refuse
+                # to let duplicate IDs complete an arbitrarily chosen call.
+                self.by_id[call_id] = None
+                self.diagnostics["duplicate_call_ids"] += 1
+            else:
+                self.by_id[call_id] = call
+        if is_poll:
+            self.diagnostics["poll_calls_administrative"] += 1
+        return call
+
+    def _refresh(self, call):
+        meta = self.metadata[id(call)]
+        parts = meta["parts"]
+        meta["sticky_failure"] |= any(p.completed and not p.succeeded for p in parts)
+        call["completed"] = bool(parts) and all(p.completed for p in parts)
+        call["succeeded"] = call["completed"] and not meta["sticky_failure"] and all(p.succeeded for p in parts)
+
+    def _register_sessions(self, call):
+        for index, part in enumerate(self.metadata[id(call)]["parts"]):
+            if part.session_id is None or part.completed:
+                continue
+            owner = (call, index)
+            prior = self.sessions.get(part.session_id)
+            if part.session_id not in self.sessions or (prior is not None and prior[0] is call and prior[1] == index):
+                self.sessions[part.session_id] = owner
+            else:
+                self.sessions[part.session_id] = None
+                self.diagnostics["ambiguous_session_ids"] += 1
+
+    def apply_parts(self, call_id, parts):
+        call = self.by_id.get(call_id)
+        if call is None:
+            self.diagnostics["unmatched_or_ambiguous_results"] += 1
+            return
+        meta = self.metadata[id(call)]
+        known_pending = [p for p in meta["parts"] if p.process and not p.completed]
+        if known_pending and not any(p.process for p in parts):
+            # Receipt of a subsequent generic acknowledgment is not evidence
+            # that an already-known running process/cell reached completion.
+            self.diagnostics["generic_ack_preserved_pending_status"] += 1
+            return
+        pending_sessions = {p.session_id for p in known_pending if p.session_id is not None}
+        incoming_sessions = {p.session_id for p in parts if p.process and p.session_id is not None}
+        if (pending_sessions and not any(s.startswith("cell:") for s in pending_sessions)
+                and incoming_sessions and not incoming_sessions.issubset(pending_sessions)):
+            self.diagnostics["conflicting_same_call_session_preserved_pending"] += 1
+            return
+        meta["parts"] = list(parts)
+        self._refresh(call)
+        poll_session = meta["poll_session"]
+        if not meta["is_poll"]:
+            self._register_sessions(call)
+            return
+        if poll_session is None:
+            self.diagnostics["unlinked_poll_results"] += 1
+            return
+        owner = self.sessions.get(poll_session)
+        if owner is None:
+            self.diagnostics["unlinked_poll_results"] += 1
+            return
+        # Exactly one process part must be attributable to this poll. Never
+        # mix success from one response/session with another process's status.
+        process_parts = [p for p in parts if p.process]
+        cell_poll = poll_session.startswith("cell:")
+        if not cell_poll and (len(process_parts) != 1 or any(p.session_id is not None and p.session_id != poll_session for p in process_parts)):
+            self.diagnostics["unresolved_poll_status"] += 1
+            return
+        origin, index = owner
+        origin_meta = self.metadata[id(origin)]
+        if index >= len(origin_meta["parts"]) or origin_meta["parts"][index].session_id != poll_session:
+            self.diagnostics["stale_poll_owner"] += 1
+            return
+        if cell_poll:
+            # Cell completion may yield several nested process envelopes.
+            # Replace the cell placeholder with those components and register
+            # their sessions; do not infer that the script's success is theirs.
+            if any(p.kind == "script_running" and p.session_id != poll_session for p in parts):
+                self.diagnostics["unresolved_poll_status"] += 1
+                return
+            if not any(p.process for p in parts):
+                self.diagnostics["unresolved_poll_status"] += 1
+                return
+            for session, registered in list(self.sessions.items()):
+                if registered is not None and registered[0] is origin:
+                    del self.sessions[session]
+            origin_meta["parts"][index:index + 1] = parts
+            self._refresh(origin)
+            self._register_sessions(origin)
+            self.diagnostics["linked_poll_results"] += 1
+            return
+        part = process_parts[0]
+        # Any explicit error in a wrapper is also a failure for the origin.
+        succeeded = part.succeeded and all(p.succeeded for p in parts if p.completed)
+        origin_meta["parts"][index] = ResultStatus(part.completed, succeeded, poll_session, part.kind, True)
+        self._refresh(origin)
+        self.diagnostics["linked_poll_results"] += 1
+
+    def apply_record(self, record, provider):
+        if provider.startswith("claude"):
+            for call_id, succeeded in claude_tool_result(record):
+                call = self.by_id.get(call_id)
+                if call is not None:
+                    call["completed"] = True
+                    call["succeeded"] = succeeded
+        else:
+            for call_id, parts in codex_result_statuses(record):
+                self.apply_parts(call_id, parts)
 
 
 def tool_input_text(value) -> str:
@@ -280,7 +574,24 @@ MUTATION_COMMAND = re.compile(r"\b(?:apply_patch|mkdir|touch|chmod|cp|mv|rm|git\
 VERIFY_COMMAND = re.compile(r"\b(?:pytest|npm\s+(?:test|run\s+(?:test|build|lint))|pnpm\s+(?:test|run)|yarn\s+(?:test|run)|go\s+test|cargo\s+test|tsc|validate|replay|check)\b", re.I)
 
 
+def is_todo_write_tool(name: str) -> bool:
+    """Closed administrative name family; never a file/command-content match.
+
+    Only the final provider-name component is inspected. Case and underscore/
+    hyphen variants are equivalent; Write targeting TODO.md is unchanged.
+    """
+    leaf = re.split(r"__|::|[./]", name.strip().casefold())[-1]
+    return re.sub(r"[_-]", "", leaf) == "todowrite"
+
+
 def classify_tool(name: str, raw_input) -> str:
+    if is_todo_write_tool(name):
+        return "administrative"
+    return classify_tool_before_v5(name, raw_input)
+
+
+def classify_tool_before_v5(name: str, raw_input) -> str:
+    """Preserved pre-v5 taxonomy, solely for pinned source replay comparison."""
     key = name.lower()
     serialized = tool_input_text(raw_input)
     if any(term in key for term in ("taskupdate", "taskcreate", "update_plan", "request_user_input", "askuser", "wait", "list_agents", "send_message", "present_files", "toolsearch")):
@@ -317,15 +628,123 @@ def subagent_source(record: dict, provider: str) -> bool:
     return isinstance(source, dict) and "subagent" in source
 
 
+def notification_boundary(prompt: str, native_origin: str = "") -> dict:
+    """Identify complete machine envelopes, never SDK use or keywords alone.
+
+    Keep the raw prompt unchanged. A wrapper followed by a separate instruction
+    is not classified solely from its prefix. Native machine origin is stronger
+    than user-role serialization, but does not authenticate any human identity.
+    """
+    text = prompt.strip()
+    if native_origin.casefold() == "human":
+        return {}
+    whole = re.fullmatch(r"<task-notification(?:\s[^>]*)?>\s*(.*?)\s*</task-notification>", text, re.S | re.I)
+    native = native_origin.casefold() == "task-notification"
+    if not (whole or native):
+        return {}
+    identifiers = sorted(set(re.findall(r"<tool-use-id>\s*([^<>\s]+)\s*</tool-use-id>", text, re.I)))
+    return {"kind": "machine_task_notification", "native_origin": native_origin,
+            "complete_wrapper": bool(whole), "tool_ids": identifiers}
+
+
+def bare_continuation(prompt: str, config: dict) -> bool:
+    """Closed acknowledgment grammar; any additional task content stays fresh.
+
+    This is a deterministic boundary candidate, not semantic intent inference.
+    The event normalizer separately requires a unique supported owner.
+    """
+    return any(re.fullmatch(pattern, prompt.strip(), re.I)
+               for pattern in config["continuation_only"])
+
+
+def artifact_references(prompt: str) -> set[str]:
+    # XML element syntax is not an artifact path. Contents such as an actual
+    # <file_path>/supplied/spec.md</file_path> remain visible to the rule.
+    def attribute_values(match):
+        # Artifact-bearing values remain evidence; XML names and closing-tag
+        # slashes are syntax. Attribute names never count as paths themselves.
+        return " " + " ".join(m.group(2) for m in re.finditer(r'''[A-Za-z_:][\w.:-]*\s*=\s*(["'])(.*?)\1''', match.group(0), re.S)) + " "
+    without_tags = re.sub(r"</?[A-Za-z][A-Za-z0-9_.:-]*(?:\s[^<>]*?)?/?>", attribute_values, prompt)
+    refs = set(re.findall(r'''(?<!\w)(?:[./~][^\s,;:()<>\[\]{}"']+|[A-Za-z0-9_.-]+\.(?:md|txt|json|ya?ml|csv|tsv|py|mjs|js|ts|tsx|jsx|html|css|docx|pdf|pptx|xlsx|zip))(?!\w)''', without_tags, re.I))
+    # Bare dot-numbers are numeric cues, not artifact cues. Qualified paths,
+    # URLs, dotfiles and filenames with an extension remain references.
+    return {ref for ref in refs if not re.fullmatch(r"\.\d+(?:[eE][+-]?\d+)?%?[.!?]*", ref)}
+
+
+def stage_request_text(prompt: str) -> str:
+    """Remove only mechanically identifiable inert Git message arguments.
+
+    Quotes and code fences are not generally discarded: they can express real
+    requests. For an actual Git commit/tag command, -m/--message values are data
+    to write, not a request to perform activities named in that value. Other
+    commands, including verification commands, and quoted prose remain intact.
+    This narrow lexical correction is not a general semantic stage classifier.
+    """
+    output = []
+    for line in prompt.splitlines():
+        try:
+            lexer = shlex.shlex(line, posix=True, punctuation_chars=";&|")
+            lexer.whitespace_split = True
+            lexer.commenters = ""
+            tokens = list(lexer)
+        except ValueError:
+            output.append(line)
+            continue
+        pieces, chunk = [], []
+        for value in tokens + [None]:
+            if value is None or value in {";", "&&", "||", "|"}:
+                pieces.append(chunk)
+                if value is not None:
+                    pieces.append([value])
+                chunk = []
+            else:
+                chunk.append(value)
+        changed = False
+        for part in pieces:
+            if not part:
+                continue
+            offset = 1 if part[0] == "$" else 0
+            if len(part) <= offset or part[offset].rsplit("/", 1)[-1] != "git":
+                continue
+            i = offset + 1
+            # Git's common global options have argument values before subcommand.
+            while i < len(part) and part[i].startswith("-"):
+                if part[i] in {"-C", "-c", "--git-dir", "--work-tree", "--namespace"}:
+                    i += 2
+                else:
+                    i += 1
+            if i >= len(part) or part[i] not in {"commit", "tag"}:
+                continue
+            j = i + 1
+            while j < len(part):
+                if part[j] == "--":
+                    break
+                short_message = re.fullmatch(r"-([aqsv]*)m(.*)", part[j]) if not part[j].startswith("--") else None
+                # Short options before m must be known no-argument switches;
+                # e.g. -am is a message option, but -C/path is not.
+                if (part[j] in {"-m", "--message"} or (short_message and not short_message.group(2))) and j + 1 < len(part):
+                    part[j + 1] = "INERT_MESSAGE_VALUE"
+                    changed = True
+                    j += 2
+                elif part[j].startswith("--message=") or (short_message and short_message.group(2)):
+                    part[j] = "INERT_MESSAGE_OPTION"
+                    changed = True
+                    j += 1
+                else:
+                    j += 1
+        output.append(" ".join(x for part in pieces for x in part) if changed else line)
+    return "\n".join(output)
+
+
 def episode_classification(ep: dict, config: dict, stage_groups: dict, context_groups: dict,
                            publication_regexes: list[re.Pattern], product_regexes: list[re.Pattern],
                            non_product_regexes: list[re.Pattern], continuation_regexes: list[re.Pattern],
                            continuation_wrapper_regexes: list[re.Pattern], delegated_regexes: list[re.Pattern],
                            tool_generated_regexes: list[re.Pattern]):
     prompt = ep["prompt_text"]
-    stages, stage_count = matched_groups(prompt, stage_groups)
+    stages, stage_count = matched_groups(stage_request_text(prompt), stage_groups)
     modes, explicit_context_count = matched_groups(prompt, context_groups)
-    path_refs = set(re.findall(r"(?<!\w)(?:[./~][^\s,;:()<>\[\]{}]+|[A-Za-z0-9_.-]+\.(?:md|txt|json|ya?ml|csv|tsv|py|mjs|js|ts|tsx|jsx|html|css|docx|pdf|pptx|xlsx|zip))(?!\w)", prompt, re.I))
+    path_refs = artifact_references(prompt)
     if len(path_refs) >= 2:
         if "bounded_package" not in modes:
             modes.append("bounded_package")
@@ -335,10 +754,10 @@ def episode_classification(ep: dict, config: dict, stage_groups: dict, context_g
         explicit_context_count += 1
     publication = matching_count(prompt, publication_regexes) > 0
     explicit_non_product = matching_count(prompt, non_product_regexes) > 0
-    continuation = any(regex.fullmatch(prompt.strip()) for regex in continuation_regexes)
+    continuation = ep['attachment_count'] == 0 and any(regex.fullmatch(prompt.strip()) for regex in continuation_regexes)
     continuation_wrapper = any(regex.search(prompt.strip()) for regex in continuation_wrapper_regexes)
     delegated_prompt = any(regex.search(prompt.strip()) for regex in delegated_regexes)
-    tool_generated_prompt = any(regex.search(prompt.strip()) for regex in tool_generated_regexes)
+    tool_generated_prompt = bool(notification_boundary(prompt, ep.get("native_origin", ""))) or any(regex.search(prompt.strip()) for regex in tool_generated_regexes)
     scheduled_automation = (prompt.lstrip().startswith("<scheduled-task") or
                             prompt.lstrip().lower().startswith("automation:") or
                             "this is an automated run of a scheduled task" in prompt.lower())
@@ -489,6 +908,8 @@ def main():
     root = Path.cwd()
     run_config = json.loads((root / args.config).read_text())
     rules = json.loads((root / args.rules).read_text())
+    # Routing expressions remain frozen; version only the corrected adapter.
+    rules["rule_version"] = rules["rule_version"] + ";" + ADAPTER_VERSION
     cutoff = json.loads((root / "config/study-cutoff.json").read_text())
     if rules["cutoff_id"] != cutoff["cutoff_id"]:
         raise RuntimeError("eligibility rules and study cutoff disagree")
@@ -569,7 +990,7 @@ def main():
             for source_index, source in enumerate(sources, 1):
                 active = None
                 turn_index = 0
-                calls_by_id = {}
+                tool_state = None
                 hasher = hashlib.sha256()
                 source_is_subagent = False
                 line_number = 0
@@ -607,27 +1028,15 @@ def main():
                                     "timestamp_end": timestamp, "calls": [], "assistant_output_blocks": 0,
                                     "assistant_output_chars": 0,
                                 }
-                                calls_by_id = {}
+                                tool_state = EpisodeToolState(active["calls"])
                             if active is None:
                                 continue
                             active["line_end"] = line_number
                             if timestamp:
                                 active["timestamp_end"] = timestamp
-                            results = (claude_tool_result(record) if source.provider.startswith("claude") else codex_tool_result(record))
-                            for call_id, succeeded in results:
-                                if call_id in calls_by_id:
-                                    calls_by_id[call_id]["completed"] = True
-                                    calls_by_id[call_id]["succeeded"] = succeeded
+                            tool_state.apply_record(record, source.provider)
                             for call_id, name, raw_input in extract_tool_calls(record, source.provider):
-                                target = target_identity(raw_input)
-                                call = {
-                                    "order": len(active["calls"]) + 1, "name": name, "class": classify_tool(name, raw_input),
-                                    "completed": False, "succeeded": False,
-                                    "target_ref": token("TGT", target) if target else "",
-                                }
-                                active["calls"].append(call)
-                                if call_id:
-                                    calls_by_id[call_id] = call
+                                tool_state.add_call(call_id, name, raw_input, source.provider)
                             texts = assistant_text(record, source.provider)
                             active["assistant_output_blocks"] += len(texts)
                             active["assistant_output_chars"] += sum(len(text) for text in texts)

@@ -20,6 +20,8 @@ analysis/results/archive_group_summary.csv,effect_scale,string,"Risk difference,
 analysis/results/archive_group_summary.csv,ce_value,number,"Context-operation condition rate or median, according to effect scale.",,no,public_aggregate_or_metadata
 analysis/results/archive_group_summary.csv,comparison_value,number,"Routed-comparison rate or median, according to effect scale.",,no,public_aggregate_or_metadata
 analysis/results/archive_group_summary.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,ce_observed,integer,Finite observations used in the context-operation condition estimate; timing may be unavailable.,,no,public_aggregate_or_metadata
+analysis/results/archive_group_summary.csv,comparison_observed,integer,Finite observations used in the comparison estimate; timing may be unavailable.,,no,public_aggregate_or_metadata
 analysis/results/equal_station_summary.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
 analysis/results/equal_station_summary.csv,metric,string,Stable machine-readable metric identifier.,,no,public_aggregate_or_metadata
 analysis/results/equal_station_summary.csv,metric_label,string,Human-readable metric description.,,no,public_aggregate_or_metadata
@@ -57,6 +59,8 @@ analysis/results/pooled_summary.csv,ce_value,number,"Context-operation condition
 analysis/results/pooled_summary.csv,comparison_value,number,"Routed-comparison rate or median, according to effect scale.",,no,public_aggregate_or_metadata
 analysis/results/pooled_summary.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
 analysis/results/pooled_summary.csv,rows_per_condition,integer,Observations in each balanced condition.,,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,ce_observed,integer,Finite observations used in the context-operation condition estimate; timing may be unavailable.,,no,public_aggregate_or_metadata
+analysis/results/pooled_summary.csv,comparison_observed,integer,Finite observations used in the comparison estimate; timing may be unavailable.,,no,public_aggregate_or_metadata
 analysis/results/station_effects.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
 analysis/results/station_effects.csv,station_id,string,Pseudonymous station label with no public identity key.,,no,public_aggregate_or_metadata
 analysis/results/station_effects.csv,balanced_per_condition,integer,Selected observations in each condition for a station or stratum.,,no,public_aggregate_or_metadata
@@ -66,6 +70,8 @@ analysis/results/station_effects.csv,effect_scale,string,"Risk difference, ratio
 analysis/results/station_effects.csv,ce_value,number,"Context-operation condition rate or median, according to effect scale.",,no,public_aggregate_or_metadata
 analysis/results/station_effects.csv,comparison_value,number,"Routed-comparison rate or median, according to effect scale.",,no,public_aggregate_or_metadata
 analysis/results/station_effects.csv,effect,number,Condition difference or ratio defined by effect_scale.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,ce_observed,integer,Finite observations used in the context-operation condition estimate; timing may be unavailable.,,no,public_aggregate_or_metadata
+analysis/results/station_effects.csv,comparison_observed,integer,Finite observations used in the comparison estimate; timing may be unavailable.,,no,public_aggregate_or_metadata
 data/catalog/aggregate_catalog.csv,record_id,string,Record id.,,no,public_aggregate_or_metadata
 data/catalog/aggregate_catalog.csv,view,string,View.,,no,public_aggregate_or_metadata
 data/catalog/aggregate_catalog.csv,analysis_set,string,Analysis construction or sensitivity population.,,no,public_aggregate_or_metadata
@@ -95,6 +101,8 @@ data/catalog/aggregate_catalog.csv,eligible_rows,integer,Rows eligible for the l
 data/catalog/aggregate_catalog.csv,unresolved,integer,Eligible linkage rows unresolved at the stated window.,,yes,public_aggregate_or_metadata
 data/catalog/aggregate_catalog.csv,source_file,string,Source file.,,no,public_aggregate_or_metadata
 data/catalog/aggregate_catalog.csv,source_record,string,Source record.,,no,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,ce_observed,integer,Finite observations used in the context-operation condition estimate; timing may be unavailable.,,yes,public_aggregate_or_metadata
+data/catalog/aggregate_catalog.csv,comparison_observed,integer,Finite observations used in the comparison estimate; timing may be unavailable.,,yes,public_aggregate_or_metadata
 data/catalog/source_frame_summary.csv,item_id,string,Item id.,,no,public_aggregate_or_metadata
 data/catalog/source_frame_summary.csv,scope,string,Scope.,,no,public_aggregate_or_metadata
 data/catalog/source_frame_summary.csv,measure,string,Measure.,,no,public_aggregate_or_metadata

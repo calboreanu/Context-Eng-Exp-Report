@@ -22,7 +22,7 @@ from pathlib import Path
 
 csv.field_size_limit(sys.maxsize)
 
-RULE_VERSION = "ce-inheritance-map/2.0.0-action-eligible-pilot"
+RULE_VERSION = "ce-inheritance-map/3.0.0-event-normalized-pilot"
 STATIONS = {"ST00", "ST01", "ST02"}
 # The linkage pilot deliberately uses a broader predecessor pool than the
 # balanced CE arm: either automated CE-candidate disposition can establish a
@@ -274,6 +274,7 @@ def main() -> None:
             "high_confidence_candidates": tier_counts["HIGH_CONFIDENCE_CANDIDATE"],
             "probable_candidates": tier_counts["PROBABLE_CANDIDATE"],
             "unresolved_primary_rule": tier_counts["UNRESOLVED"],
+            "sequence_unit": "corrected primary-boundary event ordinal within explicit native session and nesting owner for Claude, canonical source session for Codex; absorbed nonprimary anchors do not start fresh events; quarantined event positions are not closed up",
         },
         "class_counts": dict(sorted(class_counts.items())),
         "tier_counts": dict(sorted(tier_counts.items())),
@@ -292,6 +293,7 @@ def main() -> None:
             "Every linkage label is automated and pending accountable human review.",
             "Adjacency and lexical continuation cues are candidate evidence, not proof of inheritance.",
             "The pilot is limited to three station archives and is not additive with the 13-station balanced analysis.",
+            "Only the canonical explicit session is used; source aliases do not establish cross-session inheritance.",
         ],
     }
     (args.out / "inheritance_pilot_summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")

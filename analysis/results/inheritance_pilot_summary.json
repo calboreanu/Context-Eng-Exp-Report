@@ -1,82 +1,83 @@
 {
-  "generated_utc": "2026-08-15T13:24:46.502511+00:00",
-  "rule_version": "ce-inheritance-map/2.0.0-action-eligible-pilot",
+  "generated_utc": "2026-09-18T22:44:59.280615+00:00",
+  "rule_version": "ce-inheritance-map/3.0.0-event-normalized-pilot",
   "status": "automated_unadjudicated_candidate_linkage_pilot",
   "input": {
-    "filename": "extended_multistation_context_episode_review.local.csv",
-    "sha256": "098998194cc6636b92fb47fc04fd78055c28f02ebac664e3ffc87ecffd2bd5d3",
+    "filename": "normalized_merged_v5.local.csv",
+    "sha256": "1014631e96d0a7c7df0545ca1516894872bc0874127e803cf6d159dc8babf146",
     "restricted": true
   },
   "runtime": {
-    "python": "3.12.13",
+    "python": "3.12.14",
     "implementation": "CPython",
     "third_party_libraries": []
   },
   "scope": {
-    "source_rows_three_stations": 22469,
-    "action_eligible_comparison_rows_mapped": 3502,
+    "source_rows_three_stations": 16314,
+    "action_eligible_comparison_rows_mapped": 2898,
     "prior_ce_predecessor_dispositions": [
       "candidate_strong",
       "candidate_probable"
     ],
-    "eligible_rows_with_prior_action_eligible_ce": 3326,
-    "clean_origin_candidates": 176,
-    "high_confidence_candidates": 1338,
-    "probable_candidates": 1388,
-    "unresolved_primary_rule": 600
+    "eligible_rows_with_prior_action_eligible_ce": 2560,
+    "clean_origin_candidates": 338,
+    "high_confidence_candidates": 1107,
+    "probable_candidates": 1149,
+    "unresolved_primary_rule": 304,
+    "sequence_unit": "corrected primary-boundary event ordinal within explicit native session and nesting owner for Claude, canonical source session for Codex; absorbed nonprimary anchors do not start fresh events; quarantined event positions are not closed up"
   },
   "class_counts": {
-    "CLEAN_ORIGIN_CANDIDATE": 176,
-    "CONTEXT_REFERENCE_WITHIN_20": 1183,
-    "EXACT_PROMPT_ANCHOR": 16,
-    "EXACT_SUCCESSFUL_TOOL_TARGET": 1205,
-    "IMMEDIATE_ADJACENCY": 76,
-    "IMMEDIATE_SHORT_REFERENCE": 117,
-    "NEAR_SEQUENCE": 129,
-    "UNRESOLVED_PRIOR_CE_SESSION": 600
+    "CLEAN_ORIGIN_CANDIDATE": 338,
+    "CONTEXT_REFERENCE_WITHIN_20": 907,
+    "EXACT_PROMPT_ANCHOR": 38,
+    "EXACT_SUCCESSFUL_TOOL_TARGET": 884,
+    "IMMEDIATE_ADJACENCY": 138,
+    "IMMEDIATE_SHORT_REFERENCE": 185,
+    "NEAR_SEQUENCE": 104,
+    "UNRESOLVED_PRIOR_CE_SESSION": 304
   },
   "tier_counts": {
-    "CLEAN_ORIGIN_CANDIDATE": 176,
-    "HIGH_CONFIDENCE_CANDIDATE": 1338,
-    "PROBABLE_CANDIDATE": 1388,
-    "UNRESOLVED": 600
+    "CLEAN_ORIGIN_CANDIDATE": 338,
+    "HIGH_CONFIDENCE_CANDIDATE": 1107,
+    "PROBABLE_CANDIDATE": 1149,
+    "UNRESOLVED": 304
   },
   "primary_window": 20,
   "sensitivity": [
     {
       "window": 5,
-      "candidate_positive": 2119,
-      "eligible_rows": 3326,
-      "candidate_positive_rate": 0.6371016235718581,
-      "unresolved": 1207
+      "candidate_positive": 1860,
+      "eligible_rows": 2560,
+      "candidate_positive_rate": 0.7265625,
+      "unresolved": 700
     },
     {
       "window": 10,
-      "candidate_positive": 2453,
-      "eligible_rows": 3326,
-      "candidate_positive_rate": 0.7375225496091401,
-      "unresolved": 873
+      "candidate_positive": 2104,
+      "eligible_rows": 2560,
+      "candidate_positive_rate": 0.821875,
+      "unresolved": 456
     },
     {
       "window": 20,
-      "candidate_positive": 2726,
-      "eligible_rows": 3326,
-      "candidate_positive_rate": 0.8196031268791341,
-      "unresolved": 600
+      "candidate_positive": 2256,
+      "eligible_rows": 2560,
+      "candidate_positive_rate": 0.88125,
+      "unresolved": 304
     },
     {
       "window": 50,
-      "candidate_positive": 2919,
-      "eligible_rows": 3326,
-      "candidate_positive_rate": 0.8776307877330126,
-      "unresolved": 407
+      "candidate_positive": 2309,
+      "eligible_rows": 2560,
+      "candidate_positive_rate": 0.901953125,
+      "unresolved": 251
     },
     {
       "window": 106,
-      "candidate_positive": 2976,
-      "eligible_rows": 3326,
-      "candidate_positive_rate": 0.8947684906794949,
-      "unresolved": 350
+      "candidate_positive": 2323,
+      "eligible_rows": 2560,
+      "candidate_positive_rate": 0.907421875,
+      "unresolved": 237
     }
   ],
   "rule_precedence": [
@@ -91,6 +92,7 @@
   "limitations": [
     "Every linkage label is automated and pending accountable human review.",
     "Adjacency and lexical continuation cues are candidate evidence, not proof of inheritance.",
-    "The pilot is limited to three station archives and is not additive with the 13-station balanced analysis."
+    "The pilot is limited to three station archives and is not additive with the 13-station balanced analysis.",
+    "Only the canonical explicit session is used; source aliases do not establish cross-session inheritance."
   ]
 }

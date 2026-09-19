@@ -1,40 +1,40 @@
 # Context Engineering workstation evidence
 
-This clean-history public release contains the privacy-preserving empirical evidence behind *Context Engineering: A Practitioner Methodology for Structured Human--AI Collaboration -- An Experience Report*.
+**Public package v2.0.0 — event-v5 corrected evidence, 19 September 2026.** This package carries the frozen analytical contract `context-engineering-event-normalized-analysis/5.0.0`; the public release number and analytical contract number are distinct. The [pre-release audit record](docs/LOCAL_CANDIDATE_AUDIT.md) documents the 18 September computational and artifact checks. Current publication and downloaded-archive verification gates are tracked separately in the [release checklist](docs/RELEASE_CHECKLIST.md). No previous public release is relabeled as this successor.
 
-The revised paper analyzes 31,919 process-trace episodes from 4,760 conversation sources in 13 pseudonymous workstation archives. This repository exposes the analysis rules, executable source-level scripts, aggregate results, integrity receipts, data definitions, and claim-to-evidence mappings. It deliberately does **not** contain raw prompts, assistant responses, exact timestamps, paths, conversation identifiers, row-level balanced samples, or the candidate-linkage map.
+This is the aggregate evidence and traceability package for *Context Engineering: A Practitioner Methodology for Structured Human–AI Collaboration — An Experience Report*.
 
-## What readers can check
+The published v1.0.0 snapshot remains a historical record. Following the local event-v2 provider-status, event-v3 native-identity and event-v4 primary-boundary corrections, event-v5 corrects task-list bookkeeping classified as substantive work and bare numeric tokens classified as artifact references. See [the versioned correction](docs/CLASSIFICATION_CORRECTION.md). The author previously reported reviewing all 46 frozen event-v3 cases and collectively confirming their classifications, with no inaccuracies reported at that time. Later technical findings qualify that corroboration; they do not create new human ratings or transfer the confirmation to changed or newly selected cases. The [review summary](docs/HUMAN_REVIEW_SUMMARY.md) preserves both records and their limits. Public distribution does not establish journal submission, editorial acceptance or new human validation.
 
-- all pooled primary and unrestricted summaries;
-- all station-level effects for the 12 contributing pseudonymous stations;
-- equal-station, minimum-station-size, and archive-batch sensitivities;
-- action-count-bin diagnostics, including the comparator-standardized gaps;
-- linkage-window sensitivity from 5 through 106 prompt episodes;
-- the mapping from manuscript claims to exact files and selectors;
-- field-level transformation lineage and source-chain receipts;
-- release hashes and automated boundary checks.
+The retained intake contains 39,830 recognized text-bearing prompt occurrences before the delegated-source filter, which removes 7,911 occurrences and leaves 31,919 source-local segments. Those segments are not 31,919 distinct human tasks. The versioned normalizer reconciles replay echoes, saved-history copies and duplicate capture representations, preserves attributable work and records unresolved cases. The final v5 input contains 20,682 resolved trajectories; 283 components remain held separately. Primary and unrestricted constructions balance 429 and 1,227 observations per condition across 12 contributing stations. The exact input identity is bound to [the analysis summary](analysis/results/analysis_summary.json). The retained normalization boundary is explained in [the normalization contract](docs/EVENT_NORMALIZATION.md).
 
-`data/catalog/aggregate_catalog.csv` combines those views into one filterable long-form table. `Context_Engineering_Evidence_Explorer.xlsx` provides the same public data in a reviewer-friendly workbook; the CSV and JSON files remain the canonical machine-readable evidence.
+## What a reviewer can check
 
-## Start here
+- Primary and unrestricted pooled results, with observed timing denominators.
+- Pseudonymous station, equal-station, minimum-size and archive-batch sensitivities.
+- Action-count diagnostics and inherited-context window sensitivities.
+- Executable claim-to-record mappings, field-level transformations and source-chain receipts.
+- Deterministic catalog rebuilding, exact distributed bytes and fictional regression tests.
+- Aggregate counts, selection design and recording limits for the 46-case author check.
 
-1. Follow the five-minute workflow in [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md).
-2. Read [`docs/PRIVACY_AND_DISCLOSURE.md`](docs/PRIVACY_AND_DISCLOSURE.md).
-3. Inspect [`data/provenance/claim_to_evidence.csv`](data/provenance/claim_to_evidence.csv).
-4. Filter [`data/catalog/aggregate_catalog.csv`](data/catalog/aggregate_catalog.csv) or open the evidence explorer.
-5. Run the complete audit with `python3 scripts/run_reviewer_audit.py`.
+Start with [the reviewer guide](docs/REVIEWER_GUIDE.md), the compact [public/restricted claim boundary](docs/CLAIM_REPRODUCIBILITY.md), and the executable [claim map](data/provenance/claim_to_evidence.csv). The catalog and workbook are review conveniences; CSV and JSON remain canonical. Their frozen-content checks are recorded in the pre-release audit; successor-package checks are separate.
 
-The immutable Version 1.0.0 release is at `https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v1.0.0`. See [`docs/MANUSCRIPT_RELEASE_CROSSWALK.md`](docs/MANUSCRIPT_RELEASE_CROSSWALK.md) for the paper-to-evidence map and exact submission-PDF receipts.
+Run the public checks from the repository root:
 
-## Reproducibility boundary
+```sh
+python3 scripts/run_reviewer_audit.py
+```
 
-The raw merged input is restricted because it contains prompts, outputs, tool traces, exact timestamps, paths, and potentially confidential material. Its receipt is published by filename, byte count, and SHA-256 only. The source-level scripts are included so an authorized reviewer can reproduce the analysis with separately governed access. A public reader can independently validate the internal arithmetic and cross-file consistency of the released aggregates, but cannot regenerate the source frame from this repository alone.
+## Reproduction and privacy boundary
 
-That distinction is intentional: this is an aggregate evidence and traceability package, not a disguised release of conversation content.
+The public package supports independent aggregate arithmetic and consistency checks. Source-level regeneration requires separately authorized access to the restricted input and source receipts; see [REPRODUCE.md](analysis/REPRODUCE.md). Raw prompts, responses, supplied context, exact timestamps, persistent locators, row-level trajectories, event aliases and detailed human-review materials are not distributed. Hashes identify withheld records; they do not make those records public. Only the bounded review's aggregate summary is included.
 
-## License and release status
+Normalized events are not demonstrated independent practitioners, tasks or accepted deliverables. Tool status is not independent product-quality validation. The publication-purpose rules exclude matching records, not necessarily every publication-related task. Lexical classifications and candidate inheritance remain subject to their stated limitations.
 
-Code and executable specifications are licensed under Apache-2.0. Documentation, public aggregate evidence, mappings, receipts, manifests, and the reviewer workbook are licensed under CC BY 4.0; see [`LICENSING.md`](LICENSING.md) for the exact component split.
+## Version and license
 
-The author approved the aggregate-only disclosure boundary on 17 August 2026. The public release contains no raw prompts, responses, supplied context, exact timestamps, persistent locators, row-level trajectories, balanced-row derivatives, or candidate-linkage map. The separate internal IRAD/data-use signature remains an IST submission-file check, not a statement that confidential source records are public.
+The versioned locator for this package is [v2.0.0](https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v2.0.0). The [historical v1.0.0 release](https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v1.0.0) predates these corrections. No DOI is claimed. The [manuscript crosswalk](docs/MANUSCRIPT_RELEASE_CROSSWALK.md) separates public evidence from historical and current journal artifacts; the [release checklist](docs/RELEASE_CHECKLIST.md) distinguishes publication from a fresh download audit.
+
+The frozen analytical files, aggregate data, code, tests and evidence workbook are preserved from the verified 18 September event-v5 candidate. Some retained records therefore say `unreleased` or `unreleased_local_candidate`: notably the analytical deviation contract, the historical author-review summary, the CE-C02 claim note and workbook preparation notes. These describe their preparation state, not the distribution status of public package v2.0.0. Publication metadata is maintained here and in `CITATION.cff`; historical status text is not rewritten into a new empirical or human-review result. `analysis/ANALYSIS_MANIFEST.sha256` remains unchanged, while `PUBLIC_MANIFEST.sha256` binds the final distributed package.
+
+Code and executable specifications use Apache-2.0; documentation and public aggregate evidence use CC BY 4.0. See [LICENSING.md](LICENSING.md). The aggregate-only disclosure boundary does not authorize release of confidential source material. The seven-field practitioner stage template remains in supplement S-A; it is not a raw-data reproduction package.

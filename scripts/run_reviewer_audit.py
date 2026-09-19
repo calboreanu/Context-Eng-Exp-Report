@@ -46,7 +46,7 @@ def main() -> None:
     run("exact file manifest", "scripts/verify_manifest.py", "PUBLIC_MANIFEST.sha256")
     run("unit and fictional-source tests", "-m", "unittest", "discover", "-s", "tests", "-v")
     print("\nREVIEWER AUDIT: PASS")
-    print("The released aggregates are internally reproducible and the confidential-source boundary is intact.")
+    print("The package aggregates are internally reproducible and the confidential-source boundary is intact; this check does not establish a release or human validation.")
 
 
 if __name__ == "__main__":

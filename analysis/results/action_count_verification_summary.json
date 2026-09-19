@@ -2,33 +2,33 @@
   "analysis_contract": "ce-action-count-verification-diagnostic/1.0.0",
   "definition": "Post hoc comparator-weighted within-action-bin verification diagnostic. Action count includes verify calls and is post-exposure; this is not a confounding adjustment or effect decomposition.",
   "inputs": {
-    "primary_balanced_rows.csv": "bd308fcf2e4d64fee5a03c99b1e055153a1cea178af485af41b5e247de7c7932",
-    "unrestricted_balanced_rows.csv": "97145cafa1713dd0831533c546e6dd7ef419550ba3d321ea7d51b1faa39a06f1"
+    "primary_balanced_rows.csv": "b091eb8dc426c995e243963847f0cdea03d3457976b6a82a49fd242d88a51cf6",
+    "unrestricted_balanced_rows.csv": "9704be293f6e3fe1e6b90048d6edb3f4a6c98ac53f0aac45655133b6eef53a91"
   },
   "summaries": [
     {
       "analysis_set": "primary_frontloaded",
       "archive_batch": "all",
-      "comparator_standardized_gap": 0.06724164852757317,
+      "comparator_standardized_gap": 0.0036768090665521905,
       "diagnostic_only": true,
-      "raw_gap": 0.14487870619946092,
-      "rows_per_condition": 1484
+      "raw_gap": 0.08158508158508154,
+      "rows_per_condition": 429
     },
     {
       "analysis_set": "unrestricted",
       "archive_batch": "all",
-      "comparator_standardized_gap": 0.03890036784451208,
+      "comparator_standardized_gap": -0.010047057878559378,
       "diagnostic_only": true,
-      "raw_gap": 0.11130899376669634,
-      "rows_per_condition": 2246
+      "raw_gap": 0.04645476772616136,
+      "rows_per_condition": 1227
     },
     {
       "analysis_set": "primary_frontloaded",
       "archive_batch": "subsequent_capture_ST04_ST13",
-      "comparator_standardized_gap": -0.020532530286101573,
+      "comparator_standardized_gap": 0.07345874355368026,
       "diagnostic_only": true,
-      "raw_gap": 0.04901960784313725,
-      "rows_per_condition": 306
+      "raw_gap": 0.11392405063291139,
+      "rows_per_condition": 79
     }
   ]
 }

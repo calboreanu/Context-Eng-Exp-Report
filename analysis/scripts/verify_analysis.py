@@ -43,7 +43,8 @@ def require(condition: bool, message: str) -> None:
 
 def close(actual: float, expected: float, label: str, tolerance: float = 1e-12) -> None:
     require(
-        math.isclose(actual, expected, rel_tol=0.0, abs_tol=tolerance),
+        (math.isnan(actual) and math.isnan(expected))
+        or math.isclose(actual, expected, rel_tol=0.0, abs_tol=tolerance),
         f"{label}: expected {expected!r}, got {actual!r}",
     )
 
@@ -73,10 +74,15 @@ def verify_balanced(path: Path, expected_ce: str) -> tuple[list[dict[str, str]],
                     f"{path.name}/{link}: unbalanced {field}")
     for index, row in enumerate(rows, start=2):
         actions = int(row["completed_substantive_actions"])
-        duration = float(row["duration_min"])
         require(actions > 0, f"{path.name}:{index}: non-positive action denominator")
-        close(float(row["min_per_action"]), duration / actions,
-              f"{path.name}:{index}: minutes/action")
+        if row["duration_min"] == "":
+            require(row["min_per_action"] == "", f"{path.name}:{index}: missing duration must remain missing")
+        else:
+            duration = float(row["duration_min"])
+            require(math.isfinite(duration) and duration >= 0,
+                    f"{path.name}:{index}: invalid observed duration")
+            close(float(row["min_per_action"]), duration / actions,
+                  f"{path.name}:{index}: minutes/action")
         stages = set(filter(None, row["stage_signal_mask"].split("|")))
         require(int(row["multistage_signal"]) == int(len(stages) >= 2),
                 f"{path.name}:{index}: multistage mismatch")
@@ -113,9 +119,14 @@ def expected_pooled(rows: list[dict[str, str]], ce_label: str) -> dict[str, tupl
         comparison_value = sum(int(row[metric]) for row in comparison) / len(comparison)
         output[metric] = (ce_value, comparison_value, ce_value - comparison_value, len(ce))
     for metric in RATIO_METRICS:
-        ce_value = statistics.median(float(row[metric]) for row in ce)
-        comparison_value = statistics.median(float(row[metric]) for row in comparison)
-        output[metric] = (ce_value, comparison_value, ce_value / comparison_value, len(ce))
+        ce_observed = [float(row[metric]) for row in ce if row[metric] != ""]
+        comparison_observed = [float(row[metric]) for row in comparison if row[metric] != ""]
+        require(all(math.isfinite(v) for v in ce_observed + comparison_observed),
+                f"pooled {metric}: non-finite observation")
+        ce_value = statistics.median(ce_observed) if ce_observed else math.nan
+        comparison_value = statistics.median(comparison_observed) if comparison_observed else math.nan
+        effect = ce_value / comparison_value if comparison_value > 0 else math.nan
+        output[metric] = (ce_value, comparison_value, effect, len(ce))
     return output
 
 
@@ -139,11 +150,22 @@ def verify_pooled(results: Path, rows_by_set: dict[str, list[dict[str, str]]]) -
         close(float(row["comparison_value"]), comp_value, f"pooled {key} comparison")
         close(float(row["effect"]), effect, f"pooled {key} effect")
         require(int(row["rows_per_condition"]) == count, f"pooled {key}: count mismatch")
+        source_rows = rows_by_set[row["analysis_set"]]
+        for cohort_label, column in ((labels[row["analysis_set"]], "ce_observed"),
+                                     (COMPARISON, "comparison_observed")):
+            if column in row:
+                observed = sum(item["cohort"] == cohort_label and item[row["metric"]] != ""
+                               for item in source_rows)
+                require(int(row[column]) == observed, f"pooled {key}: {column} mismatch")
 
 
 def verify_inheritance(results: Path) -> int:
     rows = read_csv(results / "restricted" / "inheritance_candidate_map.csv")
-    require(len(rows) == 3_502, "inheritance map: expected 3,502 rows")
+    require(bool(rows), "inheritance map: no rows")
+    require(len({row['mapping_id'] for row in rows}) == len(rows),
+            "inheritance map: duplicate mapping identity")
+    require({row['station_id'] for row in rows} <= {'ST00', 'ST01', 'ST02'},
+            "inheritance map: station outside pilot scope")
     require({row["human_review_status"] for row in rows} == {"pending"},
             "inheritance map: human-review status changed")
     tiers = Counter(row["evidence_tier"] for row in rows)
@@ -157,7 +179,21 @@ def verify_inheritance(results: Path) -> int:
     require(dict(sorted(classes.items())) == dict(sorted(summary["class_counts"].items())),
             "inheritance map: class counts differ from summary")
     eligible = [row for row in rows if row["evidence_tier"] != "CLEAN_ORIGIN_CANDIDATE"]
-    require(len(eligible) == 3_326, "inheritance map: expected 3,326 eligible rows")
+    scope = summary['scope']
+    require(scope['action_eligible_comparison_rows_mapped'] == len(rows),
+            "inheritance map: mapped-row total differs from scope")
+    require(scope['eligible_rows_with_prior_action_eligible_ce'] == len(eligible),
+            "inheritance map: eligible-row total differs from scope")
+    for field, tier in [('clean_origin_candidates', 'CLEAN_ORIGIN_CANDIDATE'),
+                        ('high_confidence_candidates', 'HIGH_CONFIDENCE_CANDIDATE'),
+                        ('probable_candidates', 'PROBABLE_CANDIDATE'),
+                        ('unresolved_primary_rule', 'UNRESOLVED')]:
+        require(scope[field] == tiers[tier], f"inheritance map: {field} differs from scope")
+    window_rows = read_csv(results / 'inheritance_window_sensitivity.csv')
+    require(len(window_rows) == len(summary['sensitivity']),
+            'inheritance window CSV: row count differs from summary')
+    window_csv = {int(row['window']): row for row in window_rows}
+    require(len(window_csv) == len(window_rows), 'inheritance window CSV: duplicate window')
     for item in summary["sensitivity"]:
         window = int(item["window"])
         # evidence_tier records the primary 20-prompt rule. Sensitivity rows are
@@ -172,6 +208,17 @@ def verify_inheritance(results: Path) -> int:
                 f"inheritance window {window}: candidate-positive mismatch")
         require(len(eligible) - positive == int(item["unresolved"]),
                 f"inheritance window {window}: unresolved mismatch")
+        require(int(item['eligible_rows']) == len(eligible),
+                f"inheritance window {window}: eligible denominator mismatch")
+        close(float(item['candidate_positive_rate']), positive / len(eligible) if eligible else 0,
+              f"inheritance window {window}: rate")
+        require(window in window_csv, f"inheritance window {window}: missing CSV row")
+        csv_row = window_csv[window]
+        for field in ('candidate_positive', 'eligible_rows', 'unresolved'):
+            require(int(csv_row[field]) == int(item[field]),
+                    f"inheritance window {window}: CSV {field} mismatch")
+        close(float(csv_row['candidate_positive_rate']), float(item['candidate_positive_rate']),
+              f"inheritance window {window}: CSV rate")
     return next(item["candidate_positive"] for item in summary["sensitivity"] if item["window"] == 20)
 
 

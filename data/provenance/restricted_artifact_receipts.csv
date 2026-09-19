@@ -1,6 +1,14 @@
 artifact_id,artifact_role,bytes,sha256,release_status,reason_withheld
-R-INPUT,restricted merged source input,153312689,098998194cc6636b92fb47fc04fd78055c28f02ebac664e3ffc87ecffd2bd5d3,withheld,"Contains prompts, outputs, traces, timestamps, paths, and potentially confidential material"
-R-STRATA,station-provider-month balancing cells,6129,4f375390e34cd8246101475eba69901933d131961a15d87458f4fc19fc9a7c47,withheld,Joint cells are more granular than needed for public verification
-R-PRIMARY,primary balanced row derivative,553223,bd308fcf2e4d64fee5a03c99b1e055153a1cea178af485af41b5e247de7c7932,withheld,Row-level sample and linkage identifiers
-R-UNRESTRICTED,unrestricted balanced row derivative,758149,97145cafa1713dd0831533c546e6dd7ef419550ba3d321ea7d51b1faa39a06f1,withheld,Row-level sample and linkage identifiers
-R-LINKAGE,inheritance candidate map,779494,78c4da732d49eeea84ba525676a2181534c0c2286cdb15009754e9e674b7a0ac,withheld,Row-level candidate links and session structure
+R-INPUT,event-v5 normalized restricted input,124979384,1014631e96d0a7c7df0545ca1516894872bc0874127e803cf6d159dc8babf146,withheld,"Prompts, content, tool traces and exact provenance"
+R-STRATA,event-v5 balancing cells,5527,385087702011a921ecd76f4025122b65b32776cfb6b67cd259b0a1f055f4840c,withheld,Fine-grained joint balancing cells
+R-PRIMARY,event-v5 primary balanced derivative,157175,b091eb8dc426c995e243963847f0cdea03d3457976b6a82a49fd242d88a51cf6,withheld,Row-level sample identifiers
+R-UNRESTRICTED,event-v5 unrestricted balanced derivative,400376,9704be293f6e3fe1e6b90048d6edb3f4a6c98ac53f0aac45655133b6eef53a91,withheld,Row-level sample identifiers
+R-LINKAGE,event-v5 candidate linkage map,641741,704d5f7f461d08c519ce212ff81856512df649ce549e6d765c01a1841ff90f18,withheld,Row-level links and session structure
+R-ALIASES,complete pre-normalization to event-v5 mapping,10121948,0379bba543e3d2b0e929bdee65ac8d1661de3bdca5a66e4be1e7ee713aec2e73,withheld,"Native identities, source locators and record relationships"
+R-QUARANTINE,event-v5 unresolved event candidates,836387,316776a6c7c45c70da8f9f82028a90bf212a96d1d1c3dba45d851c92d9ebe6f1,withheld,Content-bearing unresolved source records
+R-NORMALIZATION,private complete event-v5 reconstruction receipt,9446,2b6f98f27a6f3236f7375790426c65152d1f709d0d3a37e52d758de1e49dc433,withheld,Private source locations and reconstruction details
+R-BOUNDARIES,nonprimary-boundary ownership evidence,594736,8e691250f8d231afb972b0ad1511e7befcd7c01d6a32361af453240574807479,withheld,Native call identities and record relationships
+R-REVIEW46,frozen46 to event-v5 computational rejoin,58757,7240e40aa2cfae0c85663df8056d486010f8daae0886eea898518c708499aa9a,withheld,Detailed human-review bindings and event-level comparisons
+R-PRIMARY-REJOIN,prior to current primary computational rejoin,1025317,07055920ba2d67b82561ecb84e22c37d230331f2d43e3a96863f7f6839570fcd,withheld,Row-level analytical membership and event relationships
+R-HISTORY-REJOIN,historical evidence to event-v5 computational rejoin,180635,e5b76886cc594f8191811b4cc391dce0a39b13c135445f60e8b4aa6d75badc08,withheld,Detailed operational evidence and event relationships
+R-ACTION-REFERENCE,event-v4 to event-v5 action/reference computational rejoin,5426483,524f8523e23e8814a2d7a048cf0dd750a96f0c9dd2914de70b31f744326a1a83,withheld,Detailed native-event and analytical membership comparisons
