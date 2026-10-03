@@ -1,6 +1,51 @@
 # Manuscript-to-evidence crosswalk
 
-This page distinguishes the issued R1/v1.0.0 record, preserved event-v3/v4 artifacts, **public evidence package v2.0.0**, and the separate local event-v5 journal revision. The public package is dated 19 September 2026 and retains analytical contract `5.0.0`; “R2” in local filenames is a working label, not a new journal-assigned manuscript number. Publishing aggregate evidence does not establish journal submission or editorial acceptance.
+## Evidence v2.1.0 and pre-publication journal snapshot — 2 October 2026
+
+The paper is finalized locally from the exact submitted August R1 baseline,
+with localized corrections rather than the broader September 19 working draft.
+The five-paragraph abstract retains its bold run-in labels, 291 body words and
+296 words including labels. Neutral author wording, substantive limitations and
+the supplied biography remain. Use `docs/DOCUMENTARY_PACKAGE_RECEIPTS.md` for
+artifact identities and counts; final rebuild and response-locator checks pass.
+These are pre-publication journal artifacts, not an issued revision. Their
+v2.0.0 locator and staged-adjunct wording must be synchronized to the v2.1.0
+release before journal upload, with new artifact receipts and locator checks.
+
+The final repair scope covers three audit findings: the separate pilot's
+immediate-link rule, disclosure of final figure-code review, and the published
+ICLR title for DSPy. Pilot rule `ce-inheritance-map/3.0.1-event-normalized-pilot`
+requires consecutive ordinals for immediate links; its corrected tiers and
+shorter-window counts leave the 20-position result at 2,256/2,560 (88.1%). The
+primary and unrestricted statistical results are unchanged. Figure disclosures
+describe final code review, not undocumented original image generation. Existing
+figure assets and the graphical abstract are unchanged by these repairs; the
+earlier Figure 1 label correction and its submitted comparison asset remain.
+The tracked comparison, including the bibliography correction, uses submitted R1.
+
+The journal snapshot retains Main Section 4.8 and Supplement S-F/Table S13. Package
+v2.1.0 contains the corresponding
+`data/validation/deliverable_evidence_summary.json` and its separate accounting
+verifier. See `docs/DELIVERABLE_EVIDENCE.md` for scope and
+`docs/DOCUMENTARY_PACKAGE_RECEIPTS.md` for versioned document identities.
+It also clarifies historical-review correspondence: 35 of 39 continuing reviewed
+cases retain the tracked evidence and labels; nine are administrative status-only
+changes, while four have substantive changes. The 26/13 strict status-inclusive
+split remains explicitly named, as do the all-46 and full-primary counts. See
+`docs/HUMAN_REVIEW_SUMMARY.md` for the definitions. The account-label/privacy
+wording distinguishes the absence of a verified operator-identity mapping from
+labels that may occur in restricted records.
+
+The frozen empirical input, selected samples, primary/unrestricted analysis and
+historical author statement remain unchanged. The pilot correction, dependent
+aggregate views, regression coverage and receipts distinguish this
+successor from issued v2.0.0. They supply no new human ratings. The release-locator
+receipts below remain historical v2.0.0-era document receipts, not identities of
+the journal snapshot above. The pilot correction, correspondence clarification
+and documentary adjunct belong to package v2.1.0. Their public distribution does
+not establish journal submission.
+
+This page distinguishes the issued R1/v1.0.0 record, preserved event-v3/v4 artifacts, public v2.0.0, **evidence package v2.1.0**, and the separate journal snapshot. Package v2.1.0 is dated 2 October 2026 and retains primary analytical contract `5.0.0`; “R2” in local filenames is a working label, not a new journal-assigned manuscript number. The [release notes](https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v2.1.0) record actual publication and downloaded-archive verification. Publishing aggregate evidence does not establish journal submission or editorial acceptance.
 
 ## Historical issued record
 
@@ -42,11 +87,12 @@ The absent ST02 manifest entry represents 659 post-cutoff records with zero copi
 
 The typesetting source archive and working PDFs are separate journal artifacts. The public evidence locator is [v2.0.0](https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v2.0.0). Publication and downloaded-archive checks are tracked in the [release checklist](RELEASE_CHECKLIST.md). The journal-artifact identities below bind their stated local versions; a release-locator edit requires new artifact receipts and affected document checks, not a change to the frozen analysis.
 
-## Current release-locator typesetting receipts — 19 September 2026
+## Historical release-locator typesetting receipts — 19 September 2026
 
-These identify the current local journal artifacts linked to public evidence
-v2.0.0. They do not establish journal upload, submission or acceptance. The
-frozen event-v5 science is unchanged; the current edit updates the public
+These identify the earlier local journal artifacts linked to public evidence
+v2.0.0, before the documentary addition and audit-repair successor above.
+They do not establish journal upload, submission or acceptance. The
+frozen event-v5 science was unchanged; that edit updated the public
 locator and supplies genuine R1 redlines. The highlighted current-text copies
 are retained solely for the response's printed page/line navigation.
 

@@ -1,8 +1,10 @@
 # Claim reproducibility boundary
 
-Public package v2.0.0 carries the corrected event-v5 evidence under analytical
-contract `5.0.0`. Historical public v1.0.0 does not contain these corrected
-results. The table describes what this aggregate package supports, independently
+Package v2.1.0 retains the corrected event-v5 evidence from v2.0.0 under primary
+analytical contract `5.0.0` and adds the pilot 3.0.1 correction, correspondence
+clarification and separately checked documentary adjunct. Historical public
+v1.0.0 does not contain the event-v5 corrections. The table describes what the
+claim-mapped aggregate evidence supports, independently
 of the publication and downloaded-archive gates in the [release checklist](RELEASE_CHECKLIST.md).
 
 | Claim IDs and headline quantities | Checkable from the aggregate package | Requires authorized restricted evidence |

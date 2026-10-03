@@ -16,7 +16,7 @@ Traceability is provided at four levels without publishing conversation content.
 
 ## 4. Byte identity
 
-`analysis/ANALYSIS_MANIFEST.sha256` is the unchanged canonical receipt map from the verified local run, including hashes for governed artifacts that are intentionally absent. `PUBLIC_MANIFEST.sha256` covers every file actually included in public package v2.0.0, including its release metadata. The former proves local identity; the latter proves public-package completeness. Frozen preparation-status text in analytical and data records is distinguished from current release metadata in the [README](../README.md).
+`analysis/ANALYSIS_MANIFEST.sha256` binds package v2.1.0's governed analytical files, including the clarified correspondence metadata, corrected pilot and receipts for restricted artifacts that are intentionally absent. `PUBLIC_MANIFEST.sha256` covers every file in this aggregate-only package. These manifests do not replace the preserved manifests of the frozen analysis or issued v2.0.0. The former identifies governed bytes; the latter checks package completeness. Neither proves source meaning or publication. Frozen preparation-status text is distinguished from current distribution status in the [README](../README.md).
 
 ## End-to-end flow
 

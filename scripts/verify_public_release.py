@@ -158,11 +158,123 @@ def verify_catalog_records(actual, generated, fields, label):
     require(actual == expected, f'{label}: catalog fields differ from their canonical sources')
 
 
+def correspondence_change_flags(changed_measurement_fields, trajectory_alias_membership_changed,
+                                changed_derived_labels, status_before, status_after):
+    """Executable comparison definition, not reconstruction of withheld records.
+
+    A difference in status text remains visible separately. It is not by itself
+    a change to the tracked source measurements, alias membership or labels.
+    Status-only does not imply harmlessness for an arbitrary unseen transition;
+    the aggregate's observed status transitions must be reported separately.
+    """
+    require(type(changed_measurement_fields) is list
+            and all(type(field) is str and field for field in changed_measurement_fields),
+            'correspondence measurements must be a field-name list')
+    require(type(trajectory_alias_membership_changed) is bool,
+            'correspondence alias-change flag must be boolean')
+    require(type(changed_derived_labels) is dict,
+            'correspondence derived-label changes must be an object')
+    require(type(status_before) is str and bool(status_before)
+            and type(status_after) is str and bool(status_after),
+            'correspondence statuses must be nonempty text')
+    substantive_changed = bool(changed_measurement_fields or trajectory_alias_membership_changed
+                               or changed_derived_labels)
+    status_changed = status_before != status_after
+    return {
+        'same_measured_trajectory_and_labels': not substantive_changed,
+        'strict_status_inclusive_unchanged': not substantive_changed and not status_changed,
+        'provenance_status_only': not substantive_changed and status_changed,
+    }
+
+
+def verify_correspondence_counts(item, label):
+    """Conserve substantive and strict counts without reading private case rows."""
+    scalar_fields = {
+        'historical_events', 'v5_primary_member_count', 'same_measured_trajectory_and_labels_count',
+        'changed_measurements_or_trajectory_count', 'changed_derived_labels_count',
+        'strict_status_inclusive_unchanged_count', 'strict_status_inclusive_changed_count',
+        'provenance_status_only_count', 'current_primary_provenance_status_only_count',
+        'current_primary_strict_status_inclusive_unchanged_count',
+        'current_primary_strict_status_inclusive_changed_count',
+    }
+    for key in scalar_fields:
+        require(key in item and type(item[key]) is int and item[key] >= 0,
+                f'{label}: correspondence count must be a nonnegative integer: {key}')
+    total = item['historical_events']
+    same = item['same_measured_trajectory_and_labels_count']
+    changed = item['changed_measurements_or_trajectory_count']
+    status_only = item['provenance_status_only_count']
+    strict_same = item['strict_status_inclusive_unchanged_count']
+    strict_changed = item['strict_status_inclusive_changed_count']
+    require(same + changed == strict_same + strict_changed == total,
+            f'{label}: strict/substantive totals mismatch')
+    require(same == strict_same + status_only and strict_changed == changed + status_only,
+            f'{label}: status-only transition counted as substantive change')
+    categories = {'derived_label_change', 'measurement_change_without_derived_label_change',
+                  'alias_membership_change_without_measurement_or_label_change',
+                  'provenance_status_only', 'strictly_unchanged'}
+    required = categories - {'alias_membership_change_without_measurement_or_label_change'}
+    for group, expected in [('change_category_counts', total),
+                            ('current_primary_change_category_counts', item['v5_primary_member_count'])]:
+        counts = item.get(group)
+        require(type(counts) is dict and required <= set(counts) <= categories,
+                f'{label}: invalid correspondence category fields')
+        require(all(type(value) is int and value >= 0 for value in counts.values()),
+                f'{label}: correspondence categories must be nonnegative integer counts')
+        require(sum(counts.values()) == expected, f'{label}: correspondence category total mismatch')
+    all_counts, primary_counts = item['change_category_counts'], item['current_primary_change_category_counts']
+    require(all(primary_counts.get(key, 0) <= all_counts.get(key, 0) for key in categories),
+            f'{label}: primary change category exceeds historical total')
+    require(all_counts['derived_label_change'] == item['changed_derived_labels_count']
+            and all_counts['provenance_status_only'] == status_only
+            and all_counts['strictly_unchanged'] == strict_same,
+            f'{label}: historical change category/scalar mismatch')
+    substantive_categories = categories - {'provenance_status_only', 'strictly_unchanged'}
+    require(sum(all_counts.get(key, 0) for key in substantive_categories) == changed,
+            f'{label}: alias, measurement or label changes omitted from substantive count')
+    current = item['disposition_counts']
+    strict = item.get('strict_status_inclusive_disposition_counts')
+    require(type(current) is dict
+            and {'current_primary_unchanged', 'current_primary_changed'} <= set(current)
+            <= {'current_primary_unchanged', 'current_primary_changed', 'held', 'not_current_primary'}
+            and all(type(value) is int and value >= 0 for value in current.values())
+            and sum(current.values()) == total,
+            f'{label}: substantive disposition fields/counts invalid')
+    require(type(strict) is dict and set(strict) == set(current),
+            f'{label}: strict disposition fields differ')
+    require(all(type(value) is int and value >= 0 for value in strict.values())
+            and sum(strict.values()) == total, f'{label}: strict disposition total mismatch')
+    p_same = item['current_primary_strict_status_inclusive_unchanged_count']
+    p_changed = item['current_primary_strict_status_inclusive_changed_count']
+    p_status = item['current_primary_provenance_status_only_count']
+    require(p_same == strict.get('current_primary_unchanged', 0)
+            and p_changed == strict.get('current_primary_changed', 0)
+            and p_same + p_changed == item['v5_primary_member_count'],
+            f'{label}: strict primary scalar/disposition mismatch')
+    require(current.get('current_primary_unchanged', 0) == p_same + p_status
+            and p_changed == current.get('current_primary_changed', 0) + p_status,
+            f'{label}: primary status-only transition counted as substantive change')
+    require(primary_counts['strictly_unchanged'] == p_same
+            and primary_counts['provenance_status_only'] == p_status
+            and sum(primary_counts.get(key, 0) for key in substantive_categories)
+            == current.get('current_primary_changed', 0),
+            f'{label}: primary change category/scalar mismatch')
+    require(all(strict.get(key, 0) == current.get(key, 0) for key in ('held', 'not_current_primary')),
+            f'{label}: correspondence clarification changed held/outside membership')
+
+
 def verify_v5_boundary_summary(analysis, boundary, author_review):
     """Public conservation and historical-review limits; not a private rejoin."""
     contract = 'context-engineering-event-normalized-analysis/5.0.0'
     require(analysis['analysis_contract'] == boundary['analysis_contract'] == contract,
             'boundary summary uses a different analysis contract')
+    require(boundary.get('correspondence_definition_version') == 'context-engineering-correspondence/1.1.0',
+            'boundary summary lacks the clarified correspondence version')
+    definitions = boundary.get('correspondence_definitions', {})
+    require(type(definitions) is dict
+            and 'Provenance-status text is excluded' in definitions.get('same_measured_trajectory_and_labels', '')
+            and definitions.get('human_review_boundary') == 'A computational correspondence clarification only. Original author confirmation is preserved. No new human labels or automatic transfer of confirmation to revised events or labels.',
+            'correspondence definition or historical-review boundary changed')
     scope, normalization = analysis['scope'], boundary['normalization']
     require(boundary['v5_analysis_scope'] == scope, 'boundary summary scope mismatch')
     require(normalization['old_source_rows'] == boundary['old_source_row_aliases'],
@@ -203,6 +315,7 @@ def verify_v5_boundary_summary(analysis, boundary, author_review):
         require(0 <= item['distinct_v5_events'] <= total, f'{label}: invalid distinct-event count')
         require(0 <= item['condition_changed_among_current_primary_count'] <= item['v5_primary_member_count'],
                 f'{label}: invalid condition-change count')
+        verify_correspondence_counts(item, label)
     require(review['historical_events'] == 46, 'frozen46 reconciliation coverage changed')
     require(overlap['historical_events'] == overlap['v3_primary_total']
             == 2 * boundary['v3_analysis_scope']['primary_frontloaded_balanced_per_condition'],
@@ -550,6 +663,9 @@ def verify_scope_and_catalog() -> None:
     verify_historical_evidence_overlap(boundary['historical_evidence_overlap'])
     require(boundary['normalization'] == events and boundary['review46'] == impact['frozen_review46_summary'],
             'boundary and correction-impact counters differ')
+    require(boundary['correspondence_definition_version'] == impact.get('correspondence_definition_version')
+            and boundary['correspondence_definitions'] == impact.get('correspondence_definitions'),
+            'boundary and correction-impact correspondence definitions differ')
     require(impact['analysis_scope']['preceding_event_v3'] == boundary['v3_analysis_scope']
             and impact['analysis_scope']['event_v5'] == scope, 'versioned scope identity mismatch')
     verify_analysis_receipts(analysis, impact, read_csv(PROVENANCE / 'restricted_artifact_receipts.csv'))

@@ -13,7 +13,7 @@ SPEC.loader.exec_module(CATALOG)
 
 
 class CorrectionCatalog(unittest.TestCase):
-    def build(self, mutate=None):
+    def build(self, mutate=None, mutate_boundary=None):
         action = {
             'unchanged_native_event_identities': 75, 'native_invariant_checks': 150,
             'status_transitions': {'resolved->resolved': 70},
@@ -35,6 +35,8 @@ class CorrectionCatalog(unittest.TestCase):
             'total_alias_to_primary_component_reduction')}}
         boundary['normalization']['absorbed_nonprimary_kinds'] = {}
         boundary.update(review46={}, full_primary_overlap={}, historical_evidence_overlap={'all138': {}})
+        if mutate_boundary:
+            mutate_boundary(boundary)
         inputs = {
             'analysis_summary.json': {'analysis_contract': 'context-engineering-event-normalized-analysis/5.0.0',
                                       'scope': {'source_episode_rows': 70}},
@@ -72,6 +74,33 @@ class CorrectionCatalog(unittest.TestCase):
         reordered = self.build(lambda action: action['source_accounting'].update(
             v5=dict(reversed(list(action['source_accounting']['v5'].items())))))
         self.assertEqual(baseline, reordered)
+
+    def test_correspondence_status_counts_have_explicit_meaning(self):
+        def add(boundary):
+            boundary['review46'] = {
+                'same_measured_trajectory_and_labels_count': 11,
+                'changed_measurements_or_trajectory_count': 4,
+                'strict_status_inclusive_unchanged_count': 8,
+                'provenance_status_only_count': 3,
+                'disposition_counts': {'current_primary_unchanged': 6, 'current_primary_changed': 2},
+                'change_category_counts': {'strictly_unchanged': 8, 'provenance_status_only': 3,
+                                          'measurement_change_without_derived_label_change': 3,
+                                          'derived_label_change': 1},
+                'unapproved_nested': {'fictional_case_id': 'DO_NOT_CATALOG'},
+            }
+        rows = self.build(mutate_boundary=add)
+        by_measure = {r['measure']: r for r in rows}
+        self.assertEqual(by_measure['review46.same_measured_trajectory_and_labels_count']['value'], 11)
+        self.assertIn('excludes provenance-status text', by_measure['review46.same_measured_trajectory_and_labels_count']['notes'])
+        self.assertIn('strict equality includes', by_measure['review46.strict_status_inclusive_unchanged_count']['notes'])
+        self.assertEqual(by_measure['review46.disposition_counts.current_primary_unchanged']['value'], 6)
+        self.assertNotIn('DO_NOT_CATALOG', json.dumps(rows))
+
+    def test_correspondence_nested_groups_reject_noncounts(self):
+        for value in (True, -1, 'row content', {'nested': 3}):
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'Non-count correspondence catalog field'):
+                self.build(mutate_boundary=lambda b: b['review46'].update(
+                    change_category_counts={'provenance_status_only': value}))
 
 
 if __name__ == '__main__':

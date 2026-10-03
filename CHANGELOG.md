@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0 — documentary evidence and pilot correction, 2 October 2026
+
+- Add the aggregate documentary adjunct for 138 historical terminal anchors and three selected correction/redelivery chains, with a separate accounting verifier and explicit interpretation limits.
+- Clarify historical-case correspondence by separating provenance-status-only transitions from changes to tracked measurements, alias membership or derived labels; preserve the original author statement and strict status-inclusive counts.
+- Require consecutive event ordinals for both immediate-link classes in pilot rule `ce-inheritance-map/3.0.1-event-normalized-pilot`. Two links change class; the corrected high/probable counts are 1,106/1,150 and five-/ten-position rates are 72.6%/82.1%. The 20-position result remains 2,256/2,560 (88.1%).
+- Preserve the empirical input, primary/unrestricted samples and statistical results under analytical contract `5.0.0`, and retain the v1.0.0/v2.0.0 releases unchanged. No new human ratings or causal evidence are added.
+- Synchronize the catalog, workbook, tests and integrity receipts. Publication is authorized; the [versioned release notes](https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v2.1.0) record publication and downloaded-archive checks separately from the completed pre-publication audit.
+
 ## 2.0.0 — corrected aggregate evidence package, 19 September 2026
 
 - Assign the corrected event-v5 evidence its own public version and [release locator](https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v2.0.0), distinct from public v1.0.0 and analytical contract `5.0.0`.

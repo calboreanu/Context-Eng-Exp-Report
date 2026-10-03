@@ -247,15 +247,39 @@ def build_source_frame() -> list[dict[str, object]]:
              'historical operational evidence rejoin', 'Operational evidence, not a representative classifier reference study'),
         ]
         for prefix, values, scope_label, notes in groups:
-            for key, value in values.items():
+            catalog_fields = list(values.items())
+            if prefix in {'review46', 'full_primary_overlap'}:
+                # Only these named aggregate dictionaries are flattened. Private
+                # case joins or future unrelated sections are never cataloged.
+                for group in ('disposition_counts', 'change_category_counts',
+                              'current_primary_change_category_counts'):
+                    for key, value in sorted(values.get(group, {}).items()):
+                        if type(value) is not int or value < 0:
+                            raise ValueError(f'Non-count correspondence catalog field: {prefix}.{group}.{key}')
+                        catalog_fields.append((f'{group}.{key}', value))
+            for key, value in catalog_fields:
                 # Publish only the scalar aggregate counts in these allowlisted
                 # sections. Detailed joins and nested private records are never
                 # inputs to this public catalog builder.
                 if type(value) is not int:
                     continue
+                field_notes = notes
+                if prefix in {'review46', 'full_primary_overlap'}:
+                    if 'strict_status_inclusive' in key or key.endswith('strictly_unchanged'):
+                        field_notes += '; strict equality includes exact provenance-status text, not just substantive evidence'
+                    elif 'provenance_status_only' in key:
+                        field_notes += '; only provenance-status text changes; observed transition v2_codex_unchanged to resolved, with unchanged identity, aliases and tracked evidence'
+                    elif key == 'same_measured_trajectory_and_labels_count':
+                        field_notes += '; substantive equality excludes provenance-status text and compares all 15 source fields, eight derived fields and alias membership'
+                    elif key == 'changed_measurements_or_trajectory_count':
+                        field_notes += '; source-measurement, derived-field or alias-membership changes; provenance-status-only transitions excluded'
+                    elif key.startswith(('change_category_counts.', 'current_primary_change_category_counts.')):
+                        field_notes += '; mutually exclusive priority: derived labels, source measurements, aliases, status-only, strictly unchanged'
+                    elif key.startswith('disposition_counts.current_primary_'):
+                        field_notes += '; unchanged/changed uses substantive tracked-evidence equality, excluding status-only transitions'
                 rows.append({'item_id': f'FRAME-{len(rows)+1:02d}', 'scope': scope_label,
                              'measure': f'{prefix}.{key}', 'value': value, 'unit': 'count',
-                             'source_file': 'analysis/results/boundary_correction_summary.json', 'notes': notes})
+                             'source_file': 'analysis/results/boundary_correction_summary.json', 'notes': field_notes})
         action_reference = json.loads((RESULTS / 'action_reference_correction_summary.json').read_text(encoding='utf-8'))
         action_groups = [
             ('invariants', {key: action_reference[key] for key in

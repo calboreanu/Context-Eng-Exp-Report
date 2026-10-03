@@ -1,5 +1,35 @@
 # Release checklist
 
+## Evidence package v2.1.0 — 2 October 2026
+
+The successor is authorized for aggregate-only publication. It retains the correspondence
+clarification and documentary adjunct, and corrects the separate linkage pilot
+with rule `ce-inheritance-map/3.0.1-event-normalized-pilot`. The frozen input,
+selected samples, primary/unrestricted results and historical author statement
+remain unchanged. The pilot correction changes two links and shorter-window
+counts, not the 2,256/2,560 (88.1%) headline. It creates no new human ratings.
+
+Journal repairs also cover final figure-code-review disclosure and the published
+DSPy title. The exact submitted R1 baseline remains the tracked-comparison base,
+including the bibliography correction. Existing figure assets and graphical
+abstract are unchanged by this pass; final code review is not a claim about
+unrecorded original image generation. The approved five-paragraph abstract
+retains 291 body words and 296 including labels, with neutral author wording.
+The [document receipts](DOCUMENTARY_PACKAGE_RECEIPTS.md) pin the finalized
+pre-publication journal snapshot. Its release pointer must be synchronized before
+journal upload; those receipts are not presented as updated submission identities.
+The v2.0.0 checks below remain historical checks of that issued package.
+
+- [x] Pilot adjacency guards, nine focused regressions and restricted replay checked; issued v2.0.0 and frozen analysis preserved.
+- [x] Finalized pre-publication journal PDFs, R1 redlines, bibliography, response locators, workbook, manifests and exact-archive checks completed for the repaired successor.
+- [x] Aggregate-only successor publication authorized by the author on 2 October 2026.
+- [x] Pre-publication boundary, aggregate and manifest checks pass for the audited 99-file candidate; issued tags and history remain preserved.
+
+Actual publication and fresh-download verification, including the final archive
+digest, are recorded in the [v2.1.0 release notes](https://github.com/calboreanu/Context-Eng-Exp-Report/releases/tag/v2.1.0)
+after those operations. They are not inferred from local checks. Publication
+does not establish confidential memo delivery, journal submission or acceptance.
+
 ## Public package v2.0.0 — 19 September 2026
 
 Public version `2.0.0` is distinct from analytical contract `5.0.0`. The versioned

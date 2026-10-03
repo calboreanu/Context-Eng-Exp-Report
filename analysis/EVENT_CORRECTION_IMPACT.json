@@ -29,6 +29,18 @@
       "unrestricted_contributing_stations": 12
     }
   },
+  "correspondence_definition_version": "context-engineering-correspondence/1.1.0",
+  "correspondence_definitions": {
+    "change_category_counts": "Mutually exclusive priority: derived-field change; source-measurement change without derived-field change; alias-membership change without measurement or derived-field change; provenance-status-only; strictly unchanged.",
+    "disposition_counts": "Held records remain held. Among resolved current-primary records, unchanged/changed now refers to substantive equality. Historical strict dispositions are retained separately.",
+    "field_specification": "The 15 source-measurement fields and eight derived fields are listed in docs/HUMAN_REVIEW_SUMMARY.md.",
+    "held_membership_and_absorption": "Held status, current-primary membership, condition switches, alias expansion and absorbed boundaries are independently preserved and counted. They are not relabeled as benign status-only changes.",
+    "human_review_boundary": "A computational correspondence clarification only. Original author confirmation is preserved. No new human labels or automatic transfer of confirmation to revised events or labels.",
+    "provenance_status_only": "Substantive equality with different provenance-status text. Every observed case is v2_codex_unchanged to resolved, with identical native event identity and alias membership, no absorbed boundary and no held/resolved eligibility transition.",
+    "same_measured_trajectory_and_labels": "No change in native source-alias membership, any of the 15 tracked source-measurement fields, or any of the eight derived fields. Provenance-status text is excluded from this substantive equality predicate.",
+    "strict_status_inclusive_equality": "The substantive equality predicate plus exact equality of the provenance-status string. This preserves the original strict historical counts.",
+    "unit": "Historical v3 event; multiple historical events can reach one v5 event. Counts are not additive across overlapping evidence sets."
+  },
   "event_accounting": {
     "absorbed_nonprimary_components": 461,
     "absorbed_nonprimary_kinds": {
@@ -104,12 +116,27 @@
   "frozen_review46_summary": {
     "absorbed_boundary_event_count": 2,
     "alias_membership_expanded_event_count": 3,
+    "change_category_counts": {
+      "derived_label_change": 6,
+      "measurement_change_without_derived_label_change": 3,
+      "provenance_status_only": 9,
+      "strictly_unchanged": 28
+    },
     "changed_derived_labels_count": 6,
-    "changed_measurements_or_trajectory_count": 18,
+    "changed_measurements_or_trajectory_count": 9,
     "condition_changed_among_current_primary_count": 0,
+    "current_primary_change_category_counts": {
+      "derived_label_change": 1,
+      "measurement_change_without_derived_label_change": 3,
+      "provenance_status_only": 9,
+      "strictly_unchanged": 26
+    },
+    "current_primary_provenance_status_only_count": 9,
+    "current_primary_strict_status_inclusive_changed_count": 13,
+    "current_primary_strict_status_inclusive_unchanged_count": 26,
     "disposition_counts": {
-      "current_primary_changed": 13,
-      "current_primary_unchanged": 26,
+      "current_primary_changed": 4,
+      "current_primary_unchanged": 35,
       "not_current_primary": 7
     },
     "distinct_v5_events": 46,
@@ -119,7 +146,15 @@
       "candidate_strong": 1,
       "exclude_no_context_operation": 6
     },
-    "same_measured_trajectory_and_labels_count": 28,
+    "provenance_status_only_count": 9,
+    "same_measured_trajectory_and_labels_count": 37,
+    "strict_status_inclusive_changed_count": 18,
+    "strict_status_inclusive_disposition_counts": {
+      "current_primary_changed": 13,
+      "current_primary_unchanged": 26,
+      "not_current_primary": 7
+    },
+    "strict_status_inclusive_unchanged_count": 28,
     "v5_primary_member_count": 39
   },
   "human_labels_added": 0,

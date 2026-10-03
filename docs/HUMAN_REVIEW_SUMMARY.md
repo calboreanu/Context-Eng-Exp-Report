@@ -18,10 +18,31 @@ The machine-readable [aggregate summary](../data/validation/author_review_summar
 
 ## Correspondence with event-v5
 
-The separate [boundary-correction summary](../analysis/results/boundary_correction_summary.json) computationally maps all 46 historical cases to 46 distinct resolved v5 events. Of those, 39 remain in the current primary sample: 26 with unchanged measured trajectories and labels, and 13 with changes. Seven are no longer in the current primary sample. None is held unresolved. These aggregate correspondence counts happen to match the v4 rejoin; they were recomputed against v5 rather than inferred from that predecessor.
+The separate [boundary-correction summary](../analysis/results/boundary_correction_summary.json) computationally maps all 46 historical cases to 46 distinct resolved v5 events. Of those, 39 remain in the current primary sample: **35 retain the same tracked trajectory, source measurements and derived labels, and four change on those dimensions**. Seven are no longer in the current primary sample. None is held unresolved. This is a reporting clarification under `context-engineering-correspondence/1.1.0`, not a new analytical version or human review.
 
-Across the entire frozen set, 28 retain the same measured trajectory and labels, while 18 have changed measurements, trajectories or labels; six have changed derived labels, and two historical boundaries are absorbed into supported primary owners. These overlapping change counts are not additional cases or human error rates. Primary membership can change through balancing as well as corrected eligibility, so membership change alone does not establish a historical labeling error.
+The original equality predicate also required the provenance-status string to match exactly. Nine continuing cases change only from `v2_codex_unchanged` to `resolved`: their native identities, source-alias memberships, tracked measurements and derived labels are identical. They are not alias/trajectory changes or newly discovered classification errors. The former 26/13 continuing-case and 28/18 whole-set splits are retained under explicitly named **strict status-inclusive** fields, not measurement-change fields.
+
+| Mutually exclusive comparison category | All 46 historical cases | Of the 39 continuing primary cases |
+| --- | ---: | ---: |
+| Strictly unchanged, including status text | 28 | 26 |
+| Provenance-status-only transition | 9 | 9 |
+| Source-measurement change without derived-label change | 3 | 3 |
+| Derived-label change | 6 | 1 |
+
+Thus 37/46 retain the same tracked measurements, alias membership and derived labels, while nine change on at least one of those dimensions. Among the continuing 39, three change source measurements without changing the eight derived fields and one changes a derived label. Restricting comparison to the narrower balanced-row export would overlook those three source-measurement changes. Two historical boundaries are absorbed into supported owners and three alias memberships expand across all 46; these overlapping counts are not additional cases or human error rates. Primary membership can change through balancing as well as corrected eligibility, so membership change alone does not establish a historical labeling error.
+
+### Consistent full-primary definition
+
+The same definition is applied to all 946 historical v3 primary records, not just the reviewed subset. Across those records, 677 retain the same tracked measurements, alias membership and derived labels and 269 change; the strict status-inclusive split is 479/467, with 198 status-only transitions. Among the 776 historical records that still map into the current primary sample, the substantive split is 629/147 and the strict split is 432/344, with 197 status-only transitions. Those 776 historical memberships reach 774 distinct current events; they are not 776 independently distinct current events. A further 169 historical records are outside the current primary set and one is held. Current primary membership remains 858 events, or 429 per condition.
+
+Every observed status-only transition in this full comparison is `v2_codex_unchanged` to `resolved`, with the same native identity and alias membership, no absorbed boundary and no held/resolved eligibility transition. The definition separates status text from tracked evidence; it does not assume that any arbitrary unseen status transition would be harmless.
+
+### Exact tracked-field definition
+
+Substantive equality requires unchanged source-alias membership, all 15 tracked source fields and all eight derived fields. The source fields are `origin_candidate`, `automated_disposition`, `context_trace_status`, `product_action_trace_status`, `publication_exclusion_candidate`, `attachment_count`, `prompt_artifact_reference_count`, `context_mode_mask`, `stage_signal_mask`, `completed_substantive_action_calls`, `grounded_decision_trace`, `timestamp_start_utc`, `timestamp_end_utc`, `tool_trace_json` and `prompt_text`. These are field definitions only; their row-level contents are not released.
+
+The derived fields are `frontloaded_context_candidate`, `verification_successful`, `audit_signal`, `remediation_signal`, `packaging_release_signal`, `multistage_signal`, `grounded_decision_trace` and `completed_substantive_actions`. Strict status-inclusive equality additionally requires exact provenance-status text equality. `correspondence_change_flags` in the public verifier expresses this distinction using change flags; it does not reconstruct confidential observations. Mutually exclusive change-category accounting prioritizes a derived-label change, then a source-measurement change, then an alias-only change, then a status-only transition, then strict equality. Held status, current membership, condition switches and absorbed boundaries remain separately reported.
 
 Membership overlap is not a repeat review, does not establish that changed classifications were human-confirmed, and does not change the historical 46-case denominator. No new human labels are added by this reconciliation.
 
-Public package v2.0.0 preserves this historical review record without adding human judgments. Its machine-readable `release_status` remains the preparation-state value recorded on 18 September 2026, not the live distribution status of the package; see the [README](../README.md). Public distribution, journal submission and editorial acceptance are separate from the recorded review.
+Issued v2.0.0 remains preserved with the original status-inclusive reporting. Package v2.1.0 corrects the correspondence interpretation without changing its empirical results or the historical author statement. The author's machine-readable `release_status` remains the preparation-state value recorded on 18 September 2026, not the live distribution status; see the [README](../README.md). Public distribution, journal submission and editorial acceptance are separate from the recorded review.

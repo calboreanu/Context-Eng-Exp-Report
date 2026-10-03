@@ -3,7 +3,7 @@ R-INPUT,event-v5 normalized restricted input,124979384,1014631e96d0a7c7df0545ca1
 R-STRATA,event-v5 balancing cells,5527,385087702011a921ecd76f4025122b65b32776cfb6b67cd259b0a1f055f4840c,withheld,Fine-grained joint balancing cells
 R-PRIMARY,event-v5 primary balanced derivative,157175,b091eb8dc426c995e243963847f0cdea03d3457976b6a82a49fd242d88a51cf6,withheld,Row-level sample identifiers
 R-UNRESTRICTED,event-v5 unrestricted balanced derivative,400376,9704be293f6e3fe1e6b90048d6edb3f4a6c98ac53f0aac45655133b6eef53a91,withheld,Row-level sample identifiers
-R-LINKAGE,event-v5 candidate linkage map,641741,704d5f7f461d08c519ce212ff81856512df649ce549e6d765c01a1841ff90f18,withheld,Row-level links and session structure
+R-LINKAGE,event-v5 candidate linkage map,641745,2e8eefa3296f5f4a6524cf12f4ff2f5fd6e72f4d110fb6b5de5e2afa6187c70c,withheld,Row-level links and session structure
 R-ALIASES,complete pre-normalization to event-v5 mapping,10121948,0379bba543e3d2b0e929bdee65ac8d1661de3bdca5a66e4be1e7ee713aec2e73,withheld,"Native identities, source locators and record relationships"
 R-QUARANTINE,event-v5 unresolved event candidates,836387,316776a6c7c45c70da8f9f82028a90bf212a96d1d1c3dba45d851c92d9ebe6f1,withheld,Content-bearing unresolved source records
 R-NORMALIZATION,private complete event-v5 reconstruction receipt,9446,2b6f98f27a6f3236f7375790426c65152d1f709d0d3a37e52d758de1e49dc433,withheld,Private source locations and reconstruction details

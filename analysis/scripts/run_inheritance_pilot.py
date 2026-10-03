@@ -22,7 +22,7 @@ from pathlib import Path
 
 csv.field_size_limit(sys.maxsize)
 
-RULE_VERSION = "ce-inheritance-map/3.0.0-event-normalized-pilot"
+RULE_VERSION = "ce-inheritance-map/3.0.1-event-normalized-pilot"
 STATIONS = {"ST00", "ST01", "ST02"}
 # The linkage pilot deliberately uses a broader predecessor pool than the
 # balanced CE arm: either automated CE-candidate disposition can establish a
@@ -163,7 +163,9 @@ def main() -> None:
                     linked_candidates += [anchor_to_ce[item] for item in shared_anchors]
                     matched_prior_row = max(linked_candidates, key=lambda item: int(item["turn"])) if linked_candidates else last_ce
                     matched_prior = str(matched_prior_row["episode_token"])
-                    immediate_short = previous_was_ce and prompt_words <= 30 and reference_cue
+                    # Resolved input omits held events; retained ordinals must
+                    # also be consecutive before a link can be immediate.
+                    immediate_short = previous_was_ce and turn_distance == 1 and prompt_words <= 30 and reference_cue
                     if shared_targets:
                         mapping_class = "EXACT_SUCCESSFUL_TOOL_TARGET"
                         tier = "HIGH_CONFIDENCE_CANDIDATE"
@@ -176,7 +178,7 @@ def main() -> None:
                         mapping_class = "IMMEDIATE_SHORT_REFERENCE"
                         tier = "HIGH_CONFIDENCE_CANDIDATE"
                         minimum_window = 0
-                    elif previous_was_ce:
+                    elif previous_was_ce and turn_distance == 1:
                         mapping_class = "IMMEDIATE_ADJACENCY"
                         tier = "PROBABLE_CANDIDATE"
                         minimum_window = 1

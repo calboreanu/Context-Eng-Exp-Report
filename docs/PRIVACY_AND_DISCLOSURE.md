@@ -1,8 +1,8 @@
 # Privacy and disclosure boundary
 
-## Public package v2.0.0
+## Evidence package v2.1.0
 
-Public package v2.0.0 contains only code, rule contracts, aggregate tables, pseudonymous station summaries, transformation descriptions, and cryptographic receipts. Its statistics are descriptive process-trace summaries under the frozen event-v5 analytical contract. Release metadata does not expand this disclosure boundary.
+Package v2.1.0 contains only code, rule contracts, aggregate tables, pseudonymous station summaries, transformation descriptions, and cryptographic receipts. It retains the aggregate-only boundary of v2.0.0 while adding the documentary adjunct, correspondence clarification and pilot correction. Its statistics are descriptive process-trace summaries under the frozen event-v5 analytical contract. Release metadata does not expand this disclosure boundary.
 
 ## Never included
 
@@ -33,4 +33,4 @@ The condition and five prompt-language measures share a deterministic rule famil
 
 ## Release status
 
-The signed internal IRAD/data-use authorization remains a separate confidential record, not a public artifact or an IRB/HRPP approval. The [pre-release audit](LOCAL_CANDIDATE_AUDIT.md) describes the frozen event-v5 checks; the [release checklist](RELEASE_CHECKLIST.md) separately tracks v2.0.0 publication and downloaded-archive verification. Passing checks are not themselves publication authorization. Public distribution does not imply confidential delivery, journal submission or editorial acceptance. Historical preparation-status fields remain unchanged as explained in the [README](../README.md).
+The signed internal IRAD/data-use authorization remains a separate confidential record, not a public artifact or an IRB/HRPP approval. The [pre-release audit](LOCAL_CANDIDATE_AUDIT.md) describes the frozen event-v5 checks. The author authorized v2.1.0 aggregate-only publication on 2 October 2026; the [release checklist](RELEASE_CHECKLIST.md) distinguishes this authorization and the completed pre-publication checks from actual publication and downloaded-archive verification in the versioned release notes. Public distribution does not imply confidential delivery, journal submission or editorial acceptance. Historical preparation-status fields remain unchanged as explained in the [README](../README.md).

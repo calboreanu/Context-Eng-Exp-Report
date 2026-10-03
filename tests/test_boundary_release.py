@@ -16,12 +16,28 @@ def fixture():
     summary = {'historical_events': 46, 'distinct_v5_events': 40,
                'disposition_counts': {'current_primary_unchanged': 8, 'current_primary_changed': 12, 'not_current_primary': 24, 'held': 2},
                'same_measured_trajectory_and_labels_count': 21, 'changed_measurements_or_trajectory_count': 25,
+               'changed_derived_labels_count': 18,
+               'strict_status_inclusive_unchanged_count': 12, 'strict_status_inclusive_changed_count': 34,
+               'provenance_status_only_count': 9, 'current_primary_provenance_status_only_count': 3,
+               'current_primary_strict_status_inclusive_unchanged_count': 5,
+               'current_primary_strict_status_inclusive_changed_count': 15,
+               'strict_status_inclusive_disposition_counts': {'current_primary_unchanged': 5, 'current_primary_changed': 15, 'not_current_primary': 24, 'held': 2},
+               'change_category_counts': {'derived_label_change': 18, 'measurement_change_without_derived_label_change': 6,
+                                         'alias_membership_change_without_measurement_or_label_change': 1,
+                                         'provenance_status_only': 9, 'strictly_unchanged': 12},
+               'current_primary_change_category_counts': {'derived_label_change': 7, 'measurement_change_without_derived_label_change': 4,
+                                                         'alias_membership_change_without_measurement_or_label_change': 1,
+                                                         'provenance_status_only': 3, 'strictly_unchanged': 5},
                'v5_primary_member_count': 20, 'held_count': 2, 'condition_changed_among_current_primary_count': 2}
     overlap = copy.deepcopy(summary)
     overlap.update(v3_primary_total=46, v5_primary_total=30,
                    v5_primary_distinct_events_reached_from_v3_primary=18,
                    v5_primary_events_not_reached_from_v3_primary=12)
     boundary = {'analysis_contract': analysis['analysis_contract'], 'v5_analysis_scope': scope,
+                'correspondence_definition_version': 'context-engineering-correspondence/1.1.0',
+                'correspondence_definitions': {
+                    'same_measured_trajectory_and_labels': 'Provenance-status text is excluded from substantive equality.',
+                    'human_review_boundary': 'A computational correspondence clarification only. Original author confirmation is preserved. No new human labels or automatic transfer of confirmation to revised events or labels.'},
                 'v3_analysis_scope': {'primary_frontloaded_balanced_per_condition': 23},
                 'normalization': {'old_source_rows': 100, 'normalized_events': 75, 'representation_reduction': 15,
                                   'resolved_events': 70, 'quarantined_events': 5,
@@ -131,6 +147,56 @@ class BoundaryReleaseTests(unittest.TestCase):
         b['full_primary_overlap']['v5_primary_total'] += 1
         with self.assertRaisesRegex(RuntimeError, 'current primary reconciliation'):
             VERIFY.verify_v5_boundary_summary(a, b, h)
+
+    def test_strict_status_inclusive_counts_cannot_keep_measurement_names(self):
+        a, b, h = fixture()
+        b['review46']['same_measured_trajectory_and_labels_count'] = 12
+        b['review46']['changed_measurements_or_trajectory_count'] = 34
+        with self.assertRaisesRegex(RuntimeError, 'status-only transition counted as substantive'):
+            VERIFY.verify_v5_boundary_summary(a, b, h)
+
+    def test_current_primary_strict_counts_cannot_replace_substantive_counts(self):
+        a, b, h = fixture()
+        b['review46']['disposition_counts'].update(current_primary_unchanged=5, current_primary_changed=15)
+        with self.assertRaisesRegex(RuntimeError, 'primary status-only transition counted as substantive'):
+            VERIFY.verify_v5_boundary_summary(a, b, h)
+
+    def test_alias_only_change_is_retained_in_substantive_category(self):
+        a, b, h = fixture()
+        b['review46']['change_category_counts']['alias_membership_change_without_measurement_or_label_change'] = 0
+        with self.assertRaisesRegex(RuntimeError, 'category total mismatch'):
+            VERIFY.verify_v5_boundary_summary(a, b, h)
+
+    def test_primary_category_cannot_exceed_whole_historical_category(self):
+        a, b, h = fixture()
+        counts = b['review46']['current_primary_change_category_counts']
+        counts['measurement_change_without_derived_label_change'] = 7
+        counts['derived_label_change'] = 4
+        with self.assertRaisesRegex(RuntimeError, 'exceeds historical total'):
+            VERIFY.verify_v5_boundary_summary(a, b, h)
+
+    def test_correspondence_counts_reject_boolean_float_and_negative(self):
+        for value in (True, 9.0, -1):
+            with self.subTest(value=value):
+                a, b, h = fixture()
+                b['review46']['provenance_status_only_count'] = value
+                with self.assertRaisesRegex(RuntimeError, 'nonnegative integer'):
+                    VERIFY.verify_v5_boundary_summary(a, b, h)
+
+    def test_unknown_category_cannot_hide_status_or_alias_change(self):
+        a, b, h = fixture()
+        b['review46']['change_category_counts']['unclassified'] = 0
+        with self.assertRaisesRegex(RuntimeError, 'category fields'):
+            VERIFY.verify_v5_boundary_summary(a, b, h)
+
+    def test_correspondence_requires_explicit_version_and_no_human_transfer(self):
+        for key, value in [('correspondence_definition_version', 'old'),
+                           ('correspondence_definitions', {})]:
+            with self.subTest(key=key):
+                a, b, h = fixture()
+                b[key] = value
+                with self.assertRaisesRegex(RuntimeError, 'correspondence'):
+                    VERIFY.verify_v5_boundary_summary(a, b, h)
 
     def test_catalog_exact_values_pass(self):
         VERIFY.verify_catalog_records([{'measure': 'count', 'value': '7'}],

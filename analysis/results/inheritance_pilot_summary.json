@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-09-18T22:44:59.280615+00:00",
-  "rule_version": "ce-inheritance-map/3.0.0-event-normalized-pilot",
+  "generated_utc": "2026-10-02T18:50:47.124782+00:00",
+  "rule_version": "ce-inheritance-map/3.0.1-event-normalized-pilot",
   "status": "automated_unadjudicated_candidate_linkage_pilot",
   "input": {
     "filename": "normalized_merged_v5.local.csv",
@@ -21,42 +21,42 @@
     ],
     "eligible_rows_with_prior_action_eligible_ce": 2560,
     "clean_origin_candidates": 338,
-    "high_confidence_candidates": 1107,
-    "probable_candidates": 1149,
+    "high_confidence_candidates": 1106,
+    "probable_candidates": 1150,
     "unresolved_primary_rule": 304,
     "sequence_unit": "corrected primary-boundary event ordinal within explicit native session and nesting owner for Claude, canonical source session for Codex; absorbed nonprimary anchors do not start fresh events; quarantined event positions are not closed up"
   },
   "class_counts": {
     "CLEAN_ORIGIN_CANDIDATE": 338,
-    "CONTEXT_REFERENCE_WITHIN_20": 907,
+    "CONTEXT_REFERENCE_WITHIN_20": 909,
     "EXACT_PROMPT_ANCHOR": 38,
     "EXACT_SUCCESSFUL_TOOL_TARGET": 884,
-    "IMMEDIATE_ADJACENCY": 138,
-    "IMMEDIATE_SHORT_REFERENCE": 185,
+    "IMMEDIATE_ADJACENCY": 137,
+    "IMMEDIATE_SHORT_REFERENCE": 184,
     "NEAR_SEQUENCE": 104,
     "UNRESOLVED_PRIOR_CE_SESSION": 304
   },
   "tier_counts": {
     "CLEAN_ORIGIN_CANDIDATE": 338,
-    "HIGH_CONFIDENCE_CANDIDATE": 1107,
-    "PROBABLE_CANDIDATE": 1149,
+    "HIGH_CONFIDENCE_CANDIDATE": 1106,
+    "PROBABLE_CANDIDATE": 1150,
     "UNRESOLVED": 304
   },
   "primary_window": 20,
   "sensitivity": [
     {
       "window": 5,
-      "candidate_positive": 1860,
+      "candidate_positive": 1859,
       "eligible_rows": 2560,
-      "candidate_positive_rate": 0.7265625,
-      "unresolved": 700
+      "candidate_positive_rate": 0.726171875,
+      "unresolved": 701
     },
     {
       "window": 10,
-      "candidate_positive": 2104,
+      "candidate_positive": 2103,
       "eligible_rows": 2560,
-      "candidate_positive_rate": 0.821875,
-      "unresolved": 456
+      "candidate_positive_rate": 0.821484375,
+      "unresolved": 457
     },
     {
       "window": 20,

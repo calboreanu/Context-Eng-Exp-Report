@@ -1,0 +1,65 @@
+{
+  "analysis_contract_unchanged": "context-engineering-event-normalized-analysis/5.0.0",
+  "documentary_inventory": {
+    "chains_with_direct_corrective_response": 3,
+    "chains_with_prior_scoped_adoption": 1,
+    "chains_with_reported_revised_delivery": 3,
+    "chains_with_unrecovered_final_acceptance_endpoint": 3,
+    "full_current_formal_method_count": null,
+    "new_human_ratings": 0,
+    "retained_output_files_exactly_matching_logged_creation": 2,
+    "selected_chains": 3
+  },
+  "interpretation": {
+    "assistant_delivery_not_human_acceptance": true,
+    "completion_selected_not_success_rate_denominator": true,
+    "functional_component_mapping_not_original_role_declaration": true,
+    "historical_training_materials_not_operator_attendance": true,
+    "path_tokens_not_distinct_artifact_or_deliverable_count": true,
+    "unchanged_primary_denominator": true,
+    "unrecovered_endpoint_not_failure": true
+  },
+  "prepared_date": "2026-09-19",
+  "public_check_boundary": "Aggregate accounting and receipt syntax only; private source reconstruction and semantic interpretations cannot be independently recovered from this summary.",
+  "reconstruction": "AI-assisted source-linked documentary reconstruction; no new human ratings",
+  "restricted_receipts": {
+    "chain_evidence_sha256": "4d0f24836e0859188c8325a9b94c0304467d2609939a71834d1ca7bcebdb56ff",
+    "method_source_receipts_sha256": "13f28f311371a3d8261c2c7cf5c37d03a8ebb8bd9161763cd18c5df504f66521",
+    "protocol_sha256": "c56a748e5508b3bd2e42cb8ba0a27c3f21a00bf5a10615f3ae649d10355aa7db",
+    "terminal_register_sha256": "d9a9e88ea644efa2613dacf84f3169a249cfb6a801e175bea4ea8c646f644113"
+  },
+  "schema": "retrospective-deliverable-evidence/1.0.0",
+  "selection": {
+    "documentary_chains": "Three already-known purposive correction/redelivery chains",
+    "independent_human_review": false,
+    "preregistered": false,
+    "sets_additive": false,
+    "terminal_anchors": "All records from a historical completion-selected terminal queue"
+  },
+  "terminal_inventory": {
+    "anchors_with_all_tracked_targets_observed_in_successful_write_or_edit_results": 138,
+    "anchors_with_completed_retrieval_or_search": 132,
+    "anchors_with_completed_retrieval_or_search_before_first_successful_tracked_target_write": 127,
+    "anchors_with_completed_verification_class_call": 98,
+    "current_primary_members": 5,
+    "distinct_deliverable_count": null,
+    "distinct_historical_target_path_tokens": 343,
+    "full_method_application_count": null,
+    "historical_anchors": 138,
+    "historical_collectively_confirmed_terminal_records": 138,
+    "new_human_ratings": 0,
+    "resolved_current_events": 138,
+    "source_identities_freshly_verified": 138,
+    "source_intervals_parsed": 138
+  },
+  "timing": {
+    "audit_capture_clock_chains": 1,
+    "chains_with_three_attributable_phase_intervals": 3,
+    "comparative_speed_effect": null,
+    "nonpooling_reason": "Selected phases differ in scope and clock provenance; exact case times remain private.",
+    "pooled_duration_summary": null,
+    "private_phase_intervals": 9,
+    "provider_clock_chains": 2,
+    "scope": "Selected observed phases, not whole tasks, active labor or time to acceptance"
+  }
+}
